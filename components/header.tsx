@@ -1,87 +1,65 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
 import styled from "styled-components";
+import { Box } from "@mui/material";
 import Image from "next/image";
-import Togglebtn from "./toggleBtn/toggleBtn";
 
 export default function Header() {
   return (
-    <>
-        <ImageContainer>
-            <Image 
-                src="/vercel.svg"
-                alt="성원푸드 이미지"
-                objectPosition="center"
-                fill
-            />
-            <HeaderContainer>
-                <LeftBox>
-                    <div style={{flex: 1}}>
-                        <Image 
-                            src="/image/bi.png"
-                            alt="성원푸드 아이콘"
-                            width={50}
-                            height={20}
-                        />
-                    </div>
-                    <div style={{ flex: 1, flexDirection: "row" }}>
-                        <Togglebtn />
-                    </div>
-                    <div>이거</div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </LeftBox>
-                <RightBox>
-                    
-                </RightBox>
-            </HeaderContainer>
-        </ImageContainer>
-    </>
+    <Container>
+      <Nav>
+        <Img src="image/bi.png" width={"50px"} height={"40px"} />
+        <Ul>
+          <Li><A>1</A></Li>
+          <Li><A>2</A></Li>
+          <Li><A>3</A></Li>
+          <Li><A>4</A></Li>
+          <Li><A>5</A></Li>
+        </Ul>
+      </Nav>
+    </Container>
     
   );
 }
 
-const ImageContainer = styled.div`
-    position: relative !important;
-    width: 100%;
-    height: 800px;
+const Container = styled.div`
+  width: 100%;
+  height: 100vh;
+  background-image: url("image/FID-Fixedlncome1-gloves.jpg");
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  
 `;
 
-const HeaderContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    background-color: rgba(49,49,49,0.4);
+const Nav = styled.nav`
+  width: 100%;
+  height: 50px;
+  background-color: rgba(47,47,47,0.5);
+  line-height: 50px;
 `;
 
-const LeftBox = styled.div`
-    flex: 1;
-    display: flex;
-    justify-content: right;
-    position: relative !important;
-    z-index: 2;
+const Img = styled.img`
+  margin-top: 15px;
+  margin-left: 30px;
 `;
 
-const RightBox = styled.div`
-    flex: 1;
-    z-index: 2;
-    justify-content: right;
-    position: relative !important;
+const Ul = styled.ul`
+  float: right;
+  margin-right: 30px;
 `;
 
+const Li = styled.li`
+  list-style-type: none;
+  display: inline-block;
+  background-color: #aaa;
+  &:hover {
+    background-color: red;
+  }
+`;
 
-
-
-
-
-
-
-
-
-
-
-
+const A = styled.a`
+  text-decoration: none;
+  color: #fff;
+  padding: 30px;
+`;
 
 

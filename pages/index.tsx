@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 // eslint-disable-next-line prettier/prettier
-import Layout from "@/components/layout";
+import Layout from "@/components/Layout";
 import Head from "next/head";
 import styles from "@/styles/Button.module.scss"
 import { useRouter } from "next/router";

@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <>
-      <h3>푸터입니다</h3>
+      <h3>Footer</h3>
     </>
   );
 }
