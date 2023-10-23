@@ -82,36 +82,4 @@ const ProfileUlLi = styled.li`
   color: #fff;
 `;
 
-// const Nav = styled.nav`
-//   width: 100%;
-//   height: 50px;
-//   background-color: rgba(47,47,47,0.5);
-//   line-height: 50px;
-// `;
-
-// const Img = styled.img`
-//   margin-top: 15px;
-//   margin-left: 30px;
-// `;
-
-// const Ul = styled.ul`
-//   float: right;
-//   margin-right: 30px;
-// `;
-
-// const Li = styled.li`
-//   list-style-type: none;
-//   display: inline-block;
-//   background-color: #aaa;
-//   &:hover {
-//     background-color: red;
-//   }
-// `;
-
-// const A = styled.a`
-//   text-decoration: none;
-//   color: #fff;
-//   padding: 30px;
-// `;
-
 
