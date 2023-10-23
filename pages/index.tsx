@@ -15,11 +15,11 @@ export default function Home() {
         <meta name="description" content="성원푸드" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="text-3xl font-bold underline">
+      {/* <div className="text-3xl font-bold underline"> */}
         <h4>Home</h4>
-        <input type="button" onClick={() => router.push("/list")} value="Push" />
+        <input type="button" onClick={() => router.push("/list")} value="List로" />
         <button className={styles.button_green}>Home</button>
-      </div>
+      {/* </div> */}
     </Layout>
   );
 }

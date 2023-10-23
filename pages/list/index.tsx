@@ -7,8 +7,9 @@ export default function List() {
     // console.log(router)
     return (
         <Layout>
+
             <h4>List</h4>
-            <input type="button" onClick={() => router.push("/") } value="Push"/>
+            <input type="button" onClick={() => router.push("/") } value="홈으로"/>
             <button className={styles.button_red}>List</button>
         </Layout>
     )

@@ -32,7 +32,7 @@ export default function Header() {
 const Container = styled.div`
   width: 100%;
   height: 70vh;
-  background-image: url("image/FID-Fixedlncome1-gloves.jpg");
+  background-image: url("image/main.png");
   background-size: 100% 100%;
   background-position: center center;
   background-repeat: no-repeat;
@@ -43,7 +43,7 @@ const Section = styled.div`
   margin: 0 auto;
   position: relative;
   display: flex;
-  background-color: rgba(71,71,71,0.3);
+  background-color: rgba(71,71,71,0.5);
   justify-content: space-between;
   align-items: center;
 `;

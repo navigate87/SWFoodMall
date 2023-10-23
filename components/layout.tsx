@@ -17,7 +17,7 @@ export default function Layout({ children }: LayoutItemProp) {
     return (
       <>
         <Header />
-        <div>{children}</div>
+        <div style={{ display:"flex", justifyContent:"center" }}>{children}</div>
         <Footer/>
       </>
     )
