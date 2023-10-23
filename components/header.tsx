@@ -1,65 +1,117 @@
 import styled from "styled-components";
-import { Box } from "@mui/material";
 import Image from "next/image";
 
 export default function Header() {
   return (
     <Container>
-      <Nav>
-        <Img src="image/bi.png" width={"50px"} height={"40px"} />
-        <Ul>
-          <Li><A>1</A></Li>
-          <Li><A>2</A></Li>
-          <Li><A>3</A></Li>
-          <Li><A>4</A></Li>
-          <Li><A>5</A></Li>
-        </Ul>
-      </Nav>
+      <Section>
+        <ImgBox>
+          <Image src="/image/bi.png" alt="swfood" width={35} height={30} />
+        </ImgBox>
+        <NavTab>
+          <NavTabUl>
+            <NavTabUlLi>Online/Store</NavTabUlLi>
+            <NavTabUlLi>검색</NavTabUlLi>
+            <NavTabUlLi>예약</NavTabUlLi>
+            <NavTabUlLi>EVENT</NavTabUlLi>
+          </NavTabUl>
+        </NavTab>
+        <Profile>
+          <ProfileUl>
+            <ProfileUlLi>Language</ProfileUlLi>
+            <ProfileUlLi>Profile</ProfileUlLi>
+            <ProfileUlLi>좋아요</ProfileUlLi>
+            <ProfileUlLi>장바구니</ProfileUlLi>
+          </ProfileUl>
+        </Profile>
+      </Section>
     </Container>
-    
   );
 }
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 70vh;
   background-image: url("image/FID-Fixedlncome1-gloves.jpg");
   background-size: 100% 100%;
   background-position: center center;
   background-repeat: no-repeat;
-  
 `;
 
-const Nav = styled.nav`
-  width: 100%;
-  height: 50px;
-  background-color: rgba(47,47,47,0.5);
-  line-height: 50px;
+const Section = styled.div`
+  height: 60px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  background-color: rgba(71,71,71,0.3);
+  justify-content: space-between;
+  align-items: center;
 `;
 
-const Img = styled.img`
-  margin-top: 15px;
-  margin-left: 30px;
+const ImgBox = styled.div`
+  padding-left: 20px;
 `;
 
-const Ul = styled.ul`
-  float: right;
-  margin-right: 30px;
+const NavTab = styled.div`
+  flex: 8;
+  padding-left: 30px;
 `;
 
-const Li = styled.li`
-  list-style-type: none;
-  display: inline-block;
-  background-color: #aaa;
-  &:hover {
-    background-color: red;
-  }
+const NavTabUl = styled.ul`
+  display: flex;
+  justify-content: flex-start;
 `;
 
-const A = styled.a`
-  text-decoration: none;
+const NavTabUlLi = styled.li`
+  font-size: 16px;
+  margin: 0 15px;
   color: #fff;
-  padding: 30px;
 `;
+
+const Profile = styled.div`
+  flex: 8; 
+`;
+
+const ProfileUl = styled.ul`
+  display: flex;
+  justify-content: flex-end;
+`;
+const ProfileUlLi = styled.li`
+  font-size: 14px;
+  margin-right: 30px;
+  color: #fff;
+`;
+
+// const Nav = styled.nav`
+//   width: 100%;
+//   height: 50px;
+//   background-color: rgba(47,47,47,0.5);
+//   line-height: 50px;
+// `;
+
+// const Img = styled.img`
+//   margin-top: 15px;
+//   margin-left: 30px;
+// `;
+
+// const Ul = styled.ul`
+//   float: right;
+//   margin-right: 30px;
+// `;
+
+// const Li = styled.li`
+//   list-style-type: none;
+//   display: inline-block;
+//   background-color: #aaa;
+//   &:hover {
+//     background-color: red;
+//   }
+// `;
+
+// const A = styled.a`
+//   text-decoration: none;
+//   color: #fff;
+//   padding: 30px;
+// `;
 
 

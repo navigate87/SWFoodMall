@@ -16,9 +16,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="text-3xl font-bold underline">
+        <h4>Home</h4>
         <input type="button" onClick={() => router.push("/list")} value="Push" />
         <button className={styles.button_green}>Home</button>
-        <h4>432432432432</h4>
       </div>
     </Layout>
   );
