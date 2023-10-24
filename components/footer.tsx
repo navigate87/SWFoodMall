@@ -65,31 +65,7 @@ export default function Footer() {
           <CopyBox><p>COPYRIGHT ㉿ 2020. FoodMall. all rights reserved</p> </CopyBox>
         </RightFlexBox>
       </RightSection>
-      <FLEX1></FLEX1>
-
-      {/* <LeftSection>
-        <LeftFlexBox>
-         
-          <CsInfoBox>
-            <CsFontStyleP1>CS CENTER</CsFontStyleP1>
-            <CsFontStyleH3>1811-1811</CsFontStyleH3>
-            <CsFontStyleP2>
-              CS 운영시간 : 
-            </CsFontStyleP2>
-            <CsFontStyleP3> 오전10시~오후6시</CsFontStyleP3>
-          </CsInfoBox>
-        </LeftFlexBox>
-      </LeftSection>
-      <RightSection>
-        <ul>
-
-        </ul>
-        <span>이용약관  | </span>
-        <span>개인정보처리방침  | </span>
-        <span>이용안내  | </span>
-        <span>입점문의</span>
-        <div>대표이사 : 정대원</div>
-      </RightSection> */}
+      <FLEX1 />
     </Wrap>
   );
 }
@@ -183,7 +159,7 @@ const InfoBoxUlLi = styled.li`
 
 const CopyBox = styled.div`
   font-size: 10px;
-  color: #A2A2A2;
+  color: #A1A1A1;
   margin: 0 7px;
   padding-top: 17px;
 `;
