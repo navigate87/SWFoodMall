@@ -41,11 +41,13 @@ const Container = styled.div`
 const Section = styled.div`
   height: 60px;
   margin: 0 auto;
-  position: relative;
+  width: 100%;
+  position: fixed;
   display: flex;
   background-color: rgba(71,71,71,0.5);
   justify-content: space-between;
   align-items: center;
+  
 `;
 
 const ImgBox = styled.div`
