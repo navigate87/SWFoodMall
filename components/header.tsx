@@ -47,7 +47,6 @@ const Section = styled.div`
   background-color: rgba(71,71,71,0.5);
   justify-content: space-between;
   align-items: center;
-  
 `;
 
 const ImgBox = styled.div`

@@ -3,7 +3,6 @@
 import Header from "./Header";
 import Footer from "./Footer";
 import { useEffect, useState } from "react";
-import PrimarySearchAppBar from "./common/nav/nav";
 import styled from "styled-components";
 
 interface LayoutItemProp {

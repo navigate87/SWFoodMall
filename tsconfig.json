@@ -17,6 +17,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
+      "@components": ["component/index.ts"],
+      "@api/*": ["swfood/api/*"],
+      "@store/*": ["stores/*"]
     },
     "plugins": [
       { "name": "typescript-plugin-css-modules" },
