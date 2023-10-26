@@ -7,6 +7,8 @@ import GlobalStyle from "@/styles/globalStyle";
 import { RecoilRoot } from "recoil";
 import { theme } from "@/styles/theme";
 const queryClient = new QueryClient();
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css"
 
 export default function App({ Component, pageProps }: AppProps) {
   const [hydrated, setHydrated] = useState(false);

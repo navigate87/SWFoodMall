@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
+import SlideShow from "./slideShow";
 
 export default function Header() {
   return (
@@ -47,6 +48,7 @@ const Section = styled.div`
   background-color: rgba(71,71,71,0.5);
   justify-content: space-between;
   align-items: center;
+  z-index: 40;
 `;
 
 const ImgBox = styled.div`

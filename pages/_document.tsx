@@ -1,6 +1,4 @@
 /* eslint-disable prettier/prettier */
-
-
 import Document, {
   DocumentContext,
   DocumentInitialProps,

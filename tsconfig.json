@@ -17,7 +17,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@components": ["component/index.ts"],
       "@api/*": ["swfood/api/*"],
       "@store/*": ["stores/*"]
     },
