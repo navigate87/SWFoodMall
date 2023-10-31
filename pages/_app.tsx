@@ -20,13 +20,22 @@ export default function App({ Component, pageProps }: AppProps) {
     return null;
   }
   return (
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </RecoilRoot>
+    <>
+      {/* <head>
+        <title>성원 푸드몰</title>
+        <meta name="description" content="성원푸드" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+      </head> */}
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </QueryClientProvider>
+      </RecoilRoot>
+    </>
+ 
   );
 }

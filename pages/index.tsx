@@ -19,7 +19,7 @@ export default function Home() {
         <meta name="description" content="성원푸드" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SlideShow></SlideShow>
+      
       <Main>
         <div>
         <CustomTextH1 weight="lighter" fontSize="25" color="#F84040" style={{margin: "2% auto"}}>NOW SNS</CustomTextH1>
@@ -29,7 +29,7 @@ export default function Home() {
           <SlideShow />
         </div>
         </div>
-        <div style={{display:"flex", justifyContent: "center", marginTop: "50px"}}>
+        <div style={{display:"flex", justifyContent: "center", marginTop: "80px"}}>
           <div style={{flex: 1}}>
             <div style={{display:"flex", justifyContent: "flex-end", width: "100%", flexDirection: "column" }}>
               <CustomTextH1 weight="bold" fontSize="20" color="black"><span style={{fontSize: "25px"}}>🌐&nbsp;&nbsp;</span>알려드려요&nbsp;&nbsp;✚</CustomTextH1>
@@ -43,8 +43,8 @@ export default function Home() {
           </div>
           <div style={{flex: 1}}>
             <div style={{display:"flex", justifyContent: "center",width: "70%", alignItems:"center", flexDirection: "column"}}>
-              <div style={{display: "flex", justifyContent: "flex-start", width: "100%"}}><p style={{fontSize: "25px"}}>🤣&nbsp;&nbsp;</p> 고객서비스</div>
-              <div style={{marginTop: "10px", alignItems:"center", display: "flex", justifyContent:"space-around", width:"100%", height:"70px", border: "1px solid #CCCCCC", borderRadius:"20px" ,background:"#F1F1F1"}}>
+              <div style={{display: "flex", justifyContent: "flex-start", fontWeight:"bold", width: "100%"}}><p style={{fontSize: "25px"}}>🤣&nbsp;&nbsp;</p> 고객서비스</div>
+              <div style={{marginTop: "15px", alignItems:"center", display: "flex", justifyContent:"space-around", width:"100%", height:"70px", border: "1px solid #CCCCCC", borderRadius:"20px" ,background:"#F1F1F1"}}>
                 <div><span style={{fontSize: "15px"}}>💬&nbsp;&nbsp;</span>자주묻는질문</div>
                 <div><span style={{fontSize: "15px"}}>🚌&nbsp;&nbsp;</span>오시는길</div>
                 <div><span style={{fontSize: "15px"}}>☎️&nbsp;&nbsp;</span>연락처</div>

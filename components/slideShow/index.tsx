@@ -9,11 +9,14 @@ export default function SlideShow() {
     const [slideIndex, setSlideIndex] = useState(0);
     const settings = {
         infinite: true,
+        dots: true,
+        // appendDots: (<div>43729832798</div>),
         speed: 500,
         autoplay: true,
         autoplaySpeed: 2000,
-        slidesToShow: 7,
+        slidesToShow: 5,
         className: "center",
+        dotsClass: "dots_custom",
         centerMode: true,
         centerPadding: "50px",
         beforeChange: (current:number, next:number) => {
@@ -26,25 +29,25 @@ export default function SlideShow() {
             {
                 breakpoint: 1440,
                 settings: {
-                    slideToShow: 5
+                    slidesToShow: 5
                 }
             },
             {
                 breakpoint: 1024,
                 settings: {
-                    slideToShow: 5
+                    slidesToShow: 5
                 }
             },
             {
                 breakpoint: 720,
                 settings: {
-                    slideToShow: 3
+                    slidesToShow: 3
                 }
             },
             {
                 breakpoint: 480,
                 settings: {
-                    slideToShow: 2
+                    slidesToShow: 2
                 }
             },
             {
@@ -53,7 +56,6 @@ export default function SlideShow() {
                     slidesToShow: 1
                 }
             }
-
         ]
     }
 
@@ -126,4 +128,36 @@ const SlideContainer = styled.div`
         transition: all 300ms ease;
         transform: scale(0.99);
     }
+
+    .dots_custom {
+        display: inline-block;
+        vertical-align: middle;
+        margin: auto 0;
+        padding: 0;
+    }
+
+    .dots_custom li {
+        list-style: none;
+        cursor: pointer;
+        display: inline-block;
+        margin: 30px 0px;
+        padding: 0;
+    }
+
+    .dots_custom li button {
+        border: none;
+        background: #d1d1d1;
+        color: transparent;
+        cursor: pointer;
+        display: block;
+        height: 3px;
+        width: 125px;
+        /* border-radius: 100%; */
+        padding: 0;
+    }
+
+    .dots_custom li.slick-active button {
+        background-color: red;
+    }
+    
 `;
