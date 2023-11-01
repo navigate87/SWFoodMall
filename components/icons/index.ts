@@ -1,4 +1,4 @@
-import { SaveIcon } from '@/components/common/icons';
+import { SaveIcon } from '@/components/icons';
 
 import styled from 'styled-components';
 

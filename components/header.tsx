@@ -1,10 +1,20 @@
 import styled from "styled-components";
 import Image from "next/image";
 import SlideShow from "./slideShow";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { modalShowState } from "@/store/stores/modalState";
+import Reservation from "@/modal/reservation";
 
 export default function Header() {
+  const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState); 
+  const handleClick = (event:any) => {
+    setShowModal(true);
+    document.body.style.overflow = "hidden";
+  }
   return (
-    <Container>
+    <>
+      <Container>
       <Section>
         <ImgBox>
           <Image src="/image/bi.png" alt="swfood" width={35} height={30} />
@@ -13,7 +23,7 @@ export default function Header() {
           <NavTabUl>
             <NavTabUlLi>Online/Store</NavTabUlLi>
             <NavTabUlLi>검색</NavTabUlLi>
-            <NavTabUlLi>예약</NavTabUlLi>
+            <NavTabUlLi onClick={handleClick}>예약</NavTabUlLi>
             <NavTabUlLi>EVENT</NavTabUlLi>
           </NavTabUl>
         </NavTab>
@@ -26,7 +36,11 @@ export default function Header() {
           </ProfileUl>
         </Profile>
       </Section>
-    </Container>
+      
+      </Container>
+      {showModal && <Reservation />} 
+    </>
+    
   );
 }
 

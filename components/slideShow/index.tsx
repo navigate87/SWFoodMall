@@ -10,7 +10,6 @@ export default function SlideShow() {
     const settings = {
         infinite: true,
         dots: true,
-        // appendDots: (<div>43729832798</div>),
         speed: 500,
         autoplay: true,
         autoplaySpeed: 2000,
@@ -159,5 +158,4 @@ const SlideContainer = styled.div`
     .dots_custom li.slick-active button {
         background-color: red;
     }
-    
 `;
