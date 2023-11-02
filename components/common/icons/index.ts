@@ -1,4 +1,4 @@
-import { SaveIcon } from '@/components/icons';
+import { SaveIcon } from '@/components/common/icons';
 
 import styled from 'styled-components';
 
@@ -13,7 +13,7 @@ export { default as BellIcon } from 'public/icon/bell.svg';
 export { default as BuildingIcon } from 'public/icon/building.svg';
 export { default as CalendarIcon } from 'public/icon/calendar.svg';
 export { default as CheckedIcon } from 'public/icon/checked.svg';
-export { default as CloseIcon } from 'public/icon/close.svg';
+export { default as CloseIcon } from "public/icon/close.svg";
 export { default as CollapseIcon } from 'public/icon/collapse.svg';
 export { default as CustomerIcon } from 'public/icon/customer-management.svg';
 export { default as DeleteIcon } from 'public/icon/delete.svg';

@@ -38,7 +38,6 @@ export default function Home() {
                 <span style={{fontSize: "12px", fontWeight: "light", margin: "1% auto"}}>•&nbsp;&nbsp;부처님 오신날 대체 휴일 영업 안내</span> 
                 <span style={{fontSize: "12px", fontWeight: "light", margin: "1% auto"}}>•&nbsp;&nbsp;2023 어린이날 영업 안내</span> 
               </div>
-              
             </div>
           </div>
           <div style={{flex: 1}}>
@@ -52,9 +51,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        
       </Main>
-      
     </Layout>
   );
 }
