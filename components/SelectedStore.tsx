@@ -15,7 +15,8 @@ export default function SelectedStore({store}: { store: (typeof StoreData)[numbe
     }
     return (
         <Store key={store.alt} onClick={e => selectStore(store.alt)} >
-            <Image src={store.src} alt={store.alt} width={100} height={100} />
+            <Image src={store.src} alt={store.alt} width={110} height={100} />
+            <StoreTextBox>{store.alt}</StoreTextBox>
         </Store>
     )
 }
@@ -26,10 +27,16 @@ const Store = styled.div`
     border-radius: 15px;
     text-align: center;
     /* line-height: 100px; */
-    margin: 1%;
+    margin: 1.5%;
     color: #fff;
 
     &:hover {
-        scale: 1.2;
+        border:1px solid red;
+        background: red;
     }
+`;
+
+const StoreTextBox = styled.div`
+    color:#FFF;
+    margin: 2%;
 `;

@@ -80,15 +80,7 @@ export default function Reservation() {
                                 <SelectedStore key={store.alt} store={store}  />
                               ))
                             }
-                            {/* <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>성원정</div>
-                            <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>아뜰리에</div>
-                            <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>레스토랑</div>
-                            <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>뷔페</div>
-                            <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>스시노칸도</div> */}
-                        </Stores>
-                        {/* <div style={{display: "flex", marginTop: "6%", alignContent:"space-between", flexWrap:"wrap", }}>
-                            
-                        </div> */}
+                        </Stores>   
                     </div>
                     <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"300px", marginTop: "3%" }}></div>
                     <div style={{flex:1}}>
