@@ -1,16 +1,21 @@
 import { useRecoilState } from "recoil";
-
 import styled from "styled-components"
-import { modalShowState } from "@/store/stores/modalState";
-import { CloseIcon } from "../components/common/icons/index";
+import { modalShowState, recoilSelectedStore, recoilStoreState } from "@/store/stores/modalState";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faClock, faUserCheck, faUserPlus, faUtensils } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faClock, faUserPlus, faUtensils } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import { StoreData } from "@/data/StoreType";
+import SelectedStore from "@/components/SelectedStore";
 
 export default function Reservation() {
-    const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState)
+    const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
+    const [selectedStoreName, setSelectedStoreName] = useRecoilState<string>(recoilSelectedStore);
+    const [storeState, setStoreState] = useRecoilState<boolean>(recoilStoreState);
+
     const handleClick = (event:any) => {
         setShowModal(false);
+        setStoreState(false);
         document.body.style.overflow = "auto";
     }
     return (
@@ -59,22 +64,33 @@ export default function Reservation() {
                         </div>
                     </div>
                 </div>
+                
                 <div style={{display: "flex", margin: "1.5%"}}>
                     <div style={{flex:1}}>
                         <div style={{ display:"flex", alignItems:"center" }}>
                             <FontAwesomeIcon icon={faUtensils}/>
                             <h3 style={{marginLeft:"2%", marginRight:"3%"}}>다이닝</h3>
-                            <div style={{color:"#A2A2A2", borderBottom: "2px solid red"}}>식당을 선택해주세요</div>
+                            <div style={{color:"#A2A2A2", borderBottom: "2px solid red"}}>
+                                {  storeState ? selectedStoreName : "식당을 선택해주세요" }
+                            </div>
                         </div>
-                        <div style={{display: "flex", marginTop: "6%", alignContent:"space-between", flexWrap:"wrap", }}>
-                            <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>성원정</div>
+                        <Stores>
+                            {
+                              StoreData.map(store => (
+                                <SelectedStore key={store.alt} store={store}  />
+                              ))
+                            }
+                            {/* <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>성원정</div>
                             <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>아뜰리에</div>
                             <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>레스토랑</div>
                             <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>뷔페</div>
-                            <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>스시노칸도</div>
-                        </div>
+                            <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>스시노칸도</div> */}
+                        </Stores>
+                        {/* <div style={{display: "flex", marginTop: "6%", alignContent:"space-between", flexWrap:"wrap", }}>
+                            
+                        </div> */}
                     </div>
-                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "2.5%" }}></div>
+                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"300px", marginTop: "3%" }}></div>
                     <div style={{flex:1}}>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%"  }}>
                             <FontAwesomeIcon icon={faCalendar}/>
@@ -84,14 +100,14 @@ export default function Reservation() {
                             
                         </div>
                     </div>
-                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "2.5%" }}></div>
+                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"300px", marginTop: "3%" }}></div>
                     <div style={{flex:1}}>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%" }}>
                             <FontAwesomeIcon icon={faClock}/>
                             <h3 style={{marginLeft:"2%", marginRight:"3%"}}>시간</h3>   
                         </div>
                     </div>
-                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "2.5%" }}></div>
+                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"300px", marginTop: "3%" }}></div>
                     <div style={{flex:1}}>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"1%" }}>
                             <FontAwesomeIcon icon={faUserPlus}/>
@@ -165,5 +181,12 @@ const TextBoxBorderBot = styled.div`
     &:hover{
         border-bottom: 3px solid red;
     }
+`;
+
+const Stores = styled.div`
+    display: flex;
+    margin-top: 6%; 
+    align-content: space-between; 
+    flex-wrap: wrap
 `;
 

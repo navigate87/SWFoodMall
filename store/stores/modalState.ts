@@ -6,3 +6,13 @@ export const modalShowState = atom<boolean>({
     key: "reservationModal",
     default: false,
 });
+
+export const recoilSelectedStore = atom<string>({
+    key: "selectedStore",
+    default: "",
+}) 
+
+export const recoilStoreState = atom<boolean>({
+    key: "selectedStoreState",
+    default: false
+})
