@@ -4,6 +4,8 @@ import styled from "styled-components"
 import { modalShowState } from "@/store/stores/modalState";
 import { CloseIcon } from "../components/common/icons/index";
 import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar, faClock, faUserCheck, faUserPlus, faUtensils } from "@fortawesome/free-solid-svg-icons";
 
 export default function Reservation() {
     const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState)
@@ -16,7 +18,7 @@ export default function Reservation() {
             <Container>
                 <HeaderBox>
                     <DiningSelectBox>
-                       <TextBoxBorderBot>DINING 예약</TextBoxBorderBot> 
+                        <TextBoxBorderBot>DINING 예약</TextBoxBorderBot> 
                     </DiningSelectBox>
                     <FNBSelectBox>
                         <TextBoxBorderBot>F&B 단체예약</TextBoxBorderBot>
@@ -25,14 +27,77 @@ export default function Reservation() {
                         <ImageBox 
                             onClick={handleClick} 
                             src={"/icon/close.svg"} 
-                            width={24} 
-                            height={24} 
+                            width={28} 
+                            height={28} 
                             alt="Close" />
                     </CloseBox>
                 </HeaderBox>
                 
-                <div style={{display: "flex", justifyContent:"flex-start", margin:"1.5%"}}>
-                    step
+                <div style={{display: "flex", justifyContent:"center", margin:"1.5%"}}>
+                    <div style={{flex:1}}>
+                        <div style={{ display: "flex" }}>
+                            <div style={{ border: "3px solid green", borderRadius: "5px", fontSize:"1vw", textAlign: "center", width:"15%", lineHeight:"20px" }}>step 1</div>
+                            <div>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
+                        </div>
+                    </div>
+                    <div style={{flex:1}}>
+                        <div style={{ display: "flex", alignItems:"center" }}>
+                            <div style={{ background: "#C8C8C8", color:"#FFFFFF", borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>step 2</div>
+                            <div>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
+                        </div>
+                    </div>
+                    <div style={{flex:1}}>
+                        <div style={{ display: "flex", alignItems:"center" }}>
+                            <div style={{ background: "#C8C8C8", color:"#FFFFFF", borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>step 3</div>
+                            <div>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
+                        </div>
+                    </div>
+                    <div style={{flex:1}}>
+                        <div style={{ display: "flex", alignItems:"center" }}>
+                            <div style={{ background: "#C8C8C8", color:"#FFFFFF", borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>step 4</div>
+                            <div>&nbsp;&nbsp;</div>   
+                        </div>
+                    </div>
+                </div>
+                <div style={{display: "flex", margin: "1.5%"}}>
+                    <div style={{flex:1}}>
+                        <div style={{ display:"flex", alignItems:"center" }}>
+                            <FontAwesomeIcon icon={faUtensils}/>
+                            <h3 style={{marginLeft:"2%", marginRight:"3%"}}>다이닝</h3>
+                            <div style={{color:"#A2A2A2", borderBottom: "2px solid red"}}>식당을 선택해주세요</div>
+                        </div>
+                        <div style={{display: "flex", marginTop: "6%", alignContent:"space-between", flexWrap:"wrap", }}>
+                            <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>성원정</div>
+                            <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>아뜰리에</div>
+                            <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>레스토랑</div>
+                            <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>뷔페</div>
+                            <div style={{ width:"30%", background:"#00498C", borderRadius:"15px", textAlign: "center", lineHeight: "100px", margin:"1%", color:"#fff" }}>스시노칸도</div>
+                        </div>
+                    </div>
+                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "2.5%" }}></div>
+                    <div style={{flex:1}}>
+                        <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%"  }}>
+                            <FontAwesomeIcon icon={faCalendar}/>
+                            <h3 style={{marginLeft:"2%", marginRight:"3%"}}>날짜</h3>   
+                        </div>
+                        <div>
+                            
+                        </div>
+                    </div>
+                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "2.5%" }}></div>
+                    <div style={{flex:1}}>
+                        <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%" }}>
+                            <FontAwesomeIcon icon={faClock}/>
+                            <h3 style={{marginLeft:"2%", marginRight:"3%"}}>시간</h3>   
+                        </div>
+                    </div>
+                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "2.5%" }}></div>
+                    <div style={{flex:1}}>
+                        <div style={{ display:"flex", alignItems:"center", marginLeft:"1%" }}>
+                            <FontAwesomeIcon icon={faUserPlus}/>
+                            <h3 style={{marginLeft:"2%", marginRight:"3%"}}>인원</h3>   
+                        </div>
+                    </div>
                 </div>    
                     
             </Container>
@@ -96,6 +161,7 @@ const ImageBox = styled(Image)`
 
 const TextBoxBorderBot = styled.div`
     display: inline;
+    cursor: pointer;
     &:hover{
         border-bottom: 3px solid red;
     }

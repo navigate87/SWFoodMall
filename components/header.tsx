@@ -83,6 +83,7 @@ const NavTabUlLi = styled.li`
   font-size: 16px;
   margin: 0 15px;
   color: #fff;
+  cursor: pointer;
 `;
 
 const Profile = styled.div`
