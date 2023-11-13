@@ -54,7 +54,7 @@ export default function Layout({ children }: LayoutItemProp) {
 }
 
 const Container = styled.div`
-  margin-top: -2%;
+  margin-top: -4%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -82,7 +82,7 @@ const EventText = styled.div`
 const EventListBox = styled.div`
   border-radius: 125px;
   margin-top: 20px;
-  width: 28%;
+  width: 22%;
   height: 50px;
   background: #ECECEC;
   display: flex;

@@ -6,7 +6,7 @@ export default function Footer() {
     <Wrap>
       <FLEX1 />
       <ImgContainer>
-        <Image alt="Swfood" src="/image/bi.png" width={80} height={80} />
+        <Image alt="Swfood" src="/image/bi-color.svg" width={80} height={80} />
       </ImgContainer>
         
       <LeftSection>

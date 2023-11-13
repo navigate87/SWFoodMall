@@ -7,11 +7,24 @@ import { faCalendar, faClock, faUserPlus, faUtensils } from "@fortawesome/free-s
 import { useState } from "react";
 import { StoreData } from "@/data/StoreType";
 import SelectedStore from "@/components/SelectedStore";
+import DatePicker from "react-datepicker";
+import { addMonths, getDate, getMonth, getYear } from "date-fns";
+// import 'react-datepicker/dist/react-datepicker.css';
+import { ko } from "date-fns/locale";
 
 export default function Reservation() {
     const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
     const [selectedStoreName, setSelectedStoreName] = useRecoilState<string>(recoilSelectedStore);
     const [storeState, setStoreState] = useRecoilState<boolean>(recoilStoreState);
+    const [startDate, setStartDate] = useState<Date | null>(new Date());
+    const [endDate, setEndDate] = useState<Date | null>(null)
+    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+    const months :string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+    const onChangeDate = (dates:any) => {
+        const [start, end] = dates;
+        setStartDate(startDate);
+        setEndDate(end);
+    }
 
     const handleClick = (event:any) => {
         setShowModal(false);
@@ -40,21 +53,21 @@ export default function Reservation() {
                 
                 <div style={{display: "flex", justifyContent:"center", margin:"1.5%"}}>
                     <div style={{flex:1}}>
-                        <div style={{ display: "flex" }}>
+                        <div style={{ display: "flex", alignItems:"center" }}>
                             <div style={{ border: "3px solid green", borderRadius: "5px", fontSize:"1vw", textAlign: "center", width:"15%", lineHeight:"20px" }}>step 1</div>
-                            <div>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
+                            <div>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
                         </div>
                     </div>
                     <div style={{flex:1}}>
                         <div style={{ display: "flex", alignItems:"center" }}>
                             <div style={{ background: "#C8C8C8", color:"#FFFFFF", borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>step 2</div>
-                            <div>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
+                            <div>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
                         </div>
                     </div>
                     <div style={{flex:1}}>
                         <div style={{ display: "flex", alignItems:"center" }}>
                             <div style={{ background: "#C8C8C8", color:"#FFFFFF", borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>step 3</div>
-                            <div>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
+                            <div>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
                         </div>
                     </div>
                     <div style={{flex:1}}>
@@ -65,9 +78,9 @@ export default function Reservation() {
                     </div>
                 </div>
                 
-                <div style={{display: "flex", margin: "1.5%"}}>
+                <div style={{display: "flex", borderBottom: "1px solid #CCCCCC", width:"100%"}}>
                     <div style={{flex:1}}>
-                        <div style={{ display:"flex", alignItems:"center" }}>
+                        <div style={{ display:"flex", alignItems:"center", marginLeft:"6%" }}>
                             <FontAwesomeIcon icon={faUtensils}/>
                             <h3 style={{marginLeft:"2%", marginRight:"3%"}}>다이닝</h3>
                             <div style={{color:"#A2A2A2", borderBottom: "2px solid red"}}>
@@ -86,18 +99,80 @@ export default function Reservation() {
                     <div style={{flex:1}}>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%"  }}>
                             <FontAwesomeIcon icon={faCalendar}/>
-                            <h3 style={{marginLeft:"2%", marginRight:"3%"}}>날짜</h3>   
+                            <h3 style={{marginLeft:"2%", marginRight:"3%"}}>날짜</h3>
+                            <div style={{color:"#A2A2A2", borderBottom: "2px solid red"}}>날짜를 선택해주세요</div>
                         </div>
-                        <div>
-                            
-                        </div>
+                        <DatePickerWrapper>
+                            <StyledDatePicker 
+                                locale={ ko }
+                                minDate={new Date()}
+                                startDate={startDate}
+                                endDate={endDate}
+                                onChange={(date) => setSelectedDate(date)}
+                                inline
+                                showDisabledMonthNavigation
+                                monthsShown={1}
+                                selected={selectedDate}
+                                shouldCloseOnSelect
+                                withPortal
+                                renderCustomHeader={({
+                                   date,
+                                   prevMonthButtonDisabled,
+                                   nextMonthButtonDisabled,
+                                   decreaseMonth,
+                                   increaseMonth, 
+                                }) => (
+                                    <div style={{ margin:"10px", display: "flex", justifyContent:"center" }}>
+                                        <div style={{cursor:"pointer"}} onClick={decreaseMonth} aria-disabled={prevMonthButtonDisabled}>
+                                            ◀️
+                                        </div>
+                                        <div className="month-day">
+                                             {getYear(date)}.{months[getMonth(date)]}
+                                        </div>
+                                        <div style={{cursor:"pointer"}} onClick={increaseMonth} aria-disabled={nextMonthButtonDisabled}>
+                                            ▶️
+                                        </div>
+                                    </div>
+                                )}
+                            /> 
+                        </DatePickerWrapper>
                     </div>
                     <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"300px", marginTop: "3%" }}></div>
                     <div style={{flex:1}}>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%" }}>
-                            <FontAwesomeIcon icon={faClock}/>
+                            <FontAwesomeIcon icon={faClock} />
                             <h3 style={{marginLeft:"2%", marginRight:"3%"}}>시간</h3>   
                         </div>
+                        <div style={{marginLeft: "2%", marginTop: "7%"}}>시간</div>
+                        <ul style={{ display: "flex", alignContent:"center", flexWrap: "wrap", columnGap:"20px" }}>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>10:00</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>11:00</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>12:00</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>13:00</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>14:00</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>15:00</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>16:00</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>17:00</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>18:00</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>19:00</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>20:00</li>
+                        </ul>
+                       
+                        <div style={{marginLeft: "2%", marginTop: "3%"}}>분</div>
+                        <ul style={{ display: "flex", alignContent:"center", columnGap:"20px", flexWrap: "wrap" }}>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>00</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>05</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>10</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>15</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>20</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>25</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>30</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>35</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>40</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>45</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>50</li>
+                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>55</li>
+                        </ul>
                     </div>
                     <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"300px", marginTop: "3%" }}></div>
                     <div style={{flex:1}}>
@@ -105,10 +180,90 @@ export default function Reservation() {
                             <FontAwesomeIcon icon={faUserPlus}/>
                             <h3 style={{marginLeft:"2%", marginRight:"3%"}}>인원</h3>   
                         </div>
+                        <div style={{ display:"flex", margin:"7%", alignItems:"center", justifyContent:"center" }}>
+                            <div style={{ marginRight: "5%"  }}>일반</div>
+                            <div style={{ border:"1px solid #ededed", height:"40px",width:"280px" ,borderRadius:"15px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                                <div style={{marginLeft:"5%"}}>➖</div>
+                                <div>0</div>
+                                <div style={{marginRight:"5%"}}>➕</div>
+                            </div>
+                        </div>
+                        <div>
+                            <ul style={{ display:"flex", alignItems:"center", justifyContent:"space-evenly" }}>
+                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px",  }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+4</p></li>
+                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px", }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+6</p></li>
+                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px", }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+8</p></li>
+                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px",  }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+10</p></li>
+                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px",  }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+20</p></li>
+                            </ul>
+                        </div>
+                        <div style={{ display:"flex", margin:"7%", alignItems:"center", justifyContent:"center" }}>
+                            <div style={{ marginRight: "5%"  }}>소인</div>
+                            <div style={{ border:"1px solid #ededed", height:"40px",width:"280px" ,borderRadius:"15px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                                <div style={{marginLeft:"5%"}}>➖</div>
+                                <div>0</div>
+                                <div style={{marginRight:"5%"}}>➕</div>
+                            </div>
+                        </div>
+                        <div>
+                            <ul style={{ display:"flex", alignItems:"center", justifyContent:"space-evenly" }}>
+                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px" }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+4</p></li>
+                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px" }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+6</p></li>
+                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px" }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+8</p></li>
+                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px" }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+10</p></li>
+                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px" }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+20</p></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>    
+                                  
+                <div style={{ width:"100%", borderTop:"8px solid #ECECEC", borderBottom:"1px solid #CCCCCC"}}></div> 
+               
+                <div style={{ display:"flex", alignItems:"center", justifyContent:"space-evenly", height: "20%" }}>
+                    <div style={{flex:1}}>
+                        <div style={{display:"flex", alignContent:"center", justifyContent:"center"}}>
+                            <Image
+                                src={"/image/require_input.png"} 
+                                width={28} 
+                                height={28} 
+                                alt="text" 
+                                style={{marginRight:"2%"}}
+                            />
+                            <div style={{ margin:"1%" }}>필수입력<span style={{ color: "#f84040" }}>*</span></div>
+                        </div>
+                    </div>
                     
+                    <div style={{flex:1}}>
+                        <div style={{display:"flex", alignContent:"center", justifyContent:"center"}}>
+                            <span style={{ marginRight:"2%" }}>예약자명<span style={{ color: "#f84040" }}>*</span></span>
+                            <input></input>
+                        </div>
+                        
+                    </div>
+                    <div style={{flex:1}}>
+                        <div style={{display:"flex", alignContent:"center", justifyContent:"center"}}>
+                            <div style={{ marginRight:"2%" }}>연락처<span style={{ color: "#f84040" }}>*</span></div>
+                            <input></input>
+                        </div>
+                        
+                    </div>
+                    <div style={{flex:1}}>
+                        <div style={{display:"flex", alignContent:"center", justifyContent:"center"}}>
+                            <div style={{ marginRight:"2%" }}>이메일</div>
+                            <input></input>
+                        </div>
+                    </div>
+                    <div style={{flex:1}}>
+                        <div style={{ marginLeft:"8%", cursor:"pointer", display:"flex",justifyContent:"center", background:"#f8f6f6", alignItems:"center", borderRadius:"25px", width:"200px", height:"70px" }}>
+                            <Image color="#FFF" src={"/icon/icon-main-quick-reservation.svg"} alt="예약하기" width={40} height={40} />
+                            <div style={{ color:"#c8c8c8", marginLeft:"5%" }}>예약하기</div>
+                        </div>
+                    </div>
+                </div>
+                   
+                
             </Container>
+            
         </ModalBackground>
     )
 }
@@ -180,5 +335,50 @@ const Stores = styled.div`
     margin-top: 6%; 
     align-content: space-between; 
     flex-wrap: wrap
+`;
+
+const DatePickerWrapper = styled.div`
+    margin: 7%; 
+    text-align:center;
+
+    .react-datepicker {
+        border: none;
+    }
+    .react-datepicker__header {
+        text-align: center;
+        background-color: #fff;
+        border: none;
+    }
+    .react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range, .react-datepicker__month-text--selected, .react-datepicker__month-text--in-selecting-range, .react-datepicker__month-text--in-range, .react-datepicker__quarter-text--selected, .react-datepicker__quarter-text--in-selecting-range, .react-datepicker__quarter-text--in-range, .react-datepicker__year-text--selected, .react-datepicker__year-text--in-selecting-range, .react-datepicker__year-text--in-range {
+        border-radius: 50px;
+        color: blue;
+        background: #fff;
+        border: 1px solid red;
+
+        &:hover {
+            border-radius: 50px;
+        }
+    }
+
+    .react-datepicker__day--selected {
+        &:hover {
+            border-radius: 50px;
+        }
+    }
+`;
+
+const StyledDatePicker = styled(DatePicker)`
+    width: 122px;
+    height: 48px;
+    border: none;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    padding: 20px;
+    background-color: transparent;
+    color: #707070;
+    position: absolute;
+    top: -48px;
+    left: 5px;
 `;
 

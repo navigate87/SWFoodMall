@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58">
+    <defs>
+        <filter id="xhry8ee4ua" x="0" y="0" width="58" height="58" filterUnits="userSpaceOnUse">
+            <feOffset dy="3"/>
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feFlood flood-opacity=".161"/>
+            <feComposite operator="in" in2="blur"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g transform="translate(-1633 -26)">
+        <g style="filter:url(#xhry8ee4ua)">
+            <rect data-name="사각형 7" width="40" height="40" rx="10" transform="translate(1642 32)" style="fill:#fff"/>
+        </g>
+        <g data-name="그룹 5" transform="translate(1648 41)">
+            <circle data-name="타원 2" cx="2.5" cy="2.5" r="2.5" transform="translate(8 18)" style="fill:#707070"/>
+            <circle data-name="타원 3" cx="2.5" cy="2.5" r="2.5" transform="translate(15 18)" style="fill:#707070"/>
+            <path data-name="패스 41" d="M1669 59.594h-9.9a1 1 0 0 1-.915-.595l-5.49-12.411H1651a1 1 0 1 1 0-1.994h2.351a1 1 0 0 1 .915.595l5.49 12.411H1669a1 1 0 1 1 0 1.994z" transform="translate(-1650 -42.594)" style="fill:#707070"/>
+            <path data-name="빼기 2" d="M-1743.748-19H-1750a1 1 0 0 1-1-1 1 1 0 0 1 1-1h6a8.028 8.028 0 0 0 .252 2z" transform="translate(1758 27)" style="fill:#707070"/>
+            <path data-name="빼기 1" d="M-1743.787-15.75h-5.964A1.252 1.252 0 0 1-1751-17a1.252 1.252 0 0 1 1.25-1.25h4.485a7.962 7.962 0 0 0 1.477 2.5z" transform="translate(1759.75 27)" style="fill:#707070"/>
+            <path data-name="빼기 3" d="M-1744.959-13h-4.833a1.121 1.121 0 0 1-1.208-1 1.121 1.121 0 0 1 1.209-1h4.5a8.024 8.024 0 0 0 1.54 1.068 1.14 1.14 0 0 1-1.208.932z" transform="translate(1762 27)" style="fill:#707070"/>
+        </g>
+        <circle data-name="타원 4" cx="6" cy="6" r="6" transform="translate(1664 42)" style="fill:#f84040"/>
+        <text data-name="3" transform="translate(1667 52)" style="font-size:12px;font-family:Manrope;font-weight:700;fill:#fff"><tspan x="0" y="0">3</tspan></text>
+    </g>
+</svg>
