@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24.009" viewBox="0 0 24 24.009">
+    <g data-name="그룹 20717">
+        <path data-name="패스 21250" d="M23.164 5.523V4.016a1.217 1.217 0 0 0-1.288-1.131h-.859V1h-6.87v1.885h-.859A1.217 1.217 0 0 0 12 4.016v1.507z" transform="translate(-6.189 -.25)" style="stroke-width:1.5px;stroke-linecap:round;stroke:#22201f;stroke-linejoin:round;fill:none"/>
+        <path data-name="패스 21251" d="M22 6v.71h2.129V6" transform="translate(-11.384 -4.218)" style="stroke-linecap:square;stroke:#22201f;stroke-linejoin:round;fill:none"/>
+        <path data-name="패스 21252" d="M15.562 9h3.066a.752.752 0 0 1 .766.737v18.435a.752.752 0 0 1-.766.737H1.766A.752.752 0 0 1 1 28.172V9.737A.752.752 0 0 1 1.766 9h1.916" transform="translate(1.484 -5.675)" style="stroke-linecap:square;stroke-width:1.5px;stroke:#22201f;stroke-linejoin:round;fill:none"/>
+        <path data-name="패스 21253" d="M14.818 26.7v1.386H10V23h2.19" transform="translate(-4.949 -14.911)" style="stroke-width:1.5px;stroke-linecap:round;stroke:#22201f;stroke-linejoin:round;fill:none"/>
+        <path data-name="사각형 19519" transform="translate(5 17.009)" style="stroke-width:1.5px;stroke-linecap:round;stroke:#22201f;stroke-linejoin:round;fill:none" d="M0 0h4v3H0z"/>
+        <path data-name="패스 21254" d="m14 25.848.924.924L17.234 24" transform="translate(-7.234 -15.503)" style="stroke-width:1.5px;stroke-linecap:round;stroke:#22201f;stroke-linejoin:round;fill:none"/>
+        <path data-name="선 8" transform="translate(13 9.009)" style="stroke-width:1.5px;stroke-linecap:round;stroke:#22201f;stroke-linejoin:round;fill:none" d="M0 0h3"/>
+        <path data-name="선 9" transform="translate(13 12.009)" style="stroke-width:1.5px;stroke-linecap:round;stroke:#22201f;stroke-linejoin:round;fill:none" d="M0 0h5"/>
+        <path data-name="선 10" transform="translate(12 17.009)" style="stroke-width:1.5px;stroke-linecap:round;stroke:#22201f;stroke-linejoin:round;fill:none" d="M0 0h3"/>
+        <path data-name="선 11" transform="translate(12 20.009)" style="stroke-width:1.5px;stroke-linecap:round;stroke:#22201f;stroke-linejoin:round;fill:none" d="M0 0h6"/>
+        <path data-name="사각형 19520" transform="translate(0 .009)" style="fill:none" d="M0 0h24v24H0z"/>
+    </g>
+</svg>

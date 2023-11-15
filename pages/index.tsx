@@ -22,12 +22,12 @@ export default function Home() {
       
       <Main>
         <div>
-        <CustomTextH1 weight="lighter" fontSize="25" color="#F84040" style={{margin: "2% auto"}}>NOW SNS</CustomTextH1>
-        <CustomTextH1 weight="bold" fontSize="35" >인스타그램에 놀러오세요!</CustomTextH1>
-        <CustomTextH2 weight="lighter" fontSize="14" color="#B2B2B2" style={{margin: "1% auto"}}>@sungwon_foodmall</CustomTextH2>    
-        <div style={{ margin: "50px auto", paddingBottom: "130px"}}>
-          <SlideShow />
-        </div>
+          <CustomTextH1 weight="lighter" fontSize="25" color="#F84040" style={{margin: "2% auto"}}>NOW SNS</CustomTextH1>
+          <CustomTextH1 weight="bold" fontSize="35" >인스타그램에 놀러오세요!</CustomTextH1>
+          <CustomTextH2 weight="lighter" fontSize="14" color="#B2B2B2" style={{margin: "1% auto"}}>@sungwon_foodmall</CustomTextH2>    
+          <div style={{ margin: "50px auto", paddingBottom: "130px"}}>
+            <SlideShow />
+          </div>
         </div>
         <div style={{display:"flex", justifyContent: "center", marginTop: "80px"}}>
           <div style={{flex: 1}}>

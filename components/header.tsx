@@ -17,7 +17,7 @@ export default function Header() {
       <Container>
         <Section>
           <ImgBox>
-            <Image src="/image/bi.png" alt="swfood" width={40} height={10} />
+            <Image src="/image/bi.png" alt="swfood" width={72} height={44} />
           </ImgBox>
           <NavTab>
             <NavTabUl>
@@ -36,7 +36,9 @@ export default function Header() {
             <ProfileUl>
               <ProfileUlLi>
                 <div style={{ width:"50px", height:"23px", border:"1px solid #FFF", borderRadius:"15px", display:"flex", justifyContent:"center", alignItems:"center" }}>
-                  <div style={{ fontSize: "10px" }}>KR</div>&nbsp;&nbsp; <div style={{ marginBottom:"8%", width: "8px", height: "8px", borderTop:"1px solid #FFF", borderRight:"1px solid #FFF", transform:"rotate(135deg)" }}></div>
+                  <div style={{ fontSize: "10px" }}>KR</div>&nbsp;&nbsp; <div style={{ marginBottom:"8%", width: "8px", height: "8px", borderTop:"1px solid #FFF", borderRight:"1px solid #FFF", transform:"rotate(135deg)" }}>
+                    
+                  </div>
                 </div>
               </ProfileUlLi>
               <ProfileUlLi>

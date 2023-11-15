@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 20 24">
+    <g data-name="타원 240" transform="translate(5.289)" style="stroke:#22201f;stroke-width:1.8px;fill:none">
+        <ellipse cx="4.711" cy="4.8" rx="4.711" ry="4.8" style="stroke:none"/>
+        <ellipse cx="4.711" cy="4.8" rx="3.811" ry="3.9" style="fill:none"/>
+    </g>
+    <g data-name="패스 21398" style="fill:none">
+        <path d="M10 0c5.523 0 10 3.767 10 8.413s-4.477 5.049-10 5.049S0 13.06 0 8.413 4.477 0 10 0z" style="stroke:none" transform="translate(0 10.538)"/>
+        <path d="M10 1.8c-4.521 0-8.2 2.967-8.2 6.613 0 1.399.478 2.099 1.763 2.583 1.47.553 3.636.666 6.437.666s4.968-.113 6.437-.666c1.285-.484 1.763-1.184 1.763-2.583C18.2 4.767 14.521 1.8 10 1.8M10 0c5.523 0 10 3.767 10 8.413 0 4.647-4.477 5.05-10 5.05S0 13.06 0 8.412C0 3.767 4.477 0 10 0z" style="fill:#22201f;stroke:none" transform="translate(0 10.538)"/>
+    </g>
+</svg>

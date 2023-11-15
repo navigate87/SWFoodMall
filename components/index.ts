@@ -1,4 +1,4 @@
-import { SaveIcon } from '@/components/common/icons';
+import { SaveIcon } from '@/components';
 
 import styled from 'styled-components';
 
@@ -47,7 +47,7 @@ export { default as TreePersonIcon } from 'public/icon/treePerson.svg';
 export { default as AllIcon } from 'public/icon/type=all.svg';
 export { default as SettingsIcon } from 'public/icon/type=settings.svg';
 export { default as ZoomInIcon } from 'public/icon/zoom-in.svg';
-// export { default as FigureIcon } from 'public/icon/_icon.svg';
+export { default as DiningIcon} from 'public/icon/icon-main-quick-dining.svg';
 export { default as NewWindow } from 'public/icon/new-window.svg';
 export { default as NoImageCardIcon } from 'public/icon/no_image.svg';
 export { default as RefreshIcon } from 'public/icon/refresh.svg';

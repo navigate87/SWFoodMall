@@ -4,7 +4,7 @@ import { modalShowState, recoilSelectedStore, recoilStoreState } from "@/store/s
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock, faUserPlus, faUtensils } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StoreData } from "@/data/StoreType";
 import SelectedStore from "@/components/SelectedStore";
 import DatePicker from "react-datepicker";
@@ -19,7 +19,15 @@ export default function Reservation() {
     const [startDate, setStartDate] = useState<Date | null>(new Date());
     const [endDate, setEndDate] = useState<Date | null>(null)
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-    const months :string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+    const months :string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+
+    const [visibleComponentId, setVisibleComponentId] = useState<number | null>(null);
+    
+    // 다이닝 스토어 ID값  
+    const handleSelectComponent = (id:number) => {
+        setVisibleComponentId(id);
+    }
+
     const onChangeDate = (dates:any) => {
         const [start, end] = dates;
         setStartDate(startDate);
@@ -31,6 +39,7 @@ export default function Reservation() {
         setStoreState(false);
         document.body.style.overflow = "auto";
     }
+
     return (
         <ModalBackground>
             <Container>
@@ -81,26 +90,34 @@ export default function Reservation() {
                 <div style={{display: "flex", borderBottom: "1px solid #CCCCCC", width:"100%"}}>
                     <div style={{flex:1}}>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"6%" }}>
-                            <FontAwesomeIcon icon={faUtensils}/>
-                            <h3 style={{marginLeft:"2%", marginRight:"3%"}}>다이닝</h3>
-                            <div style={{color:"#A2A2A2", borderBottom: "2px solid red"}}>
+                            <Image 
+                                src={"/icon/icon-main-quick-dining.svg"} 
+                                width={29} 
+                                height={24} 
+                                alt="Dining" />
+                            <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>다이닝</h3>
+                            <div style={{color:"#A2A2A2", borderBottom: storeState ? "2px solid #DCDCDC" : "2px solid red" , fontSize:"16px"}}>
                                 {  storeState ? selectedStoreName : "식당을 선택해주세요" }
                             </div>
                         </div>
                         <Stores>
                             {
-                              StoreData.map(store => (
-                                <SelectedStore key={store.alt} store={store}  />
+                              StoreData.map((store, id) => (
+                                <SelectedStore key={id} id={id} store={store} onSelect={() => handleSelectComponent(id)} isSelected={id === visibleComponentId}/>
                               ))
                             }
                         </Stores>   
                     </div>
-                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"300px", marginTop: "3%" }}></div>
+                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"290px", marginTop: "3%" }}></div>
                     <div style={{flex:1}}>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%"  }}>
-                            <FontAwesomeIcon icon={faCalendar}/>
-                            <h3 style={{marginLeft:"2%", marginRight:"3%"}}>날짜</h3>
-                            <div style={{color:"#A2A2A2", borderBottom: "2px solid red"}}>날짜를 선택해주세요</div>
+                            <Image 
+                                src={"/icon/icon-main-quick-day.svg"} 
+                                width={29} 
+                                height={24} 
+                                alt="quickday" />
+                            <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>날짜</h3>
+                            <div style={{color:"#A2A2A2", borderBottom: "2px solid red", fontSize:"16px"}}>날짜를 선택해주세요</div>
                         </div>
                         <DatePickerWrapper>
                             <StyledDatePicker 
@@ -137,13 +154,17 @@ export default function Reservation() {
                             /> 
                         </DatePickerWrapper>
                     </div>
-                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"300px", marginTop: "3%" }}></div>
+                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"290px", marginTop: "3%" }}></div>
                     <div style={{flex:1}}>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%" }}>
-                            <FontAwesomeIcon icon={faClock} />
-                            <h3 style={{marginLeft:"2%", marginRight:"3%"}}>시간</h3>   
+                        <Image 
+                                src={"/icon/icon-main-quick-time.svg"} 
+                                width={29} 
+                                height={24} 
+                                alt="Time" />
+                            <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>시간</h3>   
                         </div>
-                        <div style={{marginLeft: "2%", marginTop: "7%"}}>시간</div>
+                        <div style={{marginLeft: "2%", marginTop: "7%", fontSize:"14px"}}>시간</div>
                         <ul style={{ display: "flex", alignContent:"center", flexWrap: "wrap", columnGap:"20px" }}>
                             <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>10:00</li>
                             <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>11:00</li>
@@ -158,7 +179,7 @@ export default function Reservation() {
                             <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>20:00</li>
                         </ul>
                        
-                        <div style={{marginLeft: "2%", marginTop: "3%"}}>분</div>
+                        <div style={{marginLeft: "2%", marginTop: "3%", fontSize:"14px"}}>분</div>
                         <ul style={{ display: "flex", alignContent:"center", columnGap:"20px", flexWrap: "wrap" }}>
                             <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>00</li>
                             <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>05</li>
@@ -174,15 +195,19 @@ export default function Reservation() {
                             <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>55</li>
                         </ul>
                     </div>
-                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"300px", marginTop: "3%" }}></div>
+                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"290px", marginTop: "3%" }}></div>
                     <div style={{flex:1}}>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"1%" }}>
-                            <FontAwesomeIcon icon={faUserPlus}/>
-                            <h3 style={{marginLeft:"2%", marginRight:"3%"}}>인원</h3>   
+                            <Image 
+                                src={"/icon/icon-main-quick-customer.svg"} 
+                                width={29} 
+                                height={24} 
+                                alt="Customer" />
+                            <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>인원</h3>   
                         </div>
-                        <div style={{ display:"flex", margin:"7%", alignItems:"center", justifyContent:"center" }}>
-                            <div style={{ marginRight: "5%"  }}>일반</div>
-                            <div style={{ border:"1px solid #ededed", height:"40px",width:"280px" ,borderRadius:"15px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                        <div style={{ marginLeft: "9%", marginTop:"7%", fontSize:"14px"  }}>일반</div>
+                        <div style={{ display:"flex", margin:"3%", alignItems:"center", justifyContent:"center" }}>
+                            <div style={{ border:"1px solid #ededed", height:"40px",width:"350px" ,borderRadius:"15px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
                                 <div style={{marginLeft:"5%"}}>➖</div>
                                 <div>0</div>
                                 <div style={{marginRight:"5%"}}>➕</div>
@@ -197,9 +222,9 @@ export default function Reservation() {
                                 <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px",  }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+20</p></li>
                             </ul>
                         </div>
-                        <div style={{ display:"flex", margin:"7%", alignItems:"center", justifyContent:"center" }}>
-                            <div style={{ marginRight: "5%"  }}>소인</div>
-                            <div style={{ border:"1px solid #ededed", height:"40px",width:"280px" ,borderRadius:"15px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                        <div style={{ marginLeft: "9%", marginTop:"5%", fontSize:"14px"  }}>소인</div>
+                        <div style={{ display:"flex", margin:"3%", alignItems:"center", justifyContent:"center" }}>
+                            <div style={{ border:"1px solid #ededed", height:"40px",width:"350px" ,borderRadius:"15px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
                                 <div style={{marginLeft:"5%"}}>➖</div>
                                 <div>0</div>
                                 <div style={{marginRight:"5%"}}>➕</div>
@@ -221,7 +246,7 @@ export default function Reservation() {
                
                 <div style={{ display:"flex", alignItems:"center", justifyContent:"space-evenly", height: "20%" }}>
                     <div style={{flex:1}}>
-                        <div style={{display:"flex", alignContent:"center", justifyContent:"center"}}>
+                        <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                             <Image
                                 src={"/image/require_input.png"} 
                                 width={28} 
@@ -234,22 +259,22 @@ export default function Reservation() {
                     </div>
                     
                     <div style={{flex:1}}>
-                        <div style={{display:"flex", alignContent:"center", justifyContent:"center"}}>
+                        <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                             <span style={{ marginRight:"2%" }}>예약자명<span style={{ color: "#f84040" }}>*</span></span>
                             <input></input>
                         </div>
                         
                     </div>
                     <div style={{flex:1}}>
-                        <div style={{display:"flex", alignContent:"center", justifyContent:"center"}}>
+                        <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                             <div style={{ marginRight:"2%" }}>연락처<span style={{ color: "#f84040" }}>*</span></div>
                             <input></input>
                         </div>
                         
                     </div>
                     <div style={{flex:1}}>
-                        <div style={{display:"flex", alignContent:"center", justifyContent:"center"}}>
-                            <div style={{ marginRight:"2%" }}>이메일</div>
+                        <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+                            <div style={{ marginRight:"2%" }}>이메일<span style={{ color: "#f84040" }}>*</span></div>
                             <input></input>
                         </div>
                     </div>
@@ -332,9 +357,10 @@ const TextBoxBorderBot = styled.div`
 
 const Stores = styled.div`
     display: flex;
-    margin-top: 6%; 
-    align-content: space-between; 
-    flex-wrap: wrap
+    margin: 6%;
+    flex-wrap: wrap;
+    column-count: 2;
+    row-gap: 0em 10px;
 `;
 
 const DatePickerWrapper = styled.div`

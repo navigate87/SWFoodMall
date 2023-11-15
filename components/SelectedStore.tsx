@@ -1,42 +1,69 @@
 import { Stores, StoreData } from "@/data/StoreType";
 import { recoilSelectedStore, recoilStoreState } from "@/store/stores/modalState";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
-
-export default function SelectedStore({store}: { store: (typeof StoreData)[number] }) {
+interface StoreProps {
+    store: (typeof StoreData)[number];
+    onSelect: (id: number) => void;
+    isSelected?: boolean;
+}  
+export default function SelectedStore({id, store, onSelect, isSelected}: {id:number; store: (typeof StoreData)[number]; onSelect:(id:number) => void; isSelected?:boolean;} ) {
     const [selectedStoreName , setSelectedStoreName] = useRecoilState<string>(recoilSelectedStore)
     const [storeState, setStoreState] = useRecoilState<boolean>(recoilStoreState);
-
-    const selectStore = (storename:string) => {
-        setSelectedStoreName(storename);
+    const [isVisibleFilter, setIsVisibleFilter] = useState<boolean>(false);
+    
+    const selectStore = () => {
+        setSelectedStoreName(store.alt);
         setStoreState(true);
+        onSelect(id);
     }
+
     return (
-        <Store key={store.alt} onClick={e => selectStore(store.alt)} >
-            <Image src={store.src} alt={store.alt} width={110} height={100} />
-            <StoreTextBox>{store.alt}</StoreTextBox>
+        <Store key={store.code} onClick={selectStore} style={{background: isSelected ? "#f84040" : "#FFF"}}>
+            <SelectedVisibleFilter style={{ display: isSelected ? "block" : "none"  }}>
+                <Image style={{  margin: "10px" }} src={"/icon/그룹 21275.svg"} width={48} height={48} alt="스토어체크" />
+            </SelectedVisibleFilter>
+            <StoreImg src={store.src} alt={store.alt} width={88} height={70} />
+            <StoreTextBox style={{ color: isSelected ? "#FFF":"#000" }}>{store.alt}</StoreTextBox>
         </Store>
     )
 }
 
-const Store = styled.div`
-    width: 30%;
-    background: #00498c;
-    border-radius: 15px;
+const SelectedVisibleFilter = styled.div`
+    position: absolute;
+    background: rgba(248,64,64,0.4);
+    z-index: 100;
     text-align: center;
-    /* line-height: 100px; */
-    margin: 1.5%;
+    border-radius: 10px;
+    width: 90px;
+    height: 90px;
+`;
+
+const Store = styled.div`
+    width:90px;
+    background: #FFF;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid #dcdcdc;
+    margin: 2%;
     color: #fff;
 
-    &:hover {
-        border:1px solid red;
-        background: red;
+    &:hover  {
+        border: 1px solid #f84040;
+    }
+`;
+
+const StoreImg = styled(Image)`
+    &:focus {
+        background: rgba(248, 64, 64, 0.5);
     }
 `;
 
 const StoreTextBox = styled.div`
-    color:#FFF;
+    color:#000;
     margin: 2%;
+    height: 15px;
 `;
