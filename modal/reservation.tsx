@@ -11,6 +11,8 @@ import DatePicker from "react-datepicker";
 import { addMonths, getDate, getMonth, getYear } from "date-fns";
 // import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from "date-fns/locale";
+import MyCalendar from "@/components/DatePicker";
+import UseMyCalendar from "@/components/Calendar";
 
 export default function Reservation() {
     const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
@@ -120,38 +122,7 @@ export default function Reservation() {
                             <div style={{color:"#A2A2A2", borderBottom: "2px solid red", fontSize:"16px"}}>날짜를 선택해주세요</div>
                         </div>
                         <DatePickerWrapper>
-                            <StyledDatePicker 
-                                locale={ ko }
-                                minDate={new Date()}
-                                startDate={startDate}
-                                endDate={endDate}
-                                onChange={(date) => setSelectedDate(date)}
-                                inline
-                                showDisabledMonthNavigation
-                                monthsShown={1}
-                                selected={selectedDate}
-                                shouldCloseOnSelect
-                                withPortal
-                                renderCustomHeader={({
-                                   date,
-                                   prevMonthButtonDisabled,
-                                   nextMonthButtonDisabled,
-                                   decreaseMonth,
-                                   increaseMonth, 
-                                }) => (
-                                    <div style={{ margin:"10px", display: "flex", justifyContent:"center" }}>
-                                        <div style={{cursor:"pointer"}} onClick={decreaseMonth} aria-disabled={prevMonthButtonDisabled}>
-                                            ◀️
-                                        </div>
-                                        <div className="month-day">
-                                             {getYear(date)}.{months[getMonth(date)]}
-                                        </div>
-                                        <div style={{cursor:"pointer"}} onClick={increaseMonth} aria-disabled={nextMonthButtonDisabled}>
-                                            ▶️
-                                        </div>
-                                    </div>
-                                )}
-                            /> 
+                           <MyCalendar />
                         </DatePickerWrapper>
                     </div>
                     <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"290px", marginTop: "3%" }}></div>
@@ -367,13 +338,14 @@ const DatePickerWrapper = styled.div`
     margin: 7%; 
     text-align:center;
 
-    .react-datepicker {
+    /* .react-datepicker {
         border: none;
     }
     .react-datepicker__header {
         text-align: center;
         background-color: #fff;
         border: none;
+        margin: 30px;
     }
     .react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range, .react-datepicker__month-text--selected, .react-datepicker__month-text--in-selecting-range, .react-datepicker__month-text--in-range, .react-datepicker__quarter-text--selected, .react-datepicker__quarter-text--in-selecting-range, .react-datepicker__quarter-text--in-range, .react-datepicker__year-text--selected, .react-datepicker__year-text--in-selecting-range, .react-datepicker__year-text--in-range {
         border-radius: 50px;
@@ -390,7 +362,7 @@ const DatePickerWrapper = styled.div`
         &:hover {
             border-radius: 50px;
         }
-    }
+    } */
 `;
 
 const StyledDatePicker = styled(DatePicker)`
