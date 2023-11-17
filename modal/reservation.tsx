@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components"
-import { modalShowState, recoilSelectedStore, recoilStoreState } from "@/store/stores/modalState";
+import { modalShowState, recoilSelectedDate, recoilSelectedStore, recoilStoreState } from "@/store/stores/modalState";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock, faUserPlus, faUtensils } from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +20,8 @@ export default function Reservation() {
     const [storeState, setStoreState] = useRecoilState<boolean>(recoilStoreState);
     const [startDate, setStartDate] = useState<Date | null>(new Date());
     const [endDate, setEndDate] = useState<Date | null>(null)
-    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+    const [selectedDate, setSelectedDate] = useRecoilState<Date>(recoilSelectedDate);
+    
     const months :string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
 
     const [visibleComponentId, setVisibleComponentId] = useState<number | null>(null);
@@ -119,7 +120,12 @@ export default function Reservation() {
                                 height={24} 
                                 alt="quickday" />
                             <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>날짜</h3>
-                            <div style={{color:"#A2A2A2", borderBottom: "2px solid red", fontSize:"16px"}}>날짜를 선택해주세요</div>
+                            <div style={{color:"#A2A2A2", borderBottom: "2px solid red", fontSize:"16px"}}>
+                                
+                                    날짜를 선택해주세요
+                                    
+                               
+                            </div>
                         </div>
                         <DatePickerWrapper>
                            <MyCalendar />

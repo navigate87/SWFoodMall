@@ -155,17 +155,6 @@ const useCalendar = (year: number, month: number) => {
   };
 
   const createDayInfo = (day: Date, isCurrentMonth: boolean = true): DayInfo => {
-    // const specialDates = [
-    //   new Date(year, month, 25), // 크리스마스
-    //   new Date(year, month, 31),
-    // ];
-    // return {
-    //   date: new Date(day),
-    //   isCurrentMonth: isCurrentMonth,
-    //   isToday: day.toDateString() === new Date().toDateString(),
-    //   isSelected: day.toDateString() === selectedDate.toDateString(),
-    //   isSpecialDay: checkIfSpecialDay(day),
-    // };
     const currentYear = new Date().getFullYear();
     const specialDates: Date[] = [
       new Date(currentYear, 11, 25), // Christmas
@@ -223,6 +212,7 @@ const useCalendar = (year: number, month: number) => {
   const selectDate = (date: Date) => {
     if (date.getMonth() === currentMonth.getMonth()) {
       setSelectedDate(date);
+      console.log("53465454",selectedDate)
     }
   };
 
