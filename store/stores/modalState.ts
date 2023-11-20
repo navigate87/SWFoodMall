@@ -21,3 +21,8 @@ export const recoilSelectedDate = atom<Date>({
     key: "selectedDate",
     default: new Date()
 })
+
+export const recoilDateSelectState = atom<boolean>({
+    key: "selectedDateState",
+    default: false
+})

@@ -1,4 +1,6 @@
+import { recoilDateSelectState, recoilSelectedDate } from '@/store/stores/modalState';
 import React, { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 // Styled components
@@ -119,8 +121,8 @@ type DayInfo = {
 // Custom hook for calendar logic
 const useCalendar = (year: number, month: number) => {
   const [currentMonth, setCurrentMonth] = useState(new Date(year, month, 1));
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-
+  const [selectedDate, setSelectedDate] = useRecoilState<Date>(recoilSelectedDate);
+  const [selectedDateState, setSelectedDateState] = useRecoilState<boolean>(recoilDateSelectState);
   const getDaysInMonth = (date: Date): DayInfo[] => {
     const daysArray: DayInfo[] = [];
     const currentYear = date.getFullYear();
@@ -212,7 +214,7 @@ const useCalendar = (year: number, month: number) => {
   const selectDate = (date: Date) => {
     if (date.getMonth() === currentMonth.getMonth()) {
       setSelectedDate(date);
-      console.log("53465454",selectedDate)
+      setSelectedDateState(true);
     }
   };
 
@@ -228,7 +230,6 @@ const useCalendar = (year: number, month: number) => {
 // Calendar component
 const MyCalendar: React.FC = () => {
   const now = new Date();
-  
   const { currentMonth, days, goToPreviousMonth, goToNextMonth, selectDate } = useCalendar(now.getFullYear(), now.getMonth()); // September 2023
 
   return (
