@@ -48,7 +48,8 @@ const Day = styled.td<{
   isSelected: boolean; 
   isCurrentMonth: boolean; 
   isSpecialDay: boolean;
-  isWeekend: boolean; 
+  isWeekend: boolean;
+  isPastDay: boolean; 
 }>`
   
   width: 2.5rem;
@@ -72,21 +73,24 @@ const Day = styled.td<{
       ? 'white'
       : 'transparent'};
   color: ${(props) => (
+    
     props.isSpecialDay 
       ? '#c8c8c8' 
+      : props.isPastDay 
+      ? '#cbcbcb'
       : props.isSelected 
       ? 'white' 
       : props.isCurrentMonth 
       ? 'black' 
       : '#aaa')};
   border-radius: ${(props) => (props.isSpecialDay ? '50%' : '15px')};
-
+  
   &:nth-child(1) {
-    color: ${(props) => (props.isSelected ? 'white' : "#ff6969")};
+    color: ${(props) => (props.isPastDay ? "#cbcbcb" : props.isSelected ? 'white' : "#ff6969")};
     opacity: ${(props) => (props.isCurrentMonth ? 1.0 : 0.0)};
   }
   &:nth-child(7) {
-    color: ${(props) => (props.isSelected ? 'white' : "#0085ff")};
+    color: ${(props) => (props.isPastDay ? "#cbcbcb" : props.isSelected ? 'white' : "#0085ff")};
     opacity: ${(props) => (props.isCurrentMonth ? 1.0 : 0.0)};
   }
 `;
@@ -116,11 +120,12 @@ type DayInfo = {
   isToday: boolean;
   isSelected: boolean;
   isSpecialDay: boolean;
+  isPastDay: boolean;
 };
 
 // Custom hook for calendar logic
 const useCalendar = (year: number, month: number) => {
-  const [currentMonth, setCurrentMonth] = useState(new Date(year, month, 1));
+  const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useRecoilState<Date>(recoilSelectedDate);
   const [selectedDateState, setSelectedDateState] = useRecoilState<boolean>(recoilDateSelectState);
   const getDaysInMonth = (date: Date): DayInfo[] => {
@@ -158,6 +163,8 @@ const useCalendar = (year: number, month: number) => {
 
   const createDayInfo = (day: Date, isCurrentMonth: boolean = true): DayInfo => {
     const currentYear = new Date().getFullYear();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const specialDates: Date[] = [
       new Date(currentYear, 11, 25), // Christmas
       new Date(currentYear, 9, 31),  // Halloween
@@ -176,6 +183,7 @@ const useCalendar = (year: number, month: number) => {
       isToday: day.toDateString() === new Date().toDateString(),
       isSelected: day.toDateString() === selectedDate.toDateString(),
       isSpecialDay: isThisYearSpecialDay,
+      isPastDay: day < today,
     };
 };
 
@@ -212,11 +220,17 @@ const useCalendar = (year: number, month: number) => {
   };
 
   const selectDate = (date: Date) => {
-    if (date.getMonth() === currentMonth.getMonth()) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // 시간을 00:00:00.000으로 설정
+
+    const isSpecialDay = checkIfSpecialDay(date);
+  
+    if (!isSpecialDay && date >= today && date.getMonth() === currentMonth.getMonth()) {
       setSelectedDate(date);
       setSelectedDateState(true);
     }
   };
+  
 
   return {
     currentMonth,
@@ -260,6 +274,7 @@ const MyCalendar: React.FC = () => {
                   isCurrentMonth={day.isCurrentMonth}
                   isSpecialDay={day.isSpecialDay}
                   isWeekend={dayIndex === 0 || dayIndex === 6}
+                  isPastDay={day.isPastDay}
                   onClick={() => selectDate(day.date)}
                 >
                   {day.date.getDate()}

@@ -13,7 +13,7 @@ interface StoreProps {
 export default function SelectedStore({id, store, onSelect, isSelected}: {id:number; store: (typeof StoreData)[number]; onSelect:(id:number) => void; isSelected?:boolean;} ) {
     const [selectedStoreName , setSelectedStoreName] = useRecoilState<string>(recoilSelectedStore)
     const [storeState, setStoreState] = useRecoilState<boolean>(recoilStoreState);
-    const [isVisibleFilter, setIsVisibleFilter] = useState<boolean>(false);
+    
     
     const selectStore = () => {
         setSelectedStoreName(store.alt);
@@ -50,7 +50,7 @@ const Store = styled.div`
     border: 1px solid #dcdcdc;
     margin: 2%;
     color: #fff;
-
+    cursor: pointer;
     &:hover  {
         border: 1px solid #f84040;
     }

@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components"
-import { modalShowState, recoilDateSelectState, recoilSelectedDate, recoilSelectedStore, recoilStoreState } from "@/store/stores/modalState";
+import { modalShowState, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilSelectedDate, recoilSelectedStore, recoilStoreState, recoilTimeState } from "@/store/stores/modalState";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock, faUserPlus, faUtensils } from "@fortawesome/free-solid-svg-icons";
@@ -13,6 +13,12 @@ import { addMonths, getDate, getMonth, getYear } from "date-fns";
 import { ko } from "date-fns/locale";
 import MyCalendar from "@/components/DatePicker";
 import UseMyCalendar from "@/components/Calendar";
+import TimePicker from "@/components/TimePicker";
+import PeopleCount from "@/components/\bPeopleCount";
+
+type StyledDivProps = {
+    disabled?: boolean;
+}
 
 export default function Reservation() {
     const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
@@ -22,24 +28,32 @@ export default function Reservation() {
     const [endDate, setEndDate] = useState<Date | null>(null)
     const [selectedDate, setSelectedDate] = useRecoilState<Date>(recoilSelectedDate);
     const [selectedDateState, setSelectedDateState] = useRecoilState<boolean>(recoilDateSelectState);
+    const [selectedTimeState, setSelectedTimeState] = useRecoilState<boolean>(recoilTimeState); 
+    const [childCnt, setChildCnt] = useRecoilState<string>(recoilChildCnt);
+    const [adultCnt, setAdultCnt] = useRecoilState<string>(recoilAdultCnt);
+    const [time, setTime] = useState<string>('');
     const months :string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
 
     const [visibleComponentId, setVisibleComponentId] = useState<number | null>(null);
     
+
+    const handleTimeSelected = (selectedTime: string) => {
+        setTime(selectedTime)
+        setSelectedTimeState(true);
+        console.log("selectedTime",selectedTime)
+    }
     // 다이닝 스토어 ID값  
     const handleSelectComponent = (id:number) => {
         setVisibleComponentId(id);
     }
 
-    const onChangeDate = (dates:any) => {
-        const [start, end] = dates;
-        setStartDate(startDate);
-        setEndDate(end);
-    }
-
     const handleClick = (event:any) => {
         setShowModal(false);
         setStoreState(false);
+        setSelectedTimeState(false);
+        setSelectedDateState(false);
+        setAdultCnt("0");
+        setChildCnt("0");
         document.body.style.overflow = "auto";
     }
 
@@ -51,10 +65,13 @@ export default function Reservation() {
     
         return `${date.getFullYear()}.${month}.${dayOfMonth} ${day}`;
     }
-    
-    
-    
 
+    useEffect(() => {
+        console.log("adultCnt", adultCnt);
+        console.log("childCnt", childCnt);
+        console.log("setSelectedTimeState", selectedTimeState);
+    })
+    
     return (
         <ModalBackground>
             <Container>
@@ -78,32 +95,48 @@ export default function Reservation() {
                 <div style={{display: "flex", justifyContent:"center", margin:"1.5%"}}>
                     <div style={{flex:1}}>
                         <div style={{ display: "flex", alignItems:"center" }}>
-                            <div style={{ border: "3px solid green", borderRadius: "5px", fontSize:"1vw", textAlign: "center", width:"15%", lineHeight:"20px" }}>step 1</div>
-                            <div>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
+                            <div style={{ border: !storeState ? "3px solid #26c46a" : "" , borderRadius: "10px", fontSize:"1vw", textAlign: "center", width:"15%", lineHeight:"20px" }}>
+                                {
+                                    storeState ? <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} /> : "step 1"
+                                }
+                            </div>
+                            <div style={{ color: storeState ? "#26c46a" : "#c8c8c8" }}>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
                         </div>
                     </div>
                     <div style={{flex:1}}>
                         <div style={{ display: "flex", alignItems:"center" }}>
-                            <div style={{ background: "#C8C8C8", color:"#FFFFFF", borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>step 2</div>
-                            <div>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
+                            <div style={{ border: storeState && !selectedDateState ? "3px solid #26c46a" : "", background: !storeState && !selectedDateState ? "#C8C8C8" : "", color: storeState && !selectedDateState ? "" : "#FFFFFF"  , borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>
+                            {
+                                selectedDateState ? <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} /> : "step 2"
+                            }
+                            </div>
+                            <div style={{ color: selectedDateState ? "#26c46a" : "#c8c8c8" }}>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
                         </div>
                     </div>
                     <div style={{flex:1}}>
                         <div style={{ display: "flex", alignItems:"center" }}>
-                            <div style={{ background: "#C8C8C8", color:"#FFFFFF", borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>step 3</div>
-                            <div>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
+                            <div style={{ border: selectedDateState && !selectedTimeState ? "3px solid #26c46a" : "", background: !selectedDateState && !selectedTimeState ? "#C8C8C8" : "", color:selectedDateState && !selectedTimeState ? "" : "#FFFFFF", borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>
+                                {
+                                    selectedTimeState ? <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} /> : "step 3"
+                                }
+                            </div>
+                            <div style={{ color: selectedTimeState ? "#26c46a" : "#c8c8c8" }}>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
                         </div>
                     </div>
                     <div style={{flex:1}}>
                         <div style={{ display: "flex", alignItems:"center" }}>
-                            <div style={{ background: "#C8C8C8", color:"#FFFFFF", borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>step 4</div>
+                            <div style={{ border: !(adultCnt !== "0" || childCnt !== "0") && selectedTimeState ? "3px solid #26c46a" : "", background: !(adultCnt !== "0" || childCnt !== "0") && !selectedTimeState ? "#C8C8C8" : "", color: !(adultCnt !== "0" && childCnt !== "0") && selectedTimeState ? "" : "#FFFFFF", borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>
+                                {
+                                    adultCnt === "0" && childCnt === "0" ? "step 4" : <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} />
+                                }
+                            </div>
                             <div>&nbsp;&nbsp;</div>   
                         </div>
                     </div>
                 </div>
                 
                 <div style={{display: "flex", borderBottom: "1px solid #CCCCCC", width:"100%"}}>
-                    <div style={{flex:1}}>
+                    <StyledDiv>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"6%" }}>
                             <Image 
                                 src={"/icon/icon-main-quick-dining.svg"} 
@@ -122,9 +155,9 @@ export default function Reservation() {
                               ))
                             }
                         </Stores>   
-                    </div>
-                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"290px", marginTop: "3%" }}></div>
-                    <div style={{flex:1}}>
+                    </StyledDiv>
+                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
+                    <StyledDiv disabled={!storeState}>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%"  }}>
                             <Image 
                                 src={"/icon/icon-main-quick-day.svg"} 
@@ -139,50 +172,27 @@ export default function Reservation() {
                         <DatePickerWrapper>
                            <MyCalendar />
                         </DatePickerWrapper>
-                    </div>
-                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"290px", marginTop: "3%" }}></div>
-                    <div style={{flex:1}}>
+                    </StyledDiv>
+                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
+                    <StyledDiv disabled={!selectedDateState}>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%" }}>
-                        <Image 
+                            <Image 
                                 src={"/icon/icon-main-quick-time.svg"} 
                                 width={29} 
                                 height={24} 
-                                alt="Time" />
-                            <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>시간</h3>   
+                                alt="Time" 
+                            />
+                            <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>시간</h3>  
+                            <h3 style={{ borderBottom: "2px solid #DCDCDC", fontSize:"16px", color:"#A2A2A2"}}>{time}</h3> 
                         </div>
-                        <div style={{marginLeft: "2%", marginTop: "7%", fontSize:"14px"}}>시간</div>
-                        <ul style={{ display: "flex", alignContent:"center", flexWrap: "wrap", columnGap:"20px" }}>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>10:00</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>11:00</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>12:00</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>13:00</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>14:00</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>15:00</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>16:00</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>17:00</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>18:00</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>19:00</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>20:00</li>
+                        
+                        <ul style={{ display: "flex", flexWrap: "wrap", justifyContent:"center" }}>
+                            <TimePicker onTimeSelected={handleTimeSelected} />
                         </ul>
                        
-                        <div style={{marginLeft: "2%", marginTop: "3%", fontSize:"14px"}}>분</div>
-                        <ul style={{ display: "flex", alignContent:"center", columnGap:"20px", flexWrap: "wrap" }}>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>00</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>05</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>10</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>15</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>20</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>25</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>30</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>35</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>40</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>45</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>50</li>
-                            <li style={{ height: "25px", width:"70px", borderRadius: "25px", border:"1px solid #ededed", textAlign:"center", lineHeight:"25px", margin:"2%"}}>55</li>
-                        </ul>
-                    </div>
-                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"290px", marginTop: "3%" }}></div>
-                    <div style={{flex:1}}>
+                    </StyledDiv>
+                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
+                    <StyledDiv disabled={!selectedTimeState}>
                         <div style={{ display:"flex", alignItems:"center", marginLeft:"1%" }}>
                             <Image 
                                 src={"/icon/icon-main-quick-customer.svg"} 
@@ -191,41 +201,16 @@ export default function Reservation() {
                                 alt="Customer" />
                             <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>인원</h3>   
                         </div>
+                        
                         <div style={{ marginLeft: "9%", marginTop:"7%", fontSize:"14px"  }}>일반</div>
-                        <div style={{ display:"flex", margin:"3%", alignItems:"center", justifyContent:"center" }}>
-                            <div style={{ border:"1px solid #ededed", height:"40px",width:"350px" ,borderRadius:"15px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-                                <div style={{marginLeft:"5%"}}>➖</div>
-                                <div>0</div>
-                                <div style={{marginRight:"5%"}}>➕</div>
-                            </div>
+                        <div style={{ display:"flex", justifyContent:"center" }}>
+                            <PeopleCount initialValue={0} label="일반" min={0} max={100}  />
                         </div>
-                        <div>
-                            <ul style={{ display:"flex", alignItems:"center", justifyContent:"space-evenly" }}>
-                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px",  }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+4</p></li>
-                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px", }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+6</p></li>
-                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px", }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+8</p></li>
-                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px",  }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+10</p></li>
-                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px",  }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+20</p></li>
-                            </ul>
+                        <div style={{ marginLeft: "9%", marginTop:"7%", fontSize:"14px"  }}>소인<p style={{color:"#a2a2a2", fontSize:"11px"}}>(~11세)</p></div>
+                        <div style={{ display:"flex", justifyContent:"center" }}>
+                            <PeopleCount initialValue={0} label="소인" min={0} max={100}  />
                         </div>
-                        <div style={{ marginLeft: "9%", marginTop:"5%", fontSize:"14px"  }}>소인</div>
-                        <div style={{ display:"flex", margin:"3%", alignItems:"center", justifyContent:"center" }}>
-                            <div style={{ border:"1px solid #ededed", height:"40px",width:"350px" ,borderRadius:"15px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-                                <div style={{marginLeft:"5%"}}>➖</div>
-                                <div>0</div>
-                                <div style={{marginRight:"5%"}}>➕</div>
-                            </div>
-                        </div>
-                        <div>
-                            <ul style={{ display:"flex", alignItems:"center", justifyContent:"space-evenly" }}>
-                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px" }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+4</p></li>
-                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px" }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+6</p></li>
-                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px" }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+8</p></li>
-                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px" }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+10</p></li>
-                                <li style={{ border:"1px solid #ededed", height:"40px", width:"40px", borderRadius:"15px" }}><p style={{ fontSize:"0.7em", lineHeight:"40px", textAlign:"center"}}>+20</p></li>
-                            </ul>
-                        </div>
-                    </div>
+                    </StyledDiv>
                 </div>    
                                   
                 <div style={{ width:"100%", borderTop:"8px solid #ECECEC", borderBottom:"1px solid #CCCCCC"}}></div> 
@@ -393,5 +378,12 @@ const StyledDatePicker = styled(DatePicker)`
     position: absolute;
     top: -48px;
     left: 5px;
+`;
+
+const StyledDiv = styled.div<StyledDivProps>`
+  flex: 1;
+  pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
+  user-select: ${(props) => (props.disabled ? 'none' : 'auto')};
 `;
 
