@@ -14,7 +14,7 @@ import { ko } from "date-fns/locale";
 import MyCalendar from "@/components/DatePicker";
 import UseMyCalendar from "@/components/Calendar";
 import TimePicker from "@/components/TimePicker";
-import PeopleCount from "@/components/\bPeopleCount";
+import PeopleCount from "@/components/PeopleCount";
 
 type StyledDivProps = {
     disabled?: boolean;
