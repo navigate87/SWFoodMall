@@ -363,6 +363,7 @@ const ImageBox = styled(Image)`
 const TextBoxBorderBot = styled.div`
     display: inline;
     cursor: pointer;
+    font-size: 20px;
     &:hover{
         border-bottom: 3px solid red;
     }
