@@ -34,6 +34,18 @@ const Button = styled.button`
   }
 `;
 
+const SignButton = styled.button`
+  width: 100px;
+  height: 30px;
+  margin: 0 5px;
+  font-size: 16px; // rem 대신 픽셀 사용
+  cursor: pointer;
+  &:active {
+    transform:scale(0.8);
+    transition: transform .5s;
+  }
+`;
+
 const Value = styled.div`
   margin: 0 10px;
   font-size: 16px; // rem 대신 픽셀 사용
@@ -85,9 +97,9 @@ const PeopleCount: React.FC<CounterProps> = ({ initialValue, label, min = 0, max
     <CounterWrapper>
       
       <CounterRow style={{padding: "20px", height: "40px", width: "100%", borderRadius: "10px", border: "1px solid #c8c8c8" }}>
-        <Button style={{ marginRight: "32%" }} onClick={decrement(1)}>➖</Button>
+        <SignButton style={{ marginRight: "32%" }} onClick={decrement(1)}>➖</SignButton>
         <Value>{count}</Value>
-        <Button style={{ marginLeft: "32%" }} onClick={increment(1)}>➕</Button>
+        <SignButton style={{ marginLeft: "32%" }} onClick={increment(1)}>➕</SignButton>
       </CounterRow>
       <CounterRow>
         <Button onClick={increment(10)}>+10</Button>

@@ -1,15 +1,16 @@
 import styled from "styled-components";
 import Image from "next/image";
-import SlideShow from "./slideShow";
-import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { modalShowState } from "@/store/stores/modalState";
+import { modalConfirmShowState, modalShowState } from "@/store/stores/modalState";
 import Reservation from "@/modal/reservation";
+import ConfirmModal from "@/modal/confirmReservation";
 
 export default function Header() {
-  const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState); 
+  const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
+  const [showConfirmModal, setShowConfirmModal] = useRecoilState<boolean>(modalConfirmShowState);
   const handleClick = (event:any) => {
     setShowModal(true);
+    //setShowConfirmModal(false);
     document.body.style.overflow = "hidden";
   }
   return (
@@ -55,6 +56,7 @@ export default function Header() {
         </Section>
       </Container>
       {showModal && <Reservation />} 
+      {showConfirmModal && <ConfirmModal />}
     </>
     
   );

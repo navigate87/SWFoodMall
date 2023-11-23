@@ -8,6 +8,11 @@ export const modalShowState = atom<boolean>({
     default: false,
 });
 
+export const modalConfirmShowState = atom<boolean>({
+    key: "reservationConfirmModal",
+    default: false,
+});
+
 export const recoilSelectedStore = atom<string>({
     key: "selectedStore",
     default: "",
@@ -21,6 +26,11 @@ export const recoilStoreState = atom<boolean>({
 export const recoilSelectedDate = atom<Date>({
     key: "selectedDate",
     default: new Date()
+})
+
+export const recoilSelectedTime = atom<string>({
+    key: "selectedTime",
+    default: "",
 })
 
 export const recoilDateSelectState = atom<boolean>({
@@ -42,4 +52,20 @@ export const recoilChildCnt = atom<string>({
     key: 'childCount',
     default: "0",
 })
+
+export const recoilReservationName = atom<string>({
+    key: 'mem_name',
+    default: "",
+})
+
+export const recoilReservationContact = atom<string>({
+    key: 'mem_mobile',
+    default: "",
+})
+
+export const recoilReservationEmail = atom<string>({
+    key: 'mem_email',
+    default: ""
+})
+
 

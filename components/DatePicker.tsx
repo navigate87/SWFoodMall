@@ -20,7 +20,7 @@ const CalendarHeader = styled.div`
 `;
 
 const MonthLabel = styled.span`
-  font-size: 1.5rem;
+  font-size: 16px;
   font-weight: bold;
 `;
 
@@ -52,9 +52,9 @@ const Day = styled.td<{
   isPastDay: boolean; 
 }>`
   
-  width: 2.5rem;
-  height: 2.5rem;
-  line-height: 2.5rem;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
   text-align: center;
   cursor: pointer;
   /* border: 1px solid #ddd; */
@@ -64,16 +64,18 @@ const Day = styled.td<{
   font-weight: ${(props) => (props.isToday ? 'bold' : 'normal')};
   border: ${(props) => (props.isToday ? '2px solid blue' : 'none')};
   opacity: ${(props) => (props.isCurrentMonth || props.isWeekend ? 1.0 : 0.0)};
-  background: ${(props) =>
+  border-radius: 50%;
+ 
+  background: ${(props) => (
     props.isSpecialDay
       ? '#f8f6f6'
       : props.isSelected
       ? '#f44336'
       : props.isCurrentMonth
       ? 'white'
-      : 'transparent'};
+      : 'transparent')};
+
   color: ${(props) => (
-    
     props.isSpecialDay 
       ? '#c8c8c8' 
       : props.isPastDay 
@@ -83,7 +85,7 @@ const Day = styled.td<{
       : props.isCurrentMonth 
       ? 'black' 
       : '#aaa')};
-  border-radius: ${(props) => (props.isSpecialDay ? '50%' : '15px')};
+  /* border-radius: ${(props) => (props.isSpecialDay ? '50%' : '15px')}; */
   
   &:nth-child(1) {
     color: ${(props) => (props.isPastDay ? "#cbcbcb" : props.isSelected ? 'white' : "#ff6969")};
@@ -93,6 +95,12 @@ const Day = styled.td<{
     color: ${(props) => (props.isPastDay ? "#cbcbcb" : props.isSelected ? 'white' : "#0085ff")};
     opacity: ${(props) => (props.isCurrentMonth ? 1.0 : 0.0)};
   }
+
+  /* &:hover {
+      border: 2px solid #f44336;
+      background-color: #fff;
+      
+    }  */
 `;
 
 // const SpecialDay = styled(Day)<{ isSpecialDay: boolean }>`
@@ -128,6 +136,12 @@ const useCalendar = (year: number, month: number) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useRecoilState<Date>(recoilSelectedDate);
   const [selectedDateState, setSelectedDateState] = useRecoilState<boolean>(recoilDateSelectState);
+  
+  useEffect(()=> {
+    const today = new Date();
+    setCurrentMonth(today);
+  }, [])
+  
   const getDaysInMonth = (date: Date): DayInfo[] => {
     const daysArray: DayInfo[] = [];
     const currentYear = date.getFullYear();

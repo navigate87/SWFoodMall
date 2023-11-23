@@ -1,50 +1,48 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components"
-import { modalShowState, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilSelectedDate, recoilSelectedStore, recoilStoreState, recoilTimeState } from "@/store/stores/modalState";
+import { modalConfirmShowState, modalShowState, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState } from "@/store/stores/modalState";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faClock, faUserPlus, faUtensils } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { StoreData } from "@/data/StoreType";
 import SelectedStore from "@/components/SelectedStore";
-import DatePicker from "react-datepicker";
-import { addMonths, getDate, getMonth, getYear } from "date-fns";
-// import 'react-datepicker/dist/react-datepicker.css';
-import { ko } from "date-fns/locale";
 import MyCalendar from "@/components/DatePicker";
-import UseMyCalendar from "@/components/Calendar";
 import TimePicker from "@/components/TimePicker";
 import PeopleCount from "@/components/PeopleCount";
-
+import ConfirmModal from "./confirmReservation";
 type StyledDivProps = {
     disabled?: boolean;
 }
 
 export default function Reservation() {
     const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
+    const [showConfirmModal, setShowConfirmModal] = useRecoilState<boolean>(modalConfirmShowState);
     const [selectedStoreName, setSelectedStoreName] = useRecoilState<string>(recoilSelectedStore);
     const [storeState, setStoreState] = useRecoilState<boolean>(recoilStoreState);
-    const [startDate, setStartDate] = useState<Date | null>(new Date());
-    const [endDate, setEndDate] = useState<Date | null>(null)
     const [selectedDate, setSelectedDate] = useRecoilState<Date>(recoilSelectedDate);
     const [selectedDateState, setSelectedDateState] = useRecoilState<boolean>(recoilDateSelectState);
     const [selectedTimeState, setSelectedTimeState] = useRecoilState<boolean>(recoilTimeState); 
     const [childCnt, setChildCnt] = useRecoilState<string>(recoilChildCnt);
     const [adultCnt, setAdultCnt] = useRecoilState<string>(recoilAdultCnt);
-    const [time, setTime] = useState<string>('');
-    const months :string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
-
+    const [errorText, setErrorText] = useState<boolean>(false);
+    const [time, setTime] = useRecoilState<string>(recoilSelectedTime);
     const [visibleComponentId, setVisibleComponentId] = useState<number | null>(null);
-    
+    const [name, setName] = useRecoilState<string>(recoilReservationName);
+    const [contact, setContact] = useRecoilState<string>(recoilReservationContact);
+    const [email, setEmail] = useRecoilState<string>(recoilReservationEmail);
 
     const handleTimeSelected = (selectedTime: string) => {
         setTime(selectedTime)
         setSelectedTimeState(true);
-        console.log("selectedTime",selectedTime)
     }
     // 다이닝 스토어 ID값  
     const handleSelectComponent = (id:number) => {
         setVisibleComponentId(id);
+    }
+
+    const handleModalConfirm = (event:any) => {
+        setShowConfirmModal(true)
+        setShowModal(false);
+        document.body.style.overflow = "hidden";
     }
 
     const handleClick = (event:any) => {
@@ -54,7 +52,42 @@ export default function Reservation() {
         setSelectedDateState(false);
         setAdultCnt("0");
         setChildCnt("0");
+        setName("");
+        setContact("");
+        setEmail("");
+        setErrorText(false);
         document.body.style.overflow = "auto";
+    }
+
+    const handleEmailChange = (e:any) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        const email = e.target.value;
+
+        if(emailRegex.test(email)) {
+            setEmail(email)
+            setErrorText(false)
+        } else {
+            setEmail("");
+            setErrorText(true);
+        }
+    }
+
+    const isReservation = () => { // 예약하기 버튼 활성화 조건
+        if(
+            storeState                                      // 스토어 선택
+            && selectedDateState                            // 날짜 선택
+            && selectedTimeState                            // 시간 선택
+            && (adultCnt !== "0" || childCnt !== "0")       // 인원 선택
+            && name !== ""                                  // 이름 
+            && email !== ""                                 // 이메일    
+            && contact !== ""                               // 연락처
+            && errorText === false
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function formatDate(date: Date) : string {
@@ -67,13 +100,13 @@ export default function Reservation() {
     }
 
     useEffect(() => {
-        console.log("adultCnt", adultCnt);
-        console.log("childCnt", childCnt);
-        console.log("setSelectedTimeState", selectedTimeState);
-    })
+        const reservationReady = isReservation();
+
+    }, [storeState, selectedDateState, selectedTimeState, adultCnt, childCnt, name, email, contact, errorText]);
     
     return (
-        <ModalBackground>
+        <>
+          <ModalBackground>
             <Container>
                 <HeaderBox>
                     <DiningSelectBox>
@@ -95,7 +128,7 @@ export default function Reservation() {
                 <div style={{display: "flex", justifyContent:"center", margin:"1.5%"}}>
                     <div style={{flex:1}}>
                         <div style={{ display: "flex", alignItems:"center" }}>
-                            <div style={{ border: !storeState ? "3px solid #26c46a" : "" , borderRadius: "10px", fontSize:"1vw", textAlign: "center", width:"15%", lineHeight:"20px" }}>
+                            <div style={{ border: !storeState ? "3px solid #26c46a" : "" , borderRadius: "5px", fontSize:"1vw", textAlign: "center", width:"15%", lineHeight:"20px" }}>
                                 {
                                     storeState ? <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} /> : "step 1"
                                 }
@@ -182,8 +215,10 @@ export default function Reservation() {
                                 height={24} 
                                 alt="Time" 
                             />
-                            <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>시간</h3>  
-                            <h3 style={{ borderBottom: "2px solid #DCDCDC", fontSize:"16px", color:"#A2A2A2"}}>{time}</h3> 
+                            <h3 style={{ marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>시간</h3>  
+                            <h3 style={{ borderBottom: selectedTimeState ? "2px solid #DCDCDC" : "2px solid red", fontSize:"16px", color:"#A2A2A2"}}>
+                                { selectedTimeState ? time : "시간을 선택해 주세요" }
+                            </h3> 
                         </div>
                         
                         <ul style={{ display: "flex", flexWrap: "wrap", justifyContent:"center" }}>
@@ -200,6 +235,10 @@ export default function Reservation() {
                                 height={24} 
                                 alt="Customer" />
                             <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>인원</h3>   
+                            <div style={{ color:"#A2A2A2", borderBottom: adultCnt !== "0" || childCnt !== "0" ? "2px solid #DCDCDC" : "2px solid red" , fontSize:"16px"}}>
+                                 { adultCnt !== "0" || childCnt !== "0" ? `일반  ${adultCnt}명 , 소인  ${childCnt}명` : "인원을 선택해주세요"} 
+                            </div>
+                           
                         </div>
                         
                         <div style={{ marginLeft: "9%", marginTop:"7%", fontSize:"14px"  }}>일반</div>
@@ -215,7 +254,7 @@ export default function Reservation() {
                                   
                 <div style={{ width:"100%", borderTop:"8px solid #ECECEC", borderBottom:"1px solid #CCCCCC"}}></div> 
                
-                <div style={{ display:"flex", alignItems:"center", justifyContent:"space-evenly", height: "20%" }}>
+                <div style={{ display:"flex", alignItems:"center", justifyContent:"space-evenly", height: "15%"  }}>
                     <div style={{flex:1}}>
                         <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                             <Image
@@ -231,36 +270,39 @@ export default function Reservation() {
                     
                     <div style={{flex:1}}>
                         <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
-                            <span style={{ marginRight:"2%" }}>예약자명<span style={{ color: "#f84040" }}>*</span></span>
-                            <input></input>
-                        </div>
-                        
-                    </div>
-                    <div style={{flex:1}}>
-                        <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
-                            <div style={{ marginRight:"2%" }}>연락처<span style={{ color: "#f84040" }}>*</span></div>
-                            <input></input>
+                            <span style={{ marginRight:"1%" }}>예약자명<span style={{ color: "#f84040" }}>*</span></span>
+                            <input type="text" onChange={(e) => setName(e.target.value) } style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 예약자 이름 입력" />
+                            {/* <button style={{ position:"absolute", marginLeft: "12%" }}><Image src={"/icon/Search_area_delete.svg"} width={20} height={20} alt="cancel" /></button> */}
                         </div>
                         
                     </div>
                     <div style={{flex:1}}>
                         <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                             <div style={{ marginRight:"2%" }}>이메일<span style={{ color: "#f84040" }}>*</span></div>
-                            <input></input>
+                            <input type="text" onChange={handleEmailChange} style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 예) foodmail@foodmail.co.kr" />
+                            {/* <button style={{ position:"absolute", marginLeft: "12%" }}><Image src={"/icon/Search_area_delete.svg"} width={20} height={20} alt="cancel" /></button> */}
+                        </div>
+                        
+                    </div>
+                    <div style={{flex:1}}>
+                        <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+                        
+                        <div style={{ marginRight:"2%" }}>연락처<span style={{ color: "#f84040" }}>*</span></div>
+                            <input type="text" onChange={ (e) => setContact(e.target.value) } style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 숫자만 입력해주세요." />
+                            <div style={{ display: errorText ? "block" : "none", position:"absolute", marginBottom: "55px", marginRight: "41%" , fontSize: "10px", color: "#ff0000" }}>이메일 주소를 정확히 입력해주세요</div>
                         </div>
                     </div>
                     <div style={{flex:1}}>
-                        <div style={{ marginLeft:"8%", cursor:"pointer", display:"flex",justifyContent:"center", background:"#f8f6f6", alignItems:"center", borderRadius:"25px", width:"200px", height:"70px" }}>
-                            <Image color="#FFF" src={"/icon/icon-main-quick-reservation.svg"} alt="예약하기" width={40} height={40} />
-                            <div style={{ color:"#c8c8c8", marginLeft:"5%" }}>예약하기</div>
+                        <div onClick={handleModalConfirm} style={{ marginLeft:"8%", cursor: isReservation() ? "pointer" : "", display:"flex",justifyContent:"center", background: isReservation() ? "#f84040" : "#f8f6f6", alignItems:"center", borderRadius:"25px", width:"200px", height:"70px" }}>
+                            <Image color="#FFF" src={ isReservation() ? "/icon/icon-main-quick-reservation-on.svg" : "/icon/icon-main-quick-reservation.svg"} alt="예약하기" width={40} height={40} />
+                            <div style={{ color:isReservation() ? "#FFF" : "#c8c8c8", marginLeft:"5%", fontSize: "20px" }}>예약하기</div>
                         </div>
                     </div>
                 </div>
-                   
-                
             </Container>
-            
-        </ModalBackground>
+          </ModalBackground>
+          
+        </>
     )
 }
 
@@ -337,47 +379,6 @@ const Stores = styled.div`
 const DatePickerWrapper = styled.div`
     margin: 7%; 
     text-align:center;
-
-    /* .react-datepicker {
-        border: none;
-    }
-    .react-datepicker__header {
-        text-align: center;
-        background-color: #fff;
-        border: none;
-        margin: 30px;
-    }
-    .react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range, .react-datepicker__month-text--selected, .react-datepicker__month-text--in-selecting-range, .react-datepicker__month-text--in-range, .react-datepicker__quarter-text--selected, .react-datepicker__quarter-text--in-selecting-range, .react-datepicker__quarter-text--in-range, .react-datepicker__year-text--selected, .react-datepicker__year-text--in-selecting-range, .react-datepicker__year-text--in-range {
-        border-radius: 50px;
-        color: blue;
-        background: #fff;
-        border: 1px solid red;
-
-        &:hover {
-            border-radius: 50px;
-        }
-    }
-
-    .react-datepicker__day--selected {
-        &:hover {
-            border-radius: 50px;
-        }
-    } */
-`;
-
-const StyledDatePicker = styled(DatePicker)`
-    width: 122px;
-    height: 48px;
-    border: none;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 100%;
-    padding: 20px;
-    background-color: transparent;
-    color: #707070;
-    position: absolute;
-    top: -48px;
-    left: 5px;
 `;
 
 const StyledDiv = styled.div<StyledDivProps>`

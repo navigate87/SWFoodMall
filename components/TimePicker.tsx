@@ -21,16 +21,16 @@ export const TimeButton = styled.button<{ isSelected: boolean }>`
   margin-right: 10px;
   margin-bottom: 10px;
   margin-left: 10px;
-  background: ${({ isSelected }) => (isSelected ? '#f84040' : '#f7f7f7')};
+  background: ${({ isSelected }) => (isSelected ? '#f84040' : '#white')};
   color: ${({ isSelected }) => (isSelected ? 'white' : 'black')};
-  border: 1px solid ${({ isSelected }) => (isSelected ? '#f84040' : '#ddd')};
+  border: 1px solid #ddd;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s, border-color 0.3s;
-  border-radius: 15px;
+  border-radius: 10px;
   &:hover {
-    background-color: ${({ isSelected }) => (isSelected ? '#f84040' : '#e7e7e7')};
+    border: 1px solid #f84040;
   }
 
   &:focus {
