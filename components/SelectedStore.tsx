@@ -1,5 +1,5 @@
 import { Stores, StoreData } from "@/data/StoreType";
-import { recoilSelectedStore, recoilStoreState } from "@/store/stores/modalState";
+import { recoilSelectedStore, recoilStoreCode, recoilStoreState } from "@/store/stores/modalState";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -13,12 +13,15 @@ interface StoreProps {
 export default function SelectedStore({id, store, onSelect, isSelected}: {id:number; store: (typeof StoreData)[number]; onSelect:(id:number) => void; isSelected?:boolean;} ) {
     const [selectedStoreName , setSelectedStoreName] = useRecoilState<string>(recoilSelectedStore)
     const [storeState, setStoreState] = useRecoilState<boolean>(recoilStoreState);
+    const [storeCode, setStoreCode] = useRecoilState<string>(recoilStoreCode);
     
     
     const selectStore = () => {
         setSelectedStoreName(store.alt);
         setStoreState(true);
+        setStoreCode(id.toString());
         onSelect(id);
+        
     }
 
     return (

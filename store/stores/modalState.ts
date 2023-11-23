@@ -16,7 +16,12 @@ export const modalConfirmShowState = atom<boolean>({
 export const recoilSelectedStore = atom<string>({
     key: "selectedStore",
     default: "",
-}) 
+})
+
+export const recoilStoreCode = atom<string>({
+    key: "selectedStoreCode",
+    default: "",
+})
 
 export const recoilStoreState = atom<boolean>({
     key: "selectedStoreState",

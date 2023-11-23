@@ -10,7 +10,6 @@ export default function Header() {
   const [showConfirmModal, setShowConfirmModal] = useRecoilState<boolean>(modalConfirmShowState);
   const handleClick = (event:any) => {
     setShowModal(true);
-    //setShowConfirmModal(false);
     document.body.style.overflow = "hidden";
   }
   return (

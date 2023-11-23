@@ -1,10 +1,10 @@
-import { modalConfirmShowState, modalShowState, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState } from "@/store/stores/modalState";
+import { reserveDining } from "@/api/api";
+import { recoilStoreCode, modalConfirmShowState, modalShowState, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState } from "@/store/stores/modalState";
+import { ReservationRequest } from "@/type/Reservation";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-
+import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 import styled from "styled-components"
-import Reservation from "./reservation";
 
 export default function ConfirmModal() {
   const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
@@ -20,14 +20,17 @@ export default function ConfirmModal() {
   const [adultCnt, setAdultCnt] = useRecoilState<string>(recoilAdultCnt);
   const [selectedStoreName, setSelectedStoreName] = useRecoilState<string>(recoilSelectedStore);
   const [time, setTime] = useRecoilState<string>(recoilSelectedTime);
+  const [storeCode, setStoreCode] = useRecoilState<string>(recoilStoreCode);
+
+  const { mutate, isLoading, isError, data } = useMutation(reserveDining);
+  
 
   function formatDate(date: Date) : string {
-      const days = ['(일)', '(월)', '(화)', '(수)', '(목)', '(금)', '(토)'];
-      let day = days[date.getDay()];
-      let month = (date.getMonth() + 1).toString().padStart(2, '0');
-      let dayOfMonth = date.getDate().toString().padStart(2, '0');
-
-      return `${date.getFullYear()}.${month}.${dayOfMonth} ${day}`;
+    const days = ['(일)', '(월)', '(화)', '(수)', '(목)', '(금)', '(토)'];
+    let day = days[date.getDay()];
+    let month = (date.getMonth() + 1).toString().padStart(2, '0');
+    let dayOfMonth = date.getDate().toString().padStart(2, '0');
+    return `${date.getFullYear()}-${month}-${dayOfMonth}`;
   }
 
   const handleModal = (event:any) => {
@@ -45,17 +48,32 @@ export default function ConfirmModal() {
   }
 
   const handleData = (event:any) => {
-    setShowConfirmModal(false);
-    document.body.style.overflow = "auto";
-    setShowModal(false);
-    setStoreState(false);
-    setSelectedTimeState(false);
-    setSelectedDateState(false);
-    setAdultCnt("0");
-    setChildCnt("0");
-    setName("");
-    setContact("");
-    setEmail("");
+    const data: ReservationRequest = {
+      order_path: storeCode,
+      mem_name: name,          
+      mem_mobile: contact,
+      mem_email: email,
+      order_date: formatDate(selectedDate),
+      order_time: time,
+      adult_cnt: adultCnt,
+      child_cnt: childCnt,
+      memo: 'Please prepare a birthday cake.',
+      mem_id: 'foodmall_test',
+    }
+
+    mutate(data);
+
+    // setShowConfirmModal(false);
+    // document.body.style.overflow = "auto";
+    // setShowModal(false);
+    // setStoreState(false);
+    // setSelectedTimeState(false);
+    // setSelectedDateState(false);
+    // setAdultCnt("0");
+    // setChildCnt("0");
+    // setName("");
+    // setContact("");
+    // setEmail("");
   }
 
   const handleCancel = (event:any) => {
