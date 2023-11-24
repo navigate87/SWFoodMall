@@ -4,6 +4,11 @@ import { useRecoilState } from "recoil";
 import { modalConfirmShowState, modalShowState } from "@/store/stores/modalState";
 import Reservation from "@/modal/reservation";
 import ConfirmModal from "@/modal/confirmReservation";
+import { useState } from "react";
+
+type show = {
+  show?:boolean;
+}
 
 export default function Header() {
   const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
@@ -12,6 +17,14 @@ export default function Header() {
     setShowModal(true);
     document.body.style.overflow = "hidden";
   }
+  const [currentValue, setCurrentValue] = useState("");
+  const [showOptions, setShowOptions] = useState(false);
+
+  const handleOnChangeSelectValue = (e:any) => {
+    const { innerText } = e.target;
+    setCurrentValue(innerText);
+  };
+
   return (
     <>
       <Container>
@@ -28,7 +41,16 @@ export default function Header() {
               <NavTabUlLi>
                 <Image alt="메뉴" src={"icon/Search-icon.svg"} width={25} height={25} />
               </NavTabUlLi>
-              <NavTabUlLi onClick={handleClick}>예약</NavTabUlLi>
+                {/* <NavTabUlLi onClick={handleClick}>예약</NavTabUlLi> */}
+                <SelectBox onClick={() => setShowOptions((prev) => !prev)}>
+                  <Label show={!showOptions}>예약</Label>
+                  <SelectOptions show={showOptions}>
+                    <Option style={{ pointerEvents: "none", fontSize: "15px", color:"rgba(81,81,81,0.8)" }}>예약</Option>
+                    <Option onClick={handleOnChangeSelectValue}>Dining</Option>
+                    <Option onClick={handleOnChangeSelectValue}>F&B</Option>
+                    <Option onClick={handleOnChangeSelectValue}>객실</Option>
+                  </SelectOptions>
+                </SelectBox>
               <NavTabUlLi>EVENT</NavTabUlLi>
             </NavTabUl>
           </NavTab>
@@ -113,10 +135,60 @@ const ProfileUl = styled.ul`
   justify-content: flex-end;
   align-items: center;
 `;
+
 const ProfileUlLi = styled.li`
   font-size: 14px;
   margin-right: 30px;
   color: #fff;
 `;
+
+
+const SelectBox = styled.div`
+  position: relative;
+  width: 50px;
+  padding: 8px;
+  border-radius: 12px;
+  align-self: center;
+  cursor: pointer;
+  
+`;
+const Label = styled.label<show>`
+  font-size: 14px;
+  //margin-left: 4px;
+  text-align: center;
+  color: white;
+  display: ${(props) => (props.show ? "block" : "none")};
+`;
+const SelectOptions = styled.ul<show>`
+  position: absolute;
+  list-style: none;
+  left: 0;
+  text-align: center;
+  right: 0;
+  width: 60px;
+  overflow: hidden;
+  top: -5px;
+  padding: 0;
+  border-radius: 8px;
+  background-color: rgba(42,42,42,0.4);
+  color: #fefefe;
+  max-height: ${(props) => (props.show ? "none" : "0")};
+  transition: all  0.3s ease-in-out;
+  opacity: ${(props) => (props.show ? '1' : '0')};
+  visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
+  z-index: 10; // 다른 컨텐츠 위에 표시되도록 z-index를 설정합니다.
+`;
+const Option = styled.li`
+  font-size: 12px;
+  padding: 6px 8px;
+  transition: background-color 0.2s ease-in;
+  &:hover {
+    color: #f84040;
+  }
+`;
+
+
+
+
 
 
