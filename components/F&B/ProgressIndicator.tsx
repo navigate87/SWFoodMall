@@ -32,7 +32,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
         <StepContainer>
           <StepFlexBox>
             <StepBox style={{ border: (isStepOneActive) ? "3px solid #26c46a" : "" }}>
-              { !isStepOneActive ? <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} /> : "step 1"}
+              { !(adultCnt === "0" || childCnt === "0") && (adultCnt !== "0") ? <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} /> : "step 1"}
             </StepBox>
             <StepDots isActive={!isStepOneActive} isCompleted={false} />
           </StepFlexBox>

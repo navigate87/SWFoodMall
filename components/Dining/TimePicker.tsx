@@ -100,7 +100,7 @@ const TimePicker: React.FC<TimePickerProps> = ({ onTimeSelected }) => {
           </PickerWrapper>
         </PickerSection>
         <PickerSection>
-          <PickerHeader style={{ marginTop: "1px" }}>사용시간</PickerHeader>
+          <PickerHeader style={{ marginTop: "1px" }}>분</PickerHeader>
           <PickerWrapper>
             {minutes.map((minute) => (
               <TimeButton 

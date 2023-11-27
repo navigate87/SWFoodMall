@@ -119,7 +119,7 @@ function formatDate(date: Date) : string {
               <CustomerSelect />
             </StyledDiv>
             <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
-            <StyledDiv disabled={adultCnt === "0" && childCnt === "0"}>
+            <StyledDiv disabled={(adultCnt === "0" || childCnt === "0") && (adultCnt === "0")}>
               <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%"  }}>
                 <Image 
                   src={"/icon/icon-main-quick-day.svg"} 
