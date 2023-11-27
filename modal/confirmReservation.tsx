@@ -63,17 +63,17 @@ export default function ConfirmModal() {
 
     mutate(data);
 
-    // setShowConfirmModal(false);
-    // document.body.style.overflow = "auto";
-    // setShowModal(false);
-    // setStoreState(false);
-    // setSelectedTimeState(false);
-    // setSelectedDateState(false);
-    // setAdultCnt("0");
-    // setChildCnt("0");
-    // setName("");
-    // setContact("");
-    // setEmail("");
+    setShowConfirmModal(false);
+    document.body.style.overflow = "auto";
+    setShowModal(false);
+    setStoreState(false);
+    setSelectedTimeState(false);
+    setSelectedDateState(false);
+    setAdultCnt("0");
+    setChildCnt("0");
+    setName("");
+    setContact("");
+    setEmail("");
   }
 
   const handleCancel = (event:any) => {

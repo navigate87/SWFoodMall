@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components"
-import { modalConfirmShowState, modalShowState, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState } from "@/store/stores/modalState";
+import { modalConfirmShowState, modalShowState, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilReserveOption, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState } from "@/store/stores/modalState";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { StoreData } from "@/data/StoreType";
@@ -9,8 +9,13 @@ import MyCalendar from "@/components/DatePicker";
 import TimePicker from "@/components/TimePicker";
 import PeopleCount from "@/components/PeopleCount";
 import ConfirmModal from "./confirmReservation";
+import ProgressIndicator from "@/components/ProgressIndicator";
 type StyledDivProps = {
     disabled?: boolean;
+}
+
+type ReserveType = {
+    OptionValue?: string;
 }
 
 export default function Reservation() {
@@ -29,6 +34,7 @@ export default function Reservation() {
     const [name, setName] = useRecoilState<string>(recoilReservationName);
     const [contact, setContact] = useRecoilState<string>(recoilReservationContact);
     const [email, setEmail] = useRecoilState<string>(recoilReservationEmail);
+    const [currentValue, setCurrentValue] = useRecoilState<string>(recoilReserveOption);
 
     const handleTimeSelected = (selectedTime: string) => {
         setTime(selectedTime)
@@ -110,22 +116,28 @@ export default function Reservation() {
             <Container>
                 <HeaderBox>
                     <DiningSelectBox>
-                        <TextBoxBorderBot>DINING 예약</TextBoxBorderBot> 
+                        <TextBoxBorderBot style={{ borderBottom: currentValue === "Dining" ? "3px solid red" : "", color: currentValue === "Dining" ? "#22201f" : "#a2a2a2" }}>DINING 예약</TextBoxBorderBot> 
                     </DiningSelectBox>
                     <FNBSelectBox>
-                        <TextBoxBorderBot>F&B 단체예약</TextBoxBorderBot>
+                        <TextBoxBorderBot style={{ borderBottom: currentValue === "F&B" ? "3px solid red" : "", color: currentValue === "F&B" ? "#22201f" : "#a2a2a2" }}>F&B 단체예약</TextBoxBorderBot>
                     </FNBSelectBox>
                     <CloseBox>
                         <ImageBox 
-                            onClick={handleClick} 
-                            src={"/icon/close.svg"} 
-                            width={28} 
-                            height={28} 
-                            alt="Close" />
+                          onClick={handleClick} 
+                          src={"/icon/close.svg"} 
+                          width={28} 
+                          height={28} 
+                          alt="Close" />
                     </CloseBox>
                 </HeaderBox>
-                
-                <div style={{display: "flex", justifyContent:"center", margin:"1.5%"}}>
+                <ProgressIndicator 
+                  storeState={storeState}
+                  selectedDateState={selectedDateState}
+                  selectedTimeState={selectedTimeState}
+                  adultCnt={adultCnt}
+                  childCnt={childCnt}
+                />
+                {/* <div style={{display: "flex", justifyContent:"center", margin:"1.5%"}}>
                     <div style={{flex:1}}>
                         <div style={{ display: "flex", alignItems:"center" }}>
                             <div style={{ border: !storeState ? "3px solid #26c46a" : "" , borderRadius: "5px", fontSize:"1vw", textAlign: "center", width:"15%", lineHeight:"20px" }}>
@@ -166,7 +178,7 @@ export default function Reservation() {
                             <div>&nbsp;&nbsp;</div>   
                         </div>
                     </div>
-                </div>
+                </div> */}
                 
                 <div style={{display: "flex", borderBottom: "1px solid #CCCCCC", width:"100%"}}>
                     <StyledDiv>
@@ -293,9 +305,9 @@ export default function Reservation() {
                         </div>
                     </div>
                     <div style={{flex:1}}>
-                        <div onClick={handleModalConfirm} style={{ marginLeft:"8%", cursor: isReservation() ? "pointer" : "", display:"flex",justifyContent:"center", background: isReservation() ? "#f84040" : "#f8f6f6", alignItems:"center", borderRadius:"25px", width:"200px", height:"70px" }}>
+                        <div onClick={handleModalConfirm} style={{ pointerEvents: isReservation() ? "auto" : "none", marginLeft:"8%", cursor: isReservation() ? "pointer" : "", display:"flex",justifyContent:"center", background: isReservation() ? "#f84040" : "#f8f6f6", alignItems:"center", borderRadius:"25px", width:"200px", height:"70px" }}>
                             <Image color="#FFF" src={ isReservation() ? "/icon/icon-main-quick-reservation-on.svg" : "/icon/icon-main-quick-reservation.svg"} alt="예약하기" width={40} height={40} />
-                            <div style={{ color:isReservation() ? "#FFF" : "#c8c8c8", marginLeft:"5%", fontSize: "20px" }}>예약하기</div>
+                            <div style={{ color:isReservation() ? "#FFF" : "#c8c8c8", marginLeft:"5%", fontSize: "20px",  }}>예약하기</div>
                         </div>
                     </div>
                 </div>
@@ -362,11 +374,12 @@ const ImageBox = styled(Image)`
 
 const TextBoxBorderBot = styled.div`
     display: inline;
-    cursor: pointer;
+    
     font-size: 20px;
-    &:hover{
+    
+    /* &:hover{
         border-bottom: 3px solid red;
-    }
+    } */
 `;
 
 const Stores = styled.div`

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import Image from "next/image";
 import { useRecoilState } from "recoil";
-import { modalConfirmShowState, modalShowState } from "@/store/stores/modalState";
+import { modalConfirmShowState, modalShowState, recoilReserveOption, recoilShowGroupModal } from "@/store/stores/modalState";
 import Reservation from "@/modal/reservation";
 import ConfirmModal from "@/modal/confirmReservation";
 import { useState } from "react";
+import GroupReservation from "@/modal/FnBGroupReserve";
 
 type show = {
   show?:boolean;
@@ -13,16 +14,27 @@ type show = {
 export default function Header() {
   const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
   const [showConfirmModal, setShowConfirmModal] = useRecoilState<boolean>(modalConfirmShowState);
+  const [showGroupModal, setShowGroupModal] = useRecoilState<boolean>(recoilShowGroupModal);
+  
   const handleClick = (event:any) => {
     setShowModal(true);
     document.body.style.overflow = "hidden";
   }
-  const [currentValue, setCurrentValue] = useState("");
+  const [currentValue, setCurrentValue] = useRecoilState<string>(recoilReserveOption);
   const [showOptions, setShowOptions] = useState(false);
 
   const handleOnChangeSelectValue = (e:any) => {
     const { innerText } = e.target;
     setCurrentValue(innerText);
+
+    if(innerText === "Dining") {
+      setShowModal(true);
+      document.body.style.overflow = "hidden";
+    } else if(innerText === "F&B") {
+      setShowGroupModal(true);
+      document.body.style.overflow = "hidden";
+    }
+
   };
 
   return (
@@ -46,9 +58,9 @@ export default function Header() {
                   <Label show={!showOptions}>예약</Label>
                   <SelectOptions show={showOptions}>
                     <Option style={{ pointerEvents: "none", fontSize: "15px", color:"rgba(81,81,81,0.8)" }}>예약</Option>
-                    <Option onClick={handleOnChangeSelectValue}>Dining</Option>
-                    <Option onClick={handleOnChangeSelectValue}>F&B</Option>
-                    <Option onClick={handleOnChangeSelectValue}>객실</Option>
+                    <Option value={0} onClick={handleOnChangeSelectValue}>Dining</Option>
+                    <Option value={1} onClick={handleOnChangeSelectValue}>F&B</Option>
+                    <Option value={2} onClick={handleOnChangeSelectValue}>객실</Option>
                   </SelectOptions>
                 </SelectBox>
               <NavTabUlLi>EVENT</NavTabUlLi>
@@ -77,6 +89,7 @@ export default function Header() {
         </Section>
       </Container>
       {showModal && <Reservation />} 
+      {showGroupModal && <GroupReservation />}
       {showConfirmModal && <ConfirmModal />}
     </>
     
@@ -147,6 +160,7 @@ const SelectBox = styled.div`
   position: relative;
   width: 50px;
   padding: 8px;
+  
   border-radius: 12px;
   align-self: center;
   cursor: pointer;
@@ -154,9 +168,10 @@ const SelectBox = styled.div`
 `;
 const Label = styled.label<show>`
   font-size: 14px;
-  //margin-left: 4px;
+  margin-left: 4px;
   text-align: center;
   color: white;
+  cursor: pointer;
   display: ${(props) => (props.show ? "block" : "none")};
 `;
 const SelectOptions = styled.ul<show>`

@@ -73,4 +73,14 @@ export const recoilReservationEmail = atom<string>({
     default: ""
 })
 
+export const recoilReserveOption = atom<string>({
+    key: 'Option',
+    default: ""
+})
+
+export const recoilShowGroupModal = atom<boolean>({
+    key: 'group_modal',
+    default: false
+})
+
 
