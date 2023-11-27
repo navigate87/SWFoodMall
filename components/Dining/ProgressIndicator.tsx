@@ -67,7 +67,6 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
 
 export default ProgressIndicator;
 
-
 const FlexContainer = styled.div`
   display: flex;
   justify-content: center;

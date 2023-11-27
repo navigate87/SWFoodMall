@@ -3,19 +3,19 @@ import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-export const PickerSection = styled.section`
+const PickerSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 `;
 
-export const PickerWrapper = styled.div`
+const PickerWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
 `;
 
-export const TimeButton = styled.button<{ isSelected: boolean }>`
+const TimeButton = styled.button<{ isSelected: boolean }>`
   height: 32px;
   width: 81px;
   margin-right: 10px;
@@ -38,7 +38,7 @@ export const TimeButton = styled.button<{ isSelected: boolean }>`
   }
 `;
 
-export const PickerHeader = styled.h2`
+const PickerHeader = styled.h2`
   font-size: 1.5em;
   margin-bottom: 15px;
   text-align: left;
@@ -100,7 +100,7 @@ const TimePicker: React.FC<TimePickerProps> = ({ onTimeSelected }) => {
           </PickerWrapper>
         </PickerSection>
         <PickerSection>
-          <PickerHeader style={{ marginTop: "1px" }}>분</PickerHeader>
+          <PickerHeader style={{ marginTop: "1px" }}>사용시간</PickerHeader>
           <PickerWrapper>
             {minutes.map((minute) => (
               <TimeButton 

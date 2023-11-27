@@ -1,29 +1,76 @@
-import { recoilReserveOption, recoilShowGroupModal } from "@/store/stores/modalState";
+import { modalConfirmShowState, modalShowState,recoilShowGroupModal, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilReserveOption, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState, recoilTimeRange } from "@/store/stores/modalState";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import Image from "next/image";
-import ArrowButton from "@/components/ArrowButton";
+import ArrowButton from "@/components/F&B/ArrowButton";
+import { useState } from "react";
+import ProgressIndicator from "@/components/F&B/ProgressIndicator";
+import SelectedStore from "@/components/F&B/SelectedStore";
+import { StoreDataFnb } from "@/data/StoreType";
+import CustomerSelect from "@/components/F&B/CustomerSelect";
+import TimePicker from "@/components/F&B/TimePicker";
+import MyCalendar from "@/components/DatePicker";
 
-interface CheckState {
-  isComplete?:boolean;
-}
-
-interface ButtonProps {
-  direction: 'up' | 'down'
+type StyledDivProps = {
+  disabled?: boolean;
 }
 
 export default function GroupReservation() {
+  
   const [currentValue, setCurrentValue] = useRecoilState<string>(recoilReserveOption);
   const [showGroupModal, setShowGroupModal] = useRecoilState<boolean>(recoilShowGroupModal);
+  const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
+  const [showConfirmModal, setShowConfirmModal] = useRecoilState<boolean>(modalConfirmShowState);
+  const [selectedStoreName, setSelectedStoreName] = useRecoilState<string>(recoilSelectedStore);
+  const [storeState, setStoreState] = useRecoilState<boolean>(recoilStoreState);
+  const [selectedDate, setSelectedDate] = useRecoilState<Date>(recoilSelectedDate);
+  const [selectedDateState, setSelectedDateState] = useRecoilState<boolean>(recoilDateSelectState);
+  const [selectedTimeState, setSelectedTimeState] = useRecoilState<boolean>(recoilTimeState); 
+  const [childCnt, setChildCnt] = useRecoilState<string>(recoilChildCnt);
+  const [adultCnt, setAdultCnt] = useRecoilState<string>(recoilAdultCnt);
+  const [errorText, setErrorText] = useState<boolean>(false);
+  const [time, setTime] = useRecoilState<string>(recoilSelectedTime);
+  const [visibleComponentId, setVisibleComponentId] = useState<number | null>(null);
+  const [name, setName] = useRecoilState<string>(recoilReservationName);
+  const [contact, setContact] = useRecoilState<string>(recoilReservationContact);
+  const [email, setEmail] = useRecoilState<string>(recoilReservationEmail);
+  const [timeRange, setTimeRange] = useRecoilState(recoilTimeRange);
   
   const handleClick = (event:any) => {
     setShowGroupModal(false);
+    setStoreState(false);
+    setSelectedTimeState(false);
+    setSelectedDateState(false);
+    setAdultCnt("0");
+    setChildCnt("0");
+    setName("");
+    setContact("");
+    setEmail("");
+    setErrorText(false);
+    setTimeRange("");
     document.body.style.overflow = "auto";
-  }
+}
 
   const handleDownClick = () => {
     console.log('Down button clicked!');
   };
+
+  const handleSelectComponent = (id:number) => {
+    setVisibleComponentId(id);
+}
+  // const handleTimeSelected = (timeRange: string) => {
+  //   setTime(timeRange)
+  //   setSelectedTimeState(true);
+  // }
+
+function formatDate(date: Date) : string {
+  const days = ['(일)', '(월)', '(화)', '(수)', '(목)', '(금)', '(토)'];
+  let day = days[date.getDay()];
+  let month = (date.getMonth() + 1).toString().padStart(2, '0');
+  let dayOfMonth = date.getDate().toString().padStart(2, '0');
+
+  return `${date.getFullYear()}.${month}.${dayOfMonth} ${day}`;
+}
 
   return (
     <>
@@ -45,43 +92,91 @@ export default function GroupReservation() {
                 alt="Close" />
             </CloseBox>
           </HeaderBox>
-          <StepBox>
-            <StepFlexDiv>
-              <StepDeepBox>
-                <StepCheck>
-                  step 1
-                </StepCheck>
-                <StepDot>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</StepDot>
-              </StepDeepBox>
-            </StepFlexDiv>
-            <StepFlexDiv>
-              <StepDeepBox>
-                <StepCheck>
-                  step 2
-                </StepCheck>
-                <StepDot>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</StepDot>
-              </StepDeepBox>
-            </StepFlexDiv>
-            <StepFlexDiv>
-              <StepDeepBox>
-                <StepCheck>
-                  step 3
-                </StepCheck>
-                <StepDot>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</StepDot>
-              </StepDeepBox>
-            </StepFlexDiv>
-            <StepFlexDiv>
-              <StepDeepBox>
-                <StepCheck>
-                  step 4
-                </StepCheck>
-              </StepDeepBox>
-            </StepFlexDiv>
-            <ArrowBox>
-              <ArrowButton direction={false} onClick={handleDownClick} />
-            </ArrowBox>
-          </StepBox>
-
+          <ProgressIndicator 
+            storeState={storeState}
+            selectedDateState={selectedDateState}
+            selectedTimeState={selectedTimeState}
+            adultCnt={adultCnt}
+            childCnt={childCnt}
+          />
+          <ArrowBox>
+            <ArrowButton direction={false} onClick={handleDownClick} />
+          </ArrowBox>
+          <div style={{display: "flex", borderBottom: "1px solid #CCCCCC", width:"100%"}}>
+            <StyledDiv>
+              <CountContainer>
+                <Image 
+                  src="/icon/icon-main-quick-customer.svg" 
+                  width={29} 
+                  height={24} 
+                  alt="Customer" 
+                />
+                <Title>인원</Title>
+                <CountDisplay isSelected={adultCnt !== "0" || childCnt !== "0"}>
+                  {adultCnt !== "0" || childCnt !== "0" ? `일반  ${adultCnt}명 , 소인  ${childCnt}명` : "인원을 선택해주세요"}
+                </CountDisplay>
+              </CountContainer>
+              <CustomerSelect />
+            </StyledDiv>
+            <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
+            <StyledDiv disabled={adultCnt === "0" && childCnt === "0"}>
+              <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%"  }}>
+                <Image 
+                  src={"/icon/icon-main-quick-day.svg"} 
+                  width={29} 
+                  height={24} 
+                  alt="quickday" 
+                />
+                <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>날짜</h3>
+                <div style={{color:"#A2A2A2", borderBottom: selectedDateState ? "2px solid #DCDCDC" : "2px solid red", fontSize:"16px"}}>
+                  { selectedDateState ? formatDate(selectedDate) : "날짜를 선택해주세요" }
+                </div>
+              </div>
+              <DatePickerWrapper>
+                 <MyCalendar />
+              </DatePickerWrapper>
+            </StyledDiv>
+            <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
+            <StyledDiv disabled={!selectedDateState}>
+              <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%" }}>
+                  <Image 
+                      src={"/icon/icon-main-quick-time.svg"} 
+                      width={29} 
+                      height={24} 
+                      alt="Time" 
+                  />
+                  <h3 style={{ marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>시간</h3>  
+                  <h3 style={{ borderBottom: selectedTimeState ? "2px solid #DCDCDC" : "2px solid red", fontSize:"16px", color:"#A2A2A2"}}>
+                      { selectedTimeState ? timeRange : "시간을 선택해 주세요" }
+                  </h3> 
+              </div>
+              <ul style={{ display: "flex", flexWrap: "wrap", justifyContent:"center" }}>
+                  <TimePicker />
+              </ul>
+            </StyledDiv>
+            <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
+            <StyledDiv disabled={!selectedTimeState}>
+              <div style={{ display:"flex", alignItems:"center", marginLeft:"7%" }}>
+                <Image 
+                  src={"/icon/icon-main-quick-dining.svg"} 
+                  width={29} 
+                  height={24} 
+                  alt="place" />
+                <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>장소</h3>
+                <div style={{color:"#A2A2A2", borderBottom: storeState ? "2px solid #DCDCDC" : "2px solid red" , fontSize:"16px"}}>
+                  {  storeState ? selectedStoreName : "장소를 선택해주세요" }
+                </div>
+              </div>
+            <Stores>
+              {
+                StoreDataFnb.map((store, id) => (
+                  <SelectedStore key={id} id={id} store={store} onSelect={() => handleSelectComponent(id)} isSelected={id === visibleComponentId}/>
+                ))
+              }
+            </Stores>   
+          </StyledDiv>
+          </div>
+          
         </Container>
       </ModalBackground>
     </>
@@ -118,6 +213,21 @@ const HeaderBox = styled.div`
     background: #ECECEC;
 `;
 
+const StyledDiv = styled.div<StyledDivProps>`
+  flex: 1;
+  pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
+  user-select: ${(props) => (props.disabled ? 'none' : 'auto')};
+`;
+
+const Stores = styled.div`
+    display: flex;
+    margin: 6%;
+    flex-wrap: wrap;
+    column-count: 2;
+    row-gap: 0em 10px;
+`;
+
 const DiningSelectBox = styled.div`
     flex: 1;
     text-align: center;
@@ -147,38 +257,33 @@ const TextBoxBorderBot = styled.div`
     font-size: 20px;
 `;
 
-const StepBox = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 1.5%;
-`;
-
-const StepFlexDiv = styled.div`
-  flex: 1;
-`;
-
-const StepDeepBox = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const StepCheck = styled.div<CheckState>`
-  border: ${(props) => (props.isComplete ? '3px solid #26c46a' : "")};
-  border-radius: 5px;
-  font-size: 1vw;
-  text-align: center;
-  width: 15%;
-  line-height: 20px;
-`;
-
-const StepDot = styled.div<CheckState>`
-  color: ${(props) => (props.isComplete ? '#26c46a' : '#c8c8c8')};
-`;
-
 const ArrowBox = styled.div`
   position: absolute;
   top: 100px;
   right: 25px;
+`;
+
+const DatePickerWrapper = styled.div`
+    margin: 7%; 
+    text-align:center;
+`;
+
+const Title = styled.h3`
+    margin-left: 2%;
+    margin-right: 3%;
+    font-size: 16px;
+`;
+
+const CountDisplay = styled.div<{isSelected: boolean}>`
+    color: #A2A2A2;
+    border-bottom: ${({ isSelected }) => isSelected ? '2px solid #DCDCDC' : '2px solid red'};
+    font-size: 16px;
+`;
+
+const CountContainer = styled.div`
+    display: flex;
+    align-items: center;
+    margin-left: 1%;
 `;
 
 

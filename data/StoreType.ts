@@ -30,3 +30,21 @@ export const StoreData: Stores[] = [
         code: 4,
     },
 ];
+
+export const StoreDataFnb: Stores[] = [
+    {
+        src: '/image/img_great_12.webp',
+        alt: '12층 대규모 연회장',
+        code: 1,
+    },
+    {
+        src: '/image/small_11_img.webp',
+        alt: '11층 소규모 연회장',
+        code: 2,
+    },
+    {
+        src: '/image/small_3_img.webp',
+        alt: '3층 소규모 연회장',
+        code: 3,
+    },
+]

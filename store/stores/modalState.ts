@@ -83,4 +83,8 @@ export const recoilShowGroupModal = atom<boolean>({
     default: false
 })
 
+export const recoilTimeRange = atom<string>({
+    key: 'TimeRange',
+    default: ''
+})
 

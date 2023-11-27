@@ -15,7 +15,7 @@ const CalendarHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 12px;
   margin: 10px;
 `;
 
@@ -26,6 +26,7 @@ const MonthLabel = styled.span`
 
 const CalendarTable = styled.table`
   width: 100%;
+  
   th {
     border-bottom: 5px solid transparent;
     &:nth-child(1) {
@@ -40,6 +41,9 @@ const CalendarTable = styled.table`
   }
   td {
     border: 10px solid transparent;
+    width: 10px;
+    height: 10px;
+    line-height: 30px;
   }
 `;
 
@@ -52,9 +56,9 @@ const Day = styled.td<{
   isPastDay: boolean; 
 }>`
   
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
+  
+  max-height: 30px;
+  min-width: 30px;
   text-align: center;
   cursor: pointer;
   /* border: 1px solid #ddd; */

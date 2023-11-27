@@ -4,18 +4,16 @@ import { modalConfirmShowState, modalShowState, recoilAdultCnt, recoilChildCnt, 
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { StoreData } from "@/data/StoreType";
-import SelectedStore from "@/components/SelectedStore";
+import SelectedStore from "@/components/Dining/SelectedStore";
 import MyCalendar from "@/components/DatePicker";
-import TimePicker from "@/components/TimePicker";
-import PeopleCount from "@/components/PeopleCount";
+import PeopleCount from "@/components/Dining/PeopleCount";
 import ConfirmModal from "./confirmReservation";
-import ProgressIndicator from "@/components/ProgressIndicator";
+import ProgressIndicator from "@/components/Dining/ProgressIndicator";
+import CustomerSelect from "@/components/Dining/SelectPeopleCnt";
+import TimePicker from "@/components/Dining/TimePicker";
+
 type StyledDivProps = {
     disabled?: boolean;
-}
-
-type ReserveType = {
-    OptionValue?: string;
 }
 
 export default function Reservation() {
@@ -114,159 +112,95 @@ export default function Reservation() {
         <>
           <ModalBackground>
             <Container>
-                <HeaderBox>
-                    <DiningSelectBox>
-                        <TextBoxBorderBot style={{ borderBottom: currentValue === "Dining" ? "3px solid red" : "", color: currentValue === "Dining" ? "#22201f" : "#a2a2a2" }}>DINING 예약</TextBoxBorderBot> 
-                    </DiningSelectBox>
-                    <FNBSelectBox>
-                        <TextBoxBorderBot style={{ borderBottom: currentValue === "F&B" ? "3px solid red" : "", color: currentValue === "F&B" ? "#22201f" : "#a2a2a2" }}>F&B 단체예약</TextBoxBorderBot>
-                    </FNBSelectBox>
-                    <CloseBox>
-                        <ImageBox 
-                          onClick={handleClick} 
-                          src={"/icon/close.svg"} 
-                          width={28} 
-                          height={28} 
-                          alt="Close" />
-                    </CloseBox>
-                </HeaderBox>
-                <ProgressIndicator 
-                  storeState={storeState}
-                  selectedDateState={selectedDateState}
-                  selectedTimeState={selectedTimeState}
-                  adultCnt={adultCnt}
-                  childCnt={childCnt}
-                />
-                {/* <div style={{display: "flex", justifyContent:"center", margin:"1.5%"}}>
-                    <div style={{flex:1}}>
-                        <div style={{ display: "flex", alignItems:"center" }}>
-                            <div style={{ border: !storeState ? "3px solid #26c46a" : "" , borderRadius: "5px", fontSize:"1vw", textAlign: "center", width:"15%", lineHeight:"20px" }}>
-                                {
-                                    storeState ? <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} /> : "step 1"
-                                }
-                            </div>
-                            <div style={{ color: storeState ? "#26c46a" : "#c8c8c8" }}>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
+              <HeaderBox>
+                  <DiningSelectBox>
+                      <TextBoxBorderBot style={{ borderBottom: currentValue === "Dining" ? "3px solid red" : "", color: currentValue === "Dining" ? "#22201f" : "#a2a2a2" }}>DINING 예약</TextBoxBorderBot> 
+                  </DiningSelectBox>
+                  <FNBSelectBox>
+                      <TextBoxBorderBot style={{ borderBottom: currentValue === "F&B" ? "3px solid red" : "", color: currentValue === "F&B" ? "#22201f" : "#a2a2a2" }}>F&B 단체예약</TextBoxBorderBot>
+                  </FNBSelectBox>
+                  <CloseBox>
+                      <ImageBox 
+                        onClick={handleClick} 
+                        src={"/icon/close.svg"} 
+                        width={28} 
+                        height={28} 
+                        alt="Close" />
+                  </CloseBox>
+              </HeaderBox>
+              <ProgressIndicator 
+                storeState={storeState}
+                selectedDateState={selectedDateState}
+                selectedTimeState={selectedTimeState}
+                adultCnt={adultCnt}
+                childCnt={childCnt}
+              />
+               
+              <div style={{display: "flex", borderBottom: "1px solid #CCCCCC", width:"100%"}}>
+                <StyledDiv>
+                  <div style={{ display:"flex", alignItems:"center", marginLeft:"7%" }}>
+                      <Image 
+                        src={"/icon/icon-main-quick-dining.svg"} 
+                        width={29} 
+                        height={24} 
+                        alt="Dining" />
+                      <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>다이닝</h3>
+                      <div style={{color:"#A2A2A2", borderBottom: storeState ? "2px solid #DCDCDC" : "2px solid red" , fontSize:"16px"}}>
+                        {  storeState ? selectedStoreName : "식당을 선택해주세요" }
+                      </div>
+                  </div>
+                  <Stores>
+                      {
+                        StoreData.map((store, id) => (
+                          <SelectedStore key={id} id={id} store={store} onSelect={() => handleSelectComponent(id)} isSelected={id === visibleComponentId}/>
+                        ))
+                      }
+                  </Stores>   
+                </StyledDiv>
+                <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
+                  <StyledDiv disabled={!storeState}>
+                      <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%"  }}>
+                        <Image 
+                            src={"/icon/icon-main-quick-day.svg"} 
+                            width={29} 
+                            height={24} 
+                            alt="quickday" />
+                        <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>날짜</h3>
+                        <div style={{color:"#A2A2A2", borderBottom: selectedDateState ? "2px solid #DCDCDC" : "2px solid red", fontSize:"16px"}}>
+                            { selectedDateState ? formatDate(selectedDate) : "날짜를 선택해주세요" }
                         </div>
-                    </div>
-                    <div style={{flex:1}}>
-                        <div style={{ display: "flex", alignItems:"center" }}>
-                            <div style={{ border: storeState && !selectedDateState ? "3px solid #26c46a" : "", background: !storeState && !selectedDateState ? "#C8C8C8" : "", color: storeState && !selectedDateState ? "" : "#FFFFFF"  , borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>
-                            {
-                                selectedDateState ? <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} /> : "step 2"
-                            }
-                            </div>
-                            <div style={{ color: selectedDateState ? "#26c46a" : "#c8c8c8" }}>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
-                        </div>
-                    </div>
-                    <div style={{flex:1}}>
-                        <div style={{ display: "flex", alignItems:"center" }}>
-                            <div style={{ border: selectedDateState && !selectedTimeState ? "3px solid #26c46a" : "", background: !selectedDateState && !selectedTimeState ? "#C8C8C8" : "", color:selectedDateState && !selectedTimeState ? "" : "#FFFFFF", borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>
-                                {
-                                    selectedTimeState ? <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} /> : "step 3"
-                                }
-                            </div>
-                            <div style={{ color: selectedTimeState ? "#26c46a" : "#c8c8c8" }}>&nbsp;∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙&nbsp;</div>
-                        </div>
-                    </div>
-                    <div style={{flex:1}}>
-                        <div style={{ display: "flex", alignItems:"center" }}>
-                            <div style={{ border: !(adultCnt !== "0" || childCnt !== "0") && selectedTimeState ? "3px solid #26c46a" : "", background: !(adultCnt !== "0" || childCnt !== "0") && !selectedTimeState ? "#C8C8C8" : "", color: !(adultCnt !== "0" && childCnt !== "0") && selectedTimeState ? "" : "#FFFFFF", borderRadius: "5px", fontSize:"1vw", textAlign:"center", width:"15%", lineHeight:"25px" }}>
-                                {
-                                    adultCnt === "0" && childCnt === "0" ? "step 4" : <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} />
-                                }
-                            </div>
-                            <div>&nbsp;&nbsp;</div>   
-                        </div>
-                    </div>
-                </div> */}
-                
-                <div style={{display: "flex", borderBottom: "1px solid #CCCCCC", width:"100%"}}>
-                    <StyledDiv>
-                        <div style={{ display:"flex", alignItems:"center", marginLeft:"6%" }}>
-                            <Image 
-                                src={"/icon/icon-main-quick-dining.svg"} 
-                                width={29} 
-                                height={24} 
-                                alt="Dining" />
-                            <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>다이닝</h3>
-                            <div style={{color:"#A2A2A2", borderBottom: storeState ? "2px solid #DCDCDC" : "2px solid red" , fontSize:"16px"}}>
-                                {  storeState ? selectedStoreName : "식당을 선택해주세요" }
-                            </div>
-                        </div>
-                        <Stores>
-                            {
-                              StoreData.map((store, id) => (
-                                <SelectedStore key={id} id={id} store={store} onSelect={() => handleSelectComponent(id)} isSelected={id === visibleComponentId}/>
-                              ))
-                            }
-                        </Stores>   
-                    </StyledDiv>
-                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
-                    <StyledDiv disabled={!storeState}>
-                        <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%"  }}>
-                            <Image 
-                                src={"/icon/icon-main-quick-day.svg"} 
-                                width={29} 
-                                height={24} 
-                                alt="quickday" />
-                            <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>날짜</h3>
-                            <div style={{color:"#A2A2A2", borderBottom: selectedDateState ? "2px solid #DCDCDC" : "2px solid red", fontSize:"16px"}}>
-                                { selectedDateState ? formatDate(selectedDate) : "날짜를 선택해주세요" }
-                            </div>
-                        </div>
-                        <DatePickerWrapper>
-                           <MyCalendar />
-                        </DatePickerWrapper>
-                    </StyledDiv>
-                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
-                    <StyledDiv disabled={!selectedDateState}>
-                        <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%" }}>
-                            <Image 
-                                src={"/icon/icon-main-quick-time.svg"} 
-                                width={29} 
-                                height={24} 
-                                alt="Time" 
-                            />
-                            <h3 style={{ marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>시간</h3>  
-                            <h3 style={{ borderBottom: selectedTimeState ? "2px solid #DCDCDC" : "2px solid red", fontSize:"16px", color:"#A2A2A2"}}>
-                                { selectedTimeState ? time : "시간을 선택해 주세요" }
-                            </h3> 
-                        </div>
-                        
-                        <ul style={{ display: "flex", flexWrap: "wrap", justifyContent:"center" }}>
-                            <TimePicker onTimeSelected={handleTimeSelected} />
-                        </ul>
-                       
-                    </StyledDiv>
-                    <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
-                    <StyledDiv disabled={!selectedTimeState}>
-                        <div style={{ display:"flex", alignItems:"center", marginLeft:"1%" }}>
-                            <Image 
-                                src={"/icon/icon-main-quick-customer.svg"} 
-                                width={29} 
-                                height={24} 
-                                alt="Customer" />
-                            <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>인원</h3>   
-                            <div style={{ color:"#A2A2A2", borderBottom: adultCnt !== "0" || childCnt !== "0" ? "2px solid #DCDCDC" : "2px solid red" , fontSize:"16px"}}>
-                                 { adultCnt !== "0" || childCnt !== "0" ? `일반  ${adultCnt}명 , 소인  ${childCnt}명` : "인원을 선택해주세요"} 
-                            </div>
-                           
-                        </div>
-                        
-                        <div style={{ marginLeft: "9%", marginTop:"7%", fontSize:"14px"  }}>일반</div>
-                        <div style={{ display:"flex", justifyContent:"center" }}>
-                            <PeopleCount initialValue={0} label="일반" min={0} max={100}  />
-                        </div>
-                        <div style={{ marginLeft: "9%", marginTop:"7%", fontSize:"14px"  }}>소인<p style={{color:"#a2a2a2", fontSize:"11px"}}>(~11세)</p></div>
-                        <div style={{ display:"flex", justifyContent:"center" }}>
-                            <PeopleCount initialValue={0} label="소인" min={0} max={100}  />
-                        </div>
-                    </StyledDiv>
-                </div>    
+                      </div>
+                      <DatePickerWrapper>
+                         <MyCalendar />
+                      </DatePickerWrapper>
+                  </StyledDiv>
+                  <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
+                  <StyledDiv disabled={!selectedDateState}>
+                      <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%" }}>
+                          <Image 
+                              src={"/icon/icon-main-quick-time.svg"} 
+                              width={29} 
+                              height={24} 
+                              alt="Time" 
+                          />
+                          <h3 style={{ marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>시간</h3>  
+                          <h3 style={{ borderBottom: selectedTimeState ? "2px solid #DCDCDC" : "2px solid red", fontSize:"16px", color:"#A2A2A2"}}>
+                              { selectedTimeState ? time : "시간을 선택해 주세요" }
+                          </h3> 
+                      </div>
+                      <ul style={{ display: "flex", flexWrap: "wrap", justifyContent:"center" }}>
+                          <TimePicker onTimeSelected={handleTimeSelected} />
+                      </ul>
+                  </StyledDiv>
+                  <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
+                  <StyledDiv disabled={!selectedTimeState}>
+                    <CustomerSelect childCount={childCnt} adultCount={adultCnt} />
+                  </StyledDiv>
+              </div>    
                                   
                 <div style={{ width:"100%", borderTop:"8px solid #ECECEC", borderBottom:"1px solid #CCCCCC"}}></div> 
                
-                <div style={{ display:"flex", alignItems:"center", justifyContent:"space-evenly", height: "15%"  }}>
+                <div style={{ display:"flex", alignItems:"center", justifyContent:"space-evenly", height: "15%" }}>
                     <div style={{flex:1}}>
                         <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                             <Image
@@ -284,7 +218,6 @@ export default function Reservation() {
                         <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                             <span style={{ marginRight:"1%" }}>예약자명<span style={{ color: "#f84040" }}>*</span></span>
                             <input type="text" onChange={(e) => setName(e.target.value) } style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 예약자 이름 입력" />
-                            {/* <button style={{ position:"absolute", marginLeft: "12%" }}><Image src={"/icon/Search_area_delete.svg"} width={20} height={20} alt="cancel" /></button> */}
                         </div>
                         
                     </div>
@@ -292,13 +225,11 @@ export default function Reservation() {
                         <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                             <div style={{ marginRight:"2%" }}>이메일<span style={{ color: "#f84040" }}>*</span></div>
                             <input type="text" onChange={handleEmailChange} style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 예) foodmail@foodmail.co.kr" />
-                            {/* <button style={{ position:"absolute", marginLeft: "12%" }}><Image src={"/icon/Search_area_delete.svg"} width={20} height={20} alt="cancel" /></button> */}
                         </div>
                         
                     </div>
                     <div style={{flex:1}}>
                         <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
-                        
                         <div style={{ marginRight:"2%" }}>연락처<span style={{ color: "#f84040" }}>*</span></div>
                             <input type="text" onChange={ (e) => setContact(e.target.value) } style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 숫자만 입력해주세요." />
                             <div style={{ display: errorText ? "block" : "none", position:"absolute", marginBottom: "55px", marginRight: "41%" , fontSize: "10px", color: "#ff0000" }}>이메일 주소를 정확히 입력해주세요</div>
