@@ -1,4 +1,4 @@
-import { modalConfirmShowState, modalShowState,recoilShowGroupModal, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilReserveOption, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState, recoilTimeRange } from "@/store/stores/modalState";
+import { modalConfirmShowState, recoilSecondStoreOption, recoilSecondStoreState, recoilStoreCode, modalShowState,recoilShowGroupModal, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilReserveOption, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState, recoilTimeRange } from "@/store/stores/modalState";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import Image from "next/image";
@@ -6,7 +6,8 @@ import ArrowButton from "@/components/F&B/ArrowButton";
 import { useState } from "react";
 import ProgressIndicator from "@/components/F&B/ProgressIndicator";
 import SelectedStore from "@/components/F&B/SelectedStore";
-import { StoreDataFnb } from "@/data/StoreType";
+import SecondSelectedStore from "@/components/F&B/SecondSelectedStore";
+import { StoreFirstDataFnb,StoreSelectDataType } from "@/data/StoreType";
 import CustomerSelect from "@/components/F&B/CustomerSelect";
 import TimePicker from "@/components/F&B/TimePicker";
 import MyCalendar from "@/components/DatePicker";
@@ -32,12 +33,15 @@ export default function GroupReservation() {
   const [errorText, setErrorText] = useState<boolean>(false);
   const [time, setTime] = useRecoilState<string>(recoilSelectedTime);
   const [visibleComponentId, setVisibleComponentId] = useState<number | null>(null);
+  const [visibleSecondTypeId, setVisibleSecondTypedId] = useState<number | null>(null);
   const [name, setName] = useRecoilState<string>(recoilReservationName);
   const [contact, setContact] = useRecoilState<string>(recoilReservationContact);
   const [email, setEmail] = useRecoilState<string>(recoilReservationEmail);
   const [timeRange, setTimeRange] = useRecoilState(recoilTimeRange);
   const [showComponents, setShowComponents] = useState<boolean>(true);
-
+  const [secondStore , setSecondStore] = useRecoilState<string>(recoilSecondStoreOption)
+  const [secondStoreState, setSecondStoreState] = useRecoilState<boolean>(recoilSecondStoreState);
+  const [secondStoreCode, setSecondStoreCode] = useRecoilState<string>(recoilStoreCode);
   const handleClick = (event:any) => {
     setShowGroupModal(false);
     setStoreState(false);
@@ -50,25 +54,31 @@ export default function GroupReservation() {
     setEmail("");
     setErrorText(false);
     setTimeRange("");
+    setSecondStore("");
+    setSecondStoreCode("")
     document.body.style.overflow = "auto";
 }
 
   const handleDownClick = () => {
-    setShowComponents(!showComponents);
-  };
+      setShowComponents(!showComponents);
+    };
 
   const handleSelectComponent = (id:number) => {
     setVisibleComponentId(id);
-}
-  
-function formatDate(date: Date) : string {
-  const days = ['(일)', '(월)', '(화)', '(수)', '(목)', '(금)', '(토)'];
-  let day = days[date.getDay()];
-  let month = (date.getMonth() + 1).toString().padStart(2, '0');
-  let dayOfMonth = date.getDate().toString().padStart(2, '0');
+  }
 
-  return `${date.getFullYear()}.${month}.${dayOfMonth} ${day}`;
-}
+  const handleSelectSecondType = (id:number) => {
+    setVisibleSecondTypedId(id);
+  }
+  
+  function formatDate(date: Date) : string {
+    const days = ['(일)', '(월)', '(화)', '(수)', '(목)', '(금)', '(토)'];
+    let day = days[date.getDay()];
+    let month = (date.getMonth() + 1).toString().padStart(2, '0');
+    let dayOfMonth = date.getDate().toString().padStart(2, '0');
+
+    return `${date.getFullYear()}.${month}.${dayOfMonth} ${day}`;
+  }
 
   return (
     <>
@@ -175,7 +185,7 @@ function formatDate(date: Date) : string {
                 
                 (<Stores show={showComponents}>
                 {
-                  StoreDataFnb.map((store, id) => (
+                  StoreFirstDataFnb.map((store, id) => (
                     <SelectedStore key={id} id={id} store={store} onSelect={() => handleSelectComponent(id)} isSelected={id === visibleComponentId}/>
                   ))
                 }
@@ -184,9 +194,9 @@ function formatDate(date: Date) : string {
           </StyledDiv>
           </FisrtSelectOptions>
 
-          <BorderLine />
+          <BorderBottomLine />
 
-          <SecondSelectOptions>
+          <SecondSelectBox>
             <SelectHeaderBox>
               <Image 
                 src="/icon/icon-main-quick-addition.svg" 
@@ -201,11 +211,38 @@ function formatDate(date: Date) : string {
               <SecondArrowBox>
                 <ArrowButton direction={showComponents} onClick={handleDownClick} />
               </SecondArrowBox>
-
             </FLEX_1>
-          </SecondSelectOptions>
+          </SecondSelectBox>
+          <FisrtSelectOptions>
+            <StyledDiv style={{ flex: 1 }}>
+              <Title style={{ marginLeft: "40px" }}>F&B 타입</Title>
+              {
+                (<Stores style={{ marginLeft: "30px" }} show={true}>
+                {
+                  StoreSelectDataType.map((store, id) => (
+                    
+                    <SecondSelectedStore key={id} id={id} store={store} onSelect={() => handleSelectSecondType(id)} isSelected={id === visibleSecondTypeId}/>
+                  ))
+                }
+                </Stores>)   
+              }
+            </StyledDiv>
+            <SecondBarZone show={true}/>
+            <StyledDiv style={{ flex: 1.5 }}>
+              <Title style={{ marginLeft: "20px" }}>테이블 타입</Title>
+            </StyledDiv>
+            <SecondBarZone show={true}/>
+            <StyledDiv style={{ flex: 2.5}}>
+              <Title style={{ marginLeft: "20px" }}>기본제공 부대시설</Title>
+            </StyledDiv>
+            <SecondBarZone show={true}/>
+            <StyledDiv style={{ flex: 1.8 }}>
+              <Title style={{ marginLeft: "20px" }}>추가요청 부대시설</Title>
+            </StyledDiv>
+          </FisrtSelectOptions>
           
-          <BorderLine />
+          
+          <BorderBottomLine />
         </Container>
       </ModalBackground>
     </>
@@ -248,13 +285,13 @@ const FisrtSelectOptions = styled.div`
   width: 100%;
 `;
 
-const SecondSelectOptions = styled.div`
+const SecondSelectBox = styled.div`
   display: flex;
   margin: 40px;
   width: 100%;
 `;
 
-const BorderLine = styled.div`
+const BorderBottomLine = styled.div`
   width:100%;
   border-top:5px solid #ECECEC;
   border-bottom:1px solid #CCCCCC;
@@ -266,6 +303,12 @@ const BarZone = styled.div<{show:boolean}>`
   height:320px;
   margin-top: 3%;
 `;
+
+const SecondBarZone = styled.div<{show:boolean}>`
+  display: ${({ show }) => (show ? "flex" : "none")};
+  border-left: 1px solid #EBEBEB;
+  height:320px;
+`
 
 const StyledDiv = styled.div<StyledDivProps>`
   flex: 1;

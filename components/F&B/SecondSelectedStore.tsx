@@ -1,20 +1,20 @@
-import { Stores, StoreFirstDataFnb  } from "@/data/StoreType";
-import { recoilSelectedStore, recoilStoreCode, recoilStoreState } from "@/store/stores/modalState";
+import { StoreSelectDataType } from "@/data/StoreType";
+import { recoilSecondStoreOption, recoilSecondStoreState, recoilStoreCode } from "@/store/stores/modalState";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 
-export default function SelectedStore({id, store, onSelect, isSelected}: {id:number; store: (typeof StoreFirstDataFnb)[number]; onSelect:(id:number) => void; isSelected?:boolean;} ) {
-    const [selectedStoreName , setSelectedStoreName] = useRecoilState<string>(recoilSelectedStore)
-    const [storeState, setStoreState] = useRecoilState<boolean>(recoilStoreState);
-    const [storeCode, setStoreCode] = useRecoilState<string>(recoilStoreCode);
+export default function SecondSelectedStore({id, store, onSelect, isSelected}: {id:number; store: (typeof StoreSelectDataType)[number]; onSelect:(id:number) => void; isSelected?:boolean;} ) {
+    const [secondStore , setSecondStore] = useRecoilState<string>(recoilSecondStoreOption)
+    const [secondStoreState, setSecondStoreState] = useRecoilState<boolean>(recoilSecondStoreState);
+    const [secondStoreCode, setSecondStoreCode] = useRecoilState<string>(recoilStoreCode);
     
     const selectStore = () => {
-        setSelectedStoreName(store.alt);
-        setStoreState(true);
-        setStoreCode(id.toString());
+        setSecondStore(store.alt);
+        setSecondStoreState(true);
+        setSecondStoreCode(id.toString());
         onSelect(id);
     }
 
@@ -24,8 +24,7 @@ export default function SelectedStore({id, store, onSelect, isSelected}: {id:num
                 <Image style={{  margin: "13px" }} src={"/icon/그룹 21275.svg"} width={48} height={48} alt="스토어체크" />
             </SelectedVisibleFilter>
             <StoreImg src={store.src} alt={store.alt} width={88} height={75} />
-            <StoreTextBox style={{ color: isSelected ? "#FFF":"#000" }}>{store.alt.substring(0, 4)}</StoreTextBox>
-            <StoreTextBox style={{ color: isSelected ? "#FFF":"#000" }}>{store.alt.substring(4)}</StoreTextBox>
+            <StoreTextBox style={{ color: isSelected ? "#FFF":"#000" }}>{store.alt}</StoreTextBox>
         </Store>
     )
 }

@@ -3,6 +3,7 @@ export interface Stores  {
     alt: string;
     code: number;
 }
+
 export const StoreData: Stores[] = [
     {
         src: '/image/성원정.png',
@@ -31,20 +32,43 @@ export const StoreData: Stores[] = [
     },
 ];
 
-export const StoreDataFnb: Stores[] = [
+export const StoreFirstDataFnb: Stores[] = [
     {
         src: '/image/img_great_12.webp',
-        alt: '12층 대규모 연회장',
+        alt: '12층  대규모 연회장',
         code: 1,
+       
     },
     {
         src: '/image/small_11_img.webp',
-        alt: '11층 소규모 연회장',
+        alt: '11층  소규모 연회장',
         code: 2,
+        
     },
     {
         src: '/image/small_3_img.webp',
-        alt: '3층 소규모 연회장',
+        alt: '3층  소규모 연회장',
         code: 3,
+        
     },
 ]
+
+export const StoreSelectDataType: Stores[] = [
+    {
+        src: '/image/img_business.webp',
+        alt: '비지니스',
+        code: 1,
+    },
+    {
+        src: '/image/img_banquet.webp',
+        alt: '연회',
+        code: 2,
+    },
+    {
+        src: '/image/img_seminar.webp',
+        alt: '세미나',
+        code: 3,
+    }
+
+]
+

@@ -88,3 +88,17 @@ export const recoilTimeRange = atom<string>({
     default: ''
 })
 
+export const recoilSecondStoreOption = atom<string>({
+    key: 'SecondStoreOption',
+    default: ''
+})
+
+export const recoilSecondStoreState = atom<boolean>({
+    key: 'SecondStoreState',
+    default: false
+})
+
+export const recoilSecondStoreCode = atom<string>({
+    key: 'SecondStoreCode',
+    default: ''
+})
