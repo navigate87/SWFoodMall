@@ -244,7 +244,6 @@ export default function Reservation() {
                 </div>
             </Container>
           </ModalBackground>
-          
         </>
     )
 }

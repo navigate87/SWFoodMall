@@ -13,6 +13,7 @@ import MyCalendar from "@/components/DatePicker";
 
 type StyledDivProps = {
   disabled?: boolean;
+  show?: boolean;
 }
 
 export default function GroupReservation() {
@@ -35,7 +36,8 @@ export default function GroupReservation() {
   const [contact, setContact] = useRecoilState<string>(recoilReservationContact);
   const [email, setEmail] = useRecoilState<string>(recoilReservationEmail);
   const [timeRange, setTimeRange] = useRecoilState(recoilTimeRange);
-  
+  const [showComponents, setShowComponents] = useState<boolean>(true);
+
   const handleClick = (event:any) => {
     setShowGroupModal(false);
     setStoreState(false);
@@ -52,17 +54,13 @@ export default function GroupReservation() {
 }
 
   const handleDownClick = () => {
-    console.log('Down button clicked!');
+    setShowComponents(!showComponents);
   };
 
   const handleSelectComponent = (id:number) => {
     setVisibleComponentId(id);
 }
-  // const handleTimeSelected = (timeRange: string) => {
-  //   setTime(timeRange)
-  //   setSelectedTimeState(true);
-  // }
-
+  
 function formatDate(date: Date) : string {
   const days = ['(일)', '(월)', '(화)', '(수)', '(목)', '(금)', '(토)'];
   let day = days[date.getDay()];
@@ -100,9 +98,9 @@ function formatDate(date: Date) : string {
             childCnt={childCnt}
           />
           <ArrowBox>
-            <ArrowButton direction={false} onClick={handleDownClick} />
+            <ArrowButton direction={showComponents} onClick={handleDownClick} />
           </ArrowBox>
-          <div style={{display: "flex", borderBottom: "1px solid #CCCCCC", width:"100%"}}>
+          <FisrtSelectOptions>
             <StyledDiv>
               <CountContainer>
                 <Image 
@@ -113,12 +111,15 @@ function formatDate(date: Date) : string {
                 />
                 <Title>인원</Title>
                 <CountDisplay isSelected={adultCnt !== "0" || childCnt !== "0"}>
-                  {adultCnt !== "0" || childCnt !== "0" ? `일반  ${adultCnt}명 , 소인  ${childCnt}명` : "인원을 선택해주세요"}
+                  {adultCnt !== "0" ? `일반  ${adultCnt}명 , 소인  ${childCnt}명` : "인원을 선택해주세요"}
                 </CountDisplay>
               </CountContainer>
-              <CustomerSelect />
+              {
+                showComponents && <CustomerSelect />
+              }
             </StyledDiv>
-            <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
+
+            <BarZone show={showComponents} />
             <StyledDiv disabled={(adultCnt === "0" || childCnt === "0") && (adultCnt === "0")}>
               <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%"  }}>
                 <Image 
@@ -127,16 +128,18 @@ function formatDate(date: Date) : string {
                   height={24} 
                   alt="quickday" 
                 />
-                <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>날짜</h3>
+                <Title>날짜</Title>
                 <div style={{color:"#A2A2A2", borderBottom: selectedDateState ? "2px solid #DCDCDC" : "2px solid red", fontSize:"16px"}}>
                   { selectedDateState ? formatDate(selectedDate) : "날짜를 선택해주세요" }
                 </div>
               </div>
-              <DatePickerWrapper>
-                 <MyCalendar />
+              <DatePickerWrapper show={showComponents}>
+                  <MyCalendar />
               </DatePickerWrapper>
+              
             </StyledDiv>
-            <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
+            
+            <BarZone show={showComponents} />
             <StyledDiv disabled={!selectedDateState}>
               <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%" }}>
                   <Image 
@@ -145,38 +148,64 @@ function formatDate(date: Date) : string {
                       height={24} 
                       alt="Time" 
                   />
-                  <h3 style={{ marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>시간</h3>  
+                  <Title>시간</Title>  
                   <h3 style={{ borderBottom: selectedTimeState ? "2px solid #DCDCDC" : "2px solid red", fontSize:"16px", color:"#A2A2A2"}}>
                       { selectedTimeState ? timeRange : "시간을 선택해 주세요" }
                   </h3> 
               </div>
-              <ul style={{ display: "flex", flexWrap: "wrap", justifyContent:"center" }}>
-                  <TimePicker />
-              </ul>
+              <TimePickerContainer show={showComponents}>
+                <TimePicker />
+              </TimePickerContainer>
+           
             </StyledDiv>
-            <div style={{ display:"flex", borderLeft: "1px solid #EBEBEB", height:"350px", marginTop: "3%" }}></div>
+            <BarZone show={showComponents} />
             <StyledDiv disabled={!selectedTimeState}>
-              <div style={{ display:"flex", alignItems:"center", marginLeft:"7%" }}>
+              <div style={{ display:"flex", alignItems:"center", marginLeft:"3%" }}>
                 <Image 
                   src={"/icon/icon-main-quick-dining.svg"} 
                   width={29} 
                   height={24} 
                   alt="place" />
-                <h3 style={{marginLeft:"2%", marginRight:"3%", fontSize:"16px"}}>장소</h3>
+                <Title>장소</Title>
                 <div style={{color:"#A2A2A2", borderBottom: storeState ? "2px solid #DCDCDC" : "2px solid red" , fontSize:"16px"}}>
                   {  storeState ? selectedStoreName : "장소를 선택해주세요" }
                 </div>
               </div>
-            <Stores>
               {
-                StoreDataFnb.map((store, id) => (
-                  <SelectedStore key={id} id={id} store={store} onSelect={() => handleSelectComponent(id)} isSelected={id === visibleComponentId}/>
-                ))
+                
+                (<Stores show={showComponents}>
+                {
+                  StoreDataFnb.map((store, id) => (
+                    <SelectedStore key={id} id={id} store={store} onSelect={() => handleSelectComponent(id)} isSelected={id === visibleComponentId}/>
+                  ))
+                }
+                </Stores>)   
               }
-            </Stores>   
           </StyledDiv>
-          </div>
+          </FisrtSelectOptions>
+
+          <BorderLine />
+
+          <SecondSelectOptions>
+            <SelectHeaderBox>
+              <Image 
+                src="/icon/icon-main-quick-addition.svg" 
+                width={29} 
+                height={24} 
+                alt="Customer" 
+              />
+              <Title style={{width: "85px"}}>선택사항</Title>
+              <div style={{ width:"100%" , color:"#A2A2A2", borderBottom: storeState ? "2px solid #DCDCDC" : "2px solid red" , fontSize:"16px"}}>비즈니스 타입 / Circle 타입 / 추가요청 (노래방기기, 식사제공)</div>
+            </SelectHeaderBox>
+            <FLEX_1>
+              <SecondArrowBox>
+                <ArrowButton direction={showComponents} onClick={handleDownClick} />
+              </SecondArrowBox>
+
+            </FLEX_1>
+          </SecondSelectOptions>
           
+          <BorderLine />
         </Container>
       </ModalBackground>
     </>
@@ -198,7 +227,7 @@ const Container = styled.div`
     background-color: white;
     border-radius: 25px;
     width: 1700px;
-    height: 700px;
+    height: 820px;
 `;
 
 const HeaderBox = styled.div`
@@ -206,11 +235,36 @@ const HeaderBox = styled.div`
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
     border-bottom: 1px solid #CCCCCC;
-    height: 12%;
+    height: 10%;
     justify-content: center;
     display: flex;
     align-items: center;
     background: #ECECEC;
+`;
+
+const FisrtSelectOptions = styled.div`
+  display: flex;
+  border-bottom: 1px solid #CCCCCC;
+  width: 100%;
+`;
+
+const SecondSelectOptions = styled.div`
+  display: flex;
+  margin: 40px;
+  width: 100%;
+`;
+
+const BorderLine = styled.div`
+  width:100%;
+  border-top:5px solid #ECECEC;
+  border-bottom:1px solid #CCCCCC;
+`;
+
+const BarZone = styled.div<{show:boolean}>`
+  display: ${({ show }) => (show ? "flex" : "none")};
+  border-left: 1px solid #EBEBEB;
+  height:320px;
+  margin-top: 3%;
 `;
 
 const StyledDiv = styled.div<StyledDivProps>`
@@ -220,12 +274,16 @@ const StyledDiv = styled.div<StyledDivProps>`
   user-select: ${(props) => (props.disabled ? 'none' : 'auto')};
 `;
 
-const Stores = styled.div`
+const Stores = styled.div<{show: boolean}>`
     display: flex;
-    margin: 6%;
+    margin: ${({ show }) => (show ? '6%' : '2%')};
     flex-wrap: wrap;
     column-count: 2;
     row-gap: 0em 10px;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    max-height: ${({ show }) => (show ? '700px' : '0')}; 
+    opacity: ${({ show }) => (show ? '1' : '0')};
+    overflow: hidden;
 `;
 
 const DiningSelectBox = styled.div`
@@ -263,15 +321,19 @@ const ArrowBox = styled.div`
   right: 25px;
 `;
 
-const DatePickerWrapper = styled.div`
-    margin: 7%; 
+const DatePickerWrapper = styled.div<{show:boolean}>`
     text-align:center;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    max-height: ${({ show }) => (show ? '700px' : '0')}; 
+    opacity: ${({ show }) => (show ? '1' : '0')};
+    overflow: hidden;
 `;
 
 const Title = styled.h3`
     margin-left: 2%;
     margin-right: 3%;
     font-size: 16px;
+    font-weight: bold;
 `;
 
 const CountDisplay = styled.div<{isSelected: boolean}>`
@@ -283,8 +345,38 @@ const CountDisplay = styled.div<{isSelected: boolean}>`
 const CountContainer = styled.div`
     display: flex;
     align-items: center;
-    margin-left: 1%;
+    margin-left: 7%;
 `;
+
+const TimePickerContainer = styled.ul<{show: boolean}>`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    max-height: ${({ show }) => (show ? '700px' : '0')}; 
+    opacity: ${({ show }) => (show ? '1' : '0')};
+    overflow: hidden;
+`;
+
+const SelectHeaderBox = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const FLEX_1 = styled.div`
+  flex:1;
+`;
+
+const SecondArrowBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 65px;
+`;
+
+
+
+
 
 
 

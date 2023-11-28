@@ -1,5 +1,5 @@
 import { recoilAdultCnt, recoilChildCnt } from '@/store/stores/modalState';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
@@ -59,54 +59,48 @@ const Label = styled.div`
 `;
 
 interface CounterProps {
-  initialValue: number;
   label?: string;
   min?: number;
   max?: number;
 }
 
-const PeopleCount: React.FC<CounterProps> = ({ initialValue, label, min = 0, max = 100 }) => {
-  const [count, setCount] = useState<number>(initialValue);
+const PeopleCount: React.FC<CounterProps> = ({ label, min = 0, max = 100 }) => {
   const [childCnt, setChildCnt] = useRecoilState<string>(recoilChildCnt);
   const [adultCnt, setAdultCnt] = useRecoilState<string>(recoilAdultCnt);
-  const increment = (value: number) => () => {
-    if (count + value <= max) {
-      setCount(count + value);
-      
-      if(label === "일반") {
-        setAdultCnt((count + value).toString());
-      } else {
-        setChildCnt((count + value).toString());
-      }
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (label === "일반") {
+      setCount(parseInt(adultCnt));
+    } else {
+      setCount(parseInt(childCnt));
+    }
+  }, [adultCnt, childCnt, label]);
+
+  const changeCount = (delta: number) => {
+    const newCount = Math.min(max, Math.max(min, count + delta));
+    setCount(newCount);
+
+    if (label === "일반") {
+      setAdultCnt(newCount.toString());
+    } else {
+      setChildCnt(newCount.toString());
     }
   };
-
-  const decrement = (value: number) => () => {
-    if (count - value >= min) {
-      setCount(count - value);
-
-      if(label === "일반") {
-        setAdultCnt((count - value).toString());
-      } else {
-        setChildCnt((count - value).toString());
-      }
-    }
-  };
-
+  
   return (
     <CounterWrapper>
-      
       <CounterRow style={{padding: "20px", height: "40px", width: "100%", borderRadius: "10px", border: "1px solid #c8c8c8" }}>
-        <SignButton style={{ marginRight: "32%" }} onClick={decrement(1)}>➖</SignButton>
+        <SignButton style={{ marginRight: "32%" }} onClick={()=>changeCount(-1)}>➖</SignButton>
         <Value>{count}</Value>
-        <SignButton style={{ marginLeft: "32%" }} onClick={increment(1)}>➕</SignButton>
+        <SignButton style={{ marginLeft: "32%" }} onClick={()=>changeCount(1)}>➕</SignButton>
       </CounterRow>
       <CounterRow>
-        <Button onClick={increment(10)}>+10</Button>
-        <Button onClick={increment(20)}>+20</Button>
-        <Button onClick={increment(30)}>+30</Button>
-        <Button onClick={increment(50)}>+50</Button>
-        <Button onClick={increment(100)}>+100</Button>
+        <Button onClick={()=>changeCount(10)}>+10</Button>
+        <Button onClick={()=>changeCount(20)}>+20</Button>
+        <Button onClick={()=>changeCount(30)}>+30</Button>
+        <Button onClick={()=>changeCount(50)}>+50</Button>
+        <Button onClick={()=>changeCount(100)}>+100</Button>
       </CounterRow>
     </CounterWrapper>
   );

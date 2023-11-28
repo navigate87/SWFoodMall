@@ -23,7 +23,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
     childCnt,
   }) => {
     const isStepOneActive = adultCnt === "0" || childCnt === "0";
-    const isStepTwoActive = !isStepOneActive && !selectedDateState;
+    const isStepTwoActive = adultCnt !== "0" && !selectedDateState;
     const isStepThreeActive = selectedDateState && !selectedTimeState;
     const isStepFourActive = selectedTimeState && !storeState 
   
@@ -31,15 +31,15 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
       <FlexContainer>
         <StepContainer>
           <StepFlexBox>
-            <StepBox style={{ border: (isStepOneActive) ? "3px solid #26c46a" : "" }}>
-              { !(adultCnt === "0" || childCnt === "0") && (adultCnt !== "0") ? <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} /> : "step 1"}
+            <StepBox style={{ border: (adultCnt === "0") ? "3px solid #26c46a" : "" }}>
+              { (adultCnt !== "0") ? <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} /> : "step 1"}
             </StepBox>
-            <StepDots isActive={!isStepOneActive} isCompleted={false} />
+            <StepDots isActive={adultCnt !== "0"} isCompleted={false} />
           </StepFlexBox>
         </StepContainer>
         <StepContainer>
           <StepFlexBox>
-            <StepBox style={{ border: isStepTwoActive ? "3px solid #26c46a" : "", background: isStepOneActive && !selectedDateState ? "#C8C8C8" : "", color: isStepTwoActive ? "" : "#FFFFFF" }}>
+            <StepBox style={{ border: isStepTwoActive ? "3px solid #26c46a" : "", background: adultCnt === "0" && !selectedDateState ? "#C8C8C8" : "", color: isStepTwoActive ? "" : "#FFFFFF" }}>
               {selectedDateState ? <Image src={"/icon/check.svg"} alt="checked" width={28} height={28} /> : "step 2"}
             </StepBox>
             <StepDots isActive={selectedDateState} isCompleted={false} />

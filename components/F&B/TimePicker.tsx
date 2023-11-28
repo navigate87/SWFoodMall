@@ -56,21 +56,28 @@ interface TimePickerProps {
   onTimeSelected: (time: string) => void;
 }
 
-
-
 const TimePicker: React.FC = () => {
     const [selectedHour, setSelectedHour] = useState<number | null>(null);
     const [selectedDuration, setSelectedDuration] = useState<TimeOption | null>(null);
     const [timeRange, setTimeRange] = useRecoilState(recoilTimeRange);
-    const [selectedTimeState, setSelectedTimeState] = useRecoilState<boolean>(recoilTimeState)
+    const [selectedTimeState, setSelectedTimeState] = useRecoilState<boolean>(recoilTimeState);
+    const [userSelection, setUserSelection] = useState<{hour: number | null, duration: TimeOption | null}>({
+      hour: null,
+      duration: null
+    });
     const hours = Array.from({ length: 11 }, (_, index) => 10 + index);
     const durations: TimeOption[] = ['2시간', '3시간', '6시간', '9시간', '종일'];
-    
    
     const timeToMinutes = (time: string) => {
       const [hours, minutes] = time.split('시간').map(Number);
       return hours * 60 + (minutes || 0);
     };
+
+    const displayUserSelection = () => {
+      const hourString = selectedHour !== null ? `${selectedHour}:00` : '시간 없음';
+      const durationString = selectedDuration !== null ? selectedDuration : '기간 없음';
+      return `선택한 시간: ${hourString}, 선택한 기간: ${durationString}`;
+  };
     
     const updateTimeRange = (hour: number, duration: TimeOption) => {
       const startTime = `${hour < 10 ? `0${hour}` : hour}:00`;
@@ -88,7 +95,8 @@ const TimePicker: React.FC = () => {
     };
 
     const selectHour = (hour: number) => {
-        setSelectedHour(hour);  
+        setSelectedHour(hour);
+          
         if(selectedDuration) {
           updateTimeRange(hour, selectedDuration);
         }
@@ -96,6 +104,7 @@ const TimePicker: React.FC = () => {
   
     const selectDuration = (duration: TimeOption) => {
         setSelectedDuration(duration);
+        
         if(selectedHour != null) {
           updateTimeRange(selectedHour, duration);
         }

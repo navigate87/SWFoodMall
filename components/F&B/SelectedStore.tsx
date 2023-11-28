@@ -21,7 +21,6 @@ export default function SelectedStore({id, store, onSelect, isSelected}: {id:num
         setStoreState(true);
         setStoreCode(id.toString());
         onSelect(id);
-        
     }
 
     return (

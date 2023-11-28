@@ -16,7 +16,7 @@ interface ArrowButtonProps {
 const ArrowButton: React.FC<ArrowButtonProps> = ({ direction, onClick }) => {
     return (
       <Button direction={direction} onClick={onClick}>
-        <Image src={ direction ? "/icon/icon-arrow.svg" : "/icon/icon-arrow.svg"} alt='arrow' width={13} height={10} />
+        <Image src={ direction ? "/icon/icon-arrow-up.svg" : "/icon/icon-arrow-down.svg"} alt='arrow' width={13} height={10} />
       </Button>
     );
   };

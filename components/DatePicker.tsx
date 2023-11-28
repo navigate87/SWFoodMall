@@ -6,8 +6,8 @@ import styled from 'styled-components';
 // Styled components
 const CalendarWrapper = styled.div`
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 300px;
+  margin: 10px auto;
   border-collapse: collapse;
 `;
 
@@ -15,8 +15,8 @@ const CalendarHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
-  margin: 10px;
+  padding: 15px;
+  margin: 15px;
 `;
 
 const MonthLabel = styled.span`
