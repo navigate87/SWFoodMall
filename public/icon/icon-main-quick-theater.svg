@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="76" height="46" viewBox="0 0 76 46">
+    <defs>
+        <clipPath id="s1cgpndska">
+            <path style="fill:none" d="M0 0h76v33H0z"/>
+        </clipPath>
+    </defs>
+    <g data-name="반복 그리드 3" transform="translate(0 13)" style="clip-path:url(#s1cgpndska)">
+        <g transform="translate(-211 -1358)">
+            <circle data-name="타원 91" cx="4.5" cy="4.5" r="4.5" transform="translate(211 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 96" cx="4.5" cy="4.5" r="4.5" transform="translate(254 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 92" cx="4.5" cy="4.5" r="4.5" transform="translate(235 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 94" cx="4.5" cy="4.5" r="4.5" transform="translate(278 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 93" cx="4.5" cy="4.5" r="4.5" transform="translate(223 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 95" cx="4.5" cy="4.5" r="4.5" transform="translate(266 1358)" style="fill:#dcdcdc"/>
+        </g>
+        <g transform="translate(-211 -1346)">
+            <circle data-name="타원 91" cx="4.5" cy="4.5" r="4.5" transform="translate(211 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 96" cx="4.5" cy="4.5" r="4.5" transform="translate(254 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 92" cx="4.5" cy="4.5" r="4.5" transform="translate(235 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 94" cx="4.5" cy="4.5" r="4.5" transform="translate(278 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 93" cx="4.5" cy="4.5" r="4.5" transform="translate(223 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 95" cx="4.5" cy="4.5" r="4.5" transform="translate(266 1358)" style="fill:#dcdcdc"/>
+        </g>
+        <g transform="translate(-211 -1334)">
+            <circle data-name="타원 91" cx="4.5" cy="4.5" r="4.5" transform="translate(211 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 96" cx="4.5" cy="4.5" r="4.5" transform="translate(254 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 92" cx="4.5" cy="4.5" r="4.5" transform="translate(235 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 94" cx="4.5" cy="4.5" r="4.5" transform="translate(278 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 93" cx="4.5" cy="4.5" r="4.5" transform="translate(223 1358)" style="fill:#dcdcdc"/>
+            <circle data-name="타원 95" cx="4.5" cy="4.5" r="4.5" transform="translate(266 1358)" style="fill:#dcdcdc"/>
+        </g>
+    </g>
+    <path data-name="사각형 19522" transform="translate(19)" style="fill:#dcdcdc" d="M0 0h38v6H0z"/>
+</svg>

@@ -1,9 +1,9 @@
-import { modalConfirmShowState, recoilSecondStoreOption, recoilSecondStoreState, recoilStoreCode, modalShowState,recoilShowGroupModal, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilReserveOption, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState, recoilTimeRange } from "@/store/stores/modalState";
+import { modalConfirmShowState, recoilSecondStoreOption, recoilSecondStoreState, recoilStoreCode, modalShowState,recoilShowGroupModal, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilReserveOption, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState, recoilTimeRange, recoilTableTypeName, recoilTableTypeSelect, recoilTableTypeCode, recoilEventName, recoilPeriod } from "@/store/stores/modalState";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import Image from "next/image";
 import ArrowButton from "@/components/F&B/ArrowButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProgressIndicator from "@/components/F&B/ProgressIndicator";
 import SelectedStore from "@/components/F&B/SelectedStore";
 import SecondSelectedStore from "@/components/F&B/SecondSelectedStore";
@@ -11,11 +11,44 @@ import { StoreFirstDataFnb,StoreSelectDataType } from "@/data/StoreType";
 import CustomerSelect from "@/components/F&B/CustomerSelect";
 import TimePicker from "@/components/F&B/TimePicker";
 import MyCalendar from "@/components/DatePicker";
+import { TableTypeData } from "@/data/TableType";
+import TableTypeSelect from "@/components/F&B/TableType";
+import { useMutation, useQuery } from 'react-query';
+import { useCodeInfo } from "@/api/api";
+import { FacilitiesOne, FacilitiesThree, FacilitiesTwo } from "@/data/CodoInfo";
+import AdditionalFacilitiesThree from "@/components/F&B/AdditionalFacilitiesThree";
+import AdditionalFacilitiesTwo from "@/components/F&B/AdditionalFacilitiesTwo";
+import AdditionalFacilitiesOne from "@/components/F&B/AdditionalFacilitiesOne";
 
 type StyledDivProps = {
   disabled?: boolean;
   show?: boolean;
 }
+
+const facilityCodeMapThree: { [key in keyof FacilitiesThree]: { code: string;  } } = {
+  karaoke: { code: "FSA01",  },
+  amp: { code: "FSA02",  },
+  tv: { code: "FSA03",  },
+  meal: { code: "FSA04",  },
+};
+
+const facilityCodeMapTwo: { [key in keyof FacilitiesTwo]: { code: string;  } } = {
+  stage: { code: "FFI01",  },
+  banner: { code: "FFI03",  },
+  hanger: { code: "FFI04",  },
+  blind: { code: "FFI05",  },
+  partition: { code: "FFI06",  },
+  parkingSpace: { code: "FFI02" }
+};
+
+const facilityCodeMapOne: { [key in keyof FacilitiesOne]: { code: string;  } } = {
+  screen: { code: "FFA01",  },
+  projector: { code: "FFA02",  },
+  wirelessMic: { code: "FFA03",  },
+  pinMic: { code: "FFA04",  },
+};
+
+
 
 export default function GroupReservation() {
   
@@ -39,9 +72,112 @@ export default function GroupReservation() {
   const [email, setEmail] = useRecoilState<string>(recoilReservationEmail);
   const [timeRange, setTimeRange] = useRecoilState(recoilTimeRange);
   const [showComponents, setShowComponents] = useState<boolean>(true);
+  const [showSelectComponents, setShowSelectComponents] = useState<boolean>(false);
   const [secondStore , setSecondStore] = useRecoilState<string>(recoilSecondStoreOption)
   const [secondStoreState, setSecondStoreState] = useRecoilState<boolean>(recoilSecondStoreState);
   const [secondStoreCode, setSecondStoreCode] = useRecoilState<string>(recoilStoreCode);
+  const [tableTypeName , setTableTypeName] = useRecoilState<string>(recoilTableTypeName)
+  const [tableSelectState, setTableSelectState] = useRecoilState<boolean>(recoilTableTypeSelect);
+  const [tableTypeCode, setTableTypeCode] = useRecoilState<string>(recoilTableTypeCode);
+  const [visibleTableTypeId, setVisibleTableTypeId] = useState<number | null>(null);
+  const [eventName, setEventName] = useRecoilState<string>(recoilEventName);
+  const [period, setPeriod] = useRecoilState<string>(recoilPeriod);
+
+  const [facilitiesThree, setFacilitiesThree] = useState<FacilitiesThree>({
+    karaoke: true,
+    amp: true,
+    tv: true,
+    meal: true
+  });
+
+  const [facilitiesTwo, setFacilitiesTwo] = useState<FacilitiesTwo>({
+    stage: false,
+    banner: false,
+    hanger: false,
+    blind: false,
+    partition: false,
+    parkingSpace: false,
+  });
+
+  const [facilitiesOne, setFacilitiesOne] = useState<FacilitiesOne>({
+    screen: false,
+    projector: false,
+    wirelessMic: false,
+    pinMic: false,
+  }); 
+
+  const handleFacilityChangeThree = (facilityThree : keyof FacilitiesThree) => {
+    setFacilitiesThree(prev => ({
+      ...prev,
+      [facilityThree]: !prev[facilityThree]
+    }));
+
+    console.log("여기에 값은 뭐가 나옴? facilityThree",facilityThree);
+  };
+
+  const handleFacilityChangeTwo = (facilityTwo : keyof FacilitiesTwo) => {
+    setFacilitiesTwo(prev => ({
+      ...prev,
+      [facilityTwo]: !prev[facilityTwo]
+    }));
+
+    console.log("여기에 값은 뭐가 나옴? facilityTwo",facilityTwo);
+  };
+
+  const handleFacilityChangeOne = (facilityOne : keyof FacilitiesOne) => {
+    setFacilitiesOne(prev => ({
+      ...prev,
+      [facilityOne]: !prev[facilityOne]
+    }));
+
+    console.log("여기에 값은 뭐가 나옴? facilityOne",facilityOne);
+  };
+
+  const selectedFacilitiesThree = Object.entries(facilitiesThree)
+    .filter(([key, value]) => !value)
+    .map(([key]) => ({
+      code: facilityCodeMapThree[key as keyof FacilitiesThree].code,
+  }));
+
+  const selectedFacilitiesTwo = Object.entries(facilitiesTwo)
+  .filter(([key, value]) => !value)
+  .map(([key]) => ({
+    code: facilityCodeMapTwo[key as keyof FacilitiesTwo].code,
+  }));
+
+  const selectedFacilitiesOne = Object.entries(facilitiesOne)
+  .filter(([key, value]) => !value)
+  .map(([key]) => ({
+    code: facilityCodeMapOne[key as keyof FacilitiesOne].code,
+  }));
+
+  
+  
+  //const { data, isLoading, error } = useCodeInfo(); 
+
+  const isReservation = () => { // 예약하기 버튼 활성화 조건
+    if(
+        storeState                                      // 스토어 선택
+        && selectedDateState                            // 날짜 선택
+        && selectedTimeState                            // 시간 선택
+        && (adultCnt !== "0")       // 인원 선택
+        && name !== ""                                  // 이름 
+        && email !== ""                                 // 이메일    
+        && contact !== ""                               // 연락처
+        && errorText === false
+        && period !== ''
+        && eventName !== ''
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const isShowSelectOptions = () => {
+
+  }
+
   const handleClick = (event:any) => {
     setShowGroupModal(false);
     setStoreState(false);
@@ -55,13 +191,25 @@ export default function GroupReservation() {
     setErrorText(false);
     setTimeRange("");
     setSecondStore("");
-    setSecondStoreCode("")
+    setSecondStoreCode("");
+    setSecondStoreState(false);
+    setTableTypeName("");
+    setTableSelectState(false);
+    setTableTypeCode("");
+    setEventName("");
+    setPeriod("");
     document.body.style.overflow = "auto";
 }
 
   const handleDownClick = () => {
       setShowComponents(!showComponents);
+      setShowSelectComponents(!showSelectComponents);
     };
+
+  const handleShowSelectBoxClick = () => {
+    setShowSelectComponents(!showSelectComponents);
+    setShowComponents(!showComponents);
+  }
 
   const handleSelectComponent = (id:number) => {
     setVisibleComponentId(id);
@@ -70,6 +218,41 @@ export default function GroupReservation() {
   const handleSelectSecondType = (id:number) => {
     setVisibleSecondTypedId(id);
   }
+
+  const handleSelectTableType = (id:number) => {
+    setVisibleTableTypeId(id);
+  }
+
+  const handleModalConfirm = (event:any) => {
+    setShowConfirmModal(true)
+    setShowModal(false);
+    document.body.style.overflow = "hidden";
+}
+
+const handleEmailChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+  const email = e.target.value;
+
+  if(emailRegex.test(email)) {
+      setEmail(email)
+      setErrorText(false)
+  } else {
+      setEmail("");
+      setErrorText(true);
+  }
+}
+
+const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const regex = /^\d{10,11}$/;
+    const inputValue = e.target.value;
+
+    if (regex.test(inputValue) || inputValue === '') {
+      setContact(inputValue);
+    } else {
+      setContact("");
+    }
+}
   
   function formatDate(date: Date) : string {
     const days = ['(일)', '(월)', '(화)', '(수)', '(목)', '(금)', '(토)'];
@@ -79,6 +262,17 @@ export default function GroupReservation() {
 
     return `${date.getFullYear()}.${month}.${dayOfMonth} ${day}`;
   }
+
+  useEffect(() => {
+    // console.log("추가 요청 부대시설",selectedFacilitiesThree);
+    // console.log("부대시설",selectedFacilitiesTwo);
+    // console.log("음양 영상장비",selectedFacilitiesOne);
+  
+
+    const reservationReady = isReservation();
+    
+    
+  }, [storeState, selectedDateState, selectedTimeState, adultCnt, childCnt, name, email, contact, errorText, period, eventName]);
 
   return (
     <>
@@ -182,7 +376,6 @@ export default function GroupReservation() {
                 </div>
               </div>
               {
-                
                 (<Stores show={showComponents}>
                 {
                   StoreFirstDataFnb.map((store, id) => (
@@ -205,19 +398,23 @@ export default function GroupReservation() {
                 alt="Customer" 
               />
               <Title style={{width: "85px"}}>선택사항</Title>
-              <div style={{ width:"100%" , color:"#A2A2A2", borderBottom: storeState ? "2px solid #DCDCDC" : "2px solid red" , fontSize:"16px"}}>비즈니스 타입 / Circle 타입 / 추가요청 (노래방기기, 식사제공)</div>
+              <div style={{ width:"100%" , color:"#A2A2A2", borderBottom: storeState ? "2px solid #DCDCDC" : "2px solid red" , fontSize:"16px"}}>
+                {
+                   "비즈니스 타입 / Circle 타입 / 추가요청 (노래방기기, 식사제공)"
+                }
+              </div>
             </SelectHeaderBox>
             <FLEX_1>
               <SecondArrowBox>
-                <ArrowButton direction={showComponents} onClick={handleDownClick} />
+                <ArrowButton direction={showSelectComponents} onClick={handleShowSelectBoxClick} />
               </SecondArrowBox>
             </FLEX_1>
           </SecondSelectBox>
-          <FisrtSelectOptions>
+          <SecondSelectOptions show={showSelectComponents}>
             <StyledDiv style={{ flex: 1 }}>
               <Title style={{ marginLeft: "40px" }}>F&B 타입</Title>
               {
-                (<Stores style={{ marginLeft: "30px" }} show={true}>
+                (<Stores style={{ marginLeft: "30px" }} show={showSelectComponents}>
                 {
                   StoreSelectDataType.map((store, id) => (
                     
@@ -227,22 +424,120 @@ export default function GroupReservation() {
                 </Stores>)   
               }
             </StyledDiv>
-            <SecondBarZone show={true}/>
-            <StyledDiv style={{ flex: 1.5 }}>
-              <Title style={{ marginLeft: "20px" }}>테이블 타입</Title>
+            <SecondBarZone show={showSelectComponents}/>
+            <StyledDiv style={{ flex: 1 }}>
+              <Title style={{ marginLeft: "35px" }}>테이블 타입</Title>
+              <Stores style={{ marginLeft: "35px" }} show={showSelectComponents}>
+                {
+                  TableTypeData.map((table, id) => (
+                    
+                    <TableTypeSelect key={id} id={id} table={table} onSelect={() => handleSelectTableType(id)} isSelected={id === visibleTableTypeId}/>
+                  ))
+                }
+              </Stores>
             </StyledDiv>
-            <SecondBarZone show={true}/>
+            <SecondBarZone show={showSelectComponents}/>
             <StyledDiv style={{ flex: 2.5}}>
-              <Title style={{ marginLeft: "20px" }}>기본제공 부대시설</Title>
+              <Title style={{ marginLeft: "35px" }}>기본제공 부대시설</Title>
+              <BaseAmentiesBox>
+                <div style={{ flex: 1.5 }}>
+                  <div style={{ width: "160px", height: "190px", border: "1px solid #dcdcdc", marginTop: "11%", marginLeft: "20%", borderRadius: "10px" }}>
+                    <div style={{ display: "flex", width: "auto", height: "15%", background:"#ECECEC" , justifyContent: "center", alignItems: "center", borderTopLeftRadius: "10px", borderTopRightRadius: "10px",boxSizing: "border-box"  }}>
+                      <div style={{ fontSize: "13px", fontWeight: "bold" }}>음향 ∙ 영상장비</div>
+                    </div>
+                    <AdditionalFacilitiesOne 
+                      facilities={facilitiesOne}
+                      onFacilityChange={handleFacilityChangeOne}
+                    />
+                  </div>
+                </div>
+                <div style={{ flex: 3 }}>
+                  <div style={{ width: "320px", height: "190px", border: "1px solid #dcdcdc", marginTop: "5.5%", marginLeft: "15%", borderRadius: "10px" }}>
+                    <div style={{ display: "flex", width: "auto", height: "15%", background:"#ECECEC" , justifyContent: "center", alignItems: "center", borderTopLeftRadius: "10px", borderTopRightRadius: "10px",boxSizing: "border-box"  }}>
+                      <div style={{ fontSize: "13px", fontWeight: "bold" }}>부대시설</div>
+                    </div>
+                    <AdditionalFacilitiesTwo 
+                      facilities={facilitiesTwo}
+                      onFacilityChange={handleFacilityChangeTwo}
+                    />
+                  </div> 
+                </div>
+                <div style={{ flex: 1}} />
+              </BaseAmentiesBox>
             </StyledDiv>
-            <SecondBarZone show={true}/>
+            <SecondBarZone show={showSelectComponents}/>
             <StyledDiv style={{ flex: 1.8 }}>
-              <Title style={{ marginLeft: "20px" }}>추가요청 부대시설</Title>
+              <Title style={{ marginLeft: "60px" }}>추가요청 부대시설</Title>
+              <div style={{ width: "170px", height: "190px", border: "1px solid #dcdcdc", marginTop: "4.5%", marginLeft: "15%", borderRadius: "10px" }}>
+                <div style={{display: "flex", marginTop:"3%", marginLeft: "5%"}}>
+                  <AdditionalFacilitiesThree 
+                    facilities={facilitiesThree}
+                    onFacilityChange={handleFacilityChangeThree}
+                  />
+                </div>
+              </div>
             </StyledDiv>
-          </FisrtSelectOptions>
-          
-          
+          </SecondSelectOptions>
           <BorderBottomLine />
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-evenly", height: "15%" }}>
+            <div style={{flex:1}}>
+                <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+                    <Image
+                      src={"/image/require_input.png"} 
+                      width={28} 
+                      height={28} 
+                      alt="text" 
+                      style={{marginRight:"2%"}}
+                    />
+                    <div style={{ margin:"1%", fontSize:"18px", fontWeight: "bold" }}>필수입력<span style={{ color: "#f84040" }}>*</span></div>
+                </div>
+            </div>
+            
+            <div style={{flex:1}}>
+                <div style={{display:"flex", alignItems:"center", justifyContent:"center", flexDirection: "column"}}>
+                  <div style={{ width: "100%", margin: "10px"}}>
+                    <span style={{ marginRight:"4%" }}>예약자명<span style={{ color: "#f84040" }}>*</span></span>
+                    <input type="text" onChange={(e) => setName(e.target.value) } style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 예약자 이름 입력" />
+                  </div>
+                  <div style={{ width: "100%" }}>
+                    <span style={{ marginRight:"4%" }}>주최기간<span style={{ color: "#f84040" }}>*</span></span>
+                    <input type="text" onChange={(e) => setPeriod(e.target.value) } style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 성원애드피아" />
+                  </div>
+                </div>
+            </div>
+            <div style={{flex:1}}>
+                <div style={{display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column"}}>
+                  <div style={{ width: "100%", margin: "10px"}}>
+                    <div style={{ display: errorText ? "block" : "none", position:"absolute", left: "730px", bottom: "120px", fontSize: "10px", color: "#ff0000" }}>이메일 주소를 정확히 입력해주세요</div>
+                    <span style={{ marginRight:"4%" }}>이메일<span style={{ color: "#f84040" }}>*</span></span>
+                    <input type="text" onChange={handleEmailChange} style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 예) foodmail@foodmail.co.kr" />
+                    
+                  </div>
+                  <div style={{ width: "100%"}}>
+                    <span style={{ marginRight:"4%" }}>행사명<span style={{ color: "#f84040" }}>*</span></span>
+                    <input type="text" onChange={ (e) => setEventName(e.target.value) } style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 성원 송년회" />
+                  </div>
+                
+              </div>
+            </div>
+            <div style={{flex:1}}>
+                <div style={{display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column"}}>
+                  <div style={{ width: "100%", margin: "10px"}}>
+                    <span style={{ marginRight:"2%" }}>연락처<span style={{ color: "#f84040" }}>*</span></span>
+                    <input type="text"  onChange={ (e) => setContact(e.target.value) } style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 숫자만 입력해주세요." />
+                  </div>
+                  <div style={{ width: "100%", height: "35px"}}>
+                    
+                  </div>
+                </div>
+            </div>
+            <div style={{flex:1}}>
+                <div onClick={handleModalConfirm} style={{ pointerEvents: isReservation() ? "auto" : "none", marginLeft:"8%", cursor: isReservation() ? "pointer" : "", display:"flex",justifyContent:"center", background: isReservation() ? "#f84040" : "#f8f6f6", alignItems:"center", borderRadius:"25px", width:"200px", height:"70px" }}>
+                  <Image color="#FFF" src={ isReservation() ? "/icon/icon-main-quick-reservation-on.svg" : "/icon/icon-main-quick-reservation.svg"} alt="예약하기" width={40} height={40} />
+                  <div style={{ color:isReservation() ? "#FFF" : "#c8c8c8", marginLeft:"5%", fontSize: "20px",  }}>예약하기</div>
+                </div>
+            </div>
+          </div>
         </Container>
       </ModalBackground>
     </>
@@ -264,7 +559,7 @@ const Container = styled.div`
     background-color: white;
     border-radius: 25px;
     width: 1700px;
-    height: 820px;
+    height: 800px;
 `;
 
 const HeaderBox = styled.div`
@@ -283,6 +578,12 @@ const FisrtSelectOptions = styled.div`
   display: flex;
   border-bottom: 1px solid #CCCCCC;
   width: 100%;
+`;
+
+const SecondSelectOptions = styled.div<{show:boolean}>`
+display: ${({ show }) => (show ? "flex" : "none")};
+border-bottom: 1px solid #CCCCCC;
+width: 100%;
 `;
 
 const SecondSelectBox = styled.div`
@@ -416,6 +717,16 @@ const SecondArrowBox = styled.div`
   justify-content: flex-end;
   margin-right: 65px;
 `;
+
+const BaseAmentiesBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+
+
+
+
 
 
 

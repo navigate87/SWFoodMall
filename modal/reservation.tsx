@@ -82,7 +82,7 @@ export default function Reservation() {
             storeState                                      // 스토어 선택
             && selectedDateState                            // 날짜 선택
             && selectedTimeState                            // 시간 선택
-            && (adultCnt !== "0" || childCnt !== "0")       // 인원 선택
+            && (adultCnt !== "0")       // 인원 선택
             && name !== ""                                  // 이름 
             && email !== ""                                 // 이메일    
             && contact !== ""                               // 연락처
@@ -105,7 +105,7 @@ export default function Reservation() {
 
     useEffect(() => {
         const reservationReady = isReservation();
-
+        console.log("rerservationReady",isReservation() )
     }, [storeState, selectedDateState, selectedTimeState, adultCnt, childCnt, name, email, contact, errorText]);
     
     return (

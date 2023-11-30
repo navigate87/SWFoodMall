@@ -1,3 +1,4 @@
+import { FacilitiesThree } from "@/data/CodoInfo";
 import { Time } from "@/type/Time";
 import { atom, RecoilEnv } from "recoil";
 
@@ -102,3 +103,29 @@ export const recoilSecondStoreCode = atom<string>({
     key: 'SecondStoreCode',
     default: ''
 })
+
+export const recoilTableTypeCode = atom<string>({
+    key: 'TableTypeCode',
+    default: ''
+})
+
+export const recoilTableTypeSelect = atom<boolean>({
+    key: 'TableTypeCode',
+    default: false
+})
+
+export const recoilTableTypeName = atom<string>({
+    key: 'TableTypeName',
+    default: ''
+})
+
+export const recoilEventName = atom<string>({
+    key: 'EventName',
+    default: ''
+})
+
+export const recoilPeriod = atom<string>({
+    key: 'Period',
+    default: ''
+})
+

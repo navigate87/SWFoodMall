@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="43" viewBox="0 0 80 43">
+    <g transform="translate(-208 -1349)">
+        <circle data-name="타원 91" cx="4.5" cy="4.5" r="4.5" transform="translate(211 1358)" style="fill:#fff"/>
+        <circle data-name="타원 96" cx="4.5" cy="4.5" r="4.5" transform="translate(253 1358)" style="fill:#fff"/>
+        <circle data-name="타원 99" cx="4.5" cy="4.5" r="4.5" transform="translate(253 1383)" style="fill:#fff"/>
+        <circle data-name="타원 102" cx="4.5" cy="4.5" r="4.5" transform="translate(211 1383)" style="fill:#fff"/>
+        <circle data-name="타원 92" cx="4.5" cy="4.5" r="4.5" transform="translate(235 1358)" style="fill:#fff"/>
+        <circle data-name="타원 94" cx="4.5" cy="4.5" r="4.5" transform="translate(277 1358)" style="fill:#fff"/>
+        <circle data-name="타원 97" cx="4.5" cy="4.5" r="4.5" transform="translate(277 1383)" style="fill:#fff"/>
+        <circle data-name="타원 100" cx="4.5" cy="4.5" r="4.5" transform="translate(235 1383)" style="fill:#fff"/>
+        <circle data-name="타원 93" cx="4.5" cy="4.5" r="4.5" transform="translate(223 1358)" style="fill:#fff"/>
+        <circle data-name="타원 95" cx="4.5" cy="4.5" r="4.5" transform="translate(265 1358)" style="fill:#fff"/>
+        <circle data-name="타원 98" cx="4.5" cy="4.5" r="4.5" transform="translate(265 1383)" style="fill:#fff"/>
+        <circle data-name="타원 101" cx="4.5" cy="4.5" r="4.5" transform="translate(223 1383)" style="fill:#fff"/>
+        <path data-name="사각형 19521" transform="translate(250 1349)" style="fill:#fff" d="M0 0h38v6H0z"/>
+        <path data-name="사각형 19524" transform="translate(250 1374)" style="fill:#fff" d="M0 0h38v6H0z"/>
+        <path data-name="사각형 19522" transform="translate(208 1349)" style="fill:#fff" d="M0 0h38v6H0z"/>
+        <path data-name="사각형 19523" transform="translate(208 1374)" style="fill:#fff" d="M0 0h38v6H0z"/>
+    </g>
+</svg>
