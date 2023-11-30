@@ -83,6 +83,8 @@ export default function GroupReservation() {
   const [eventName, setEventName] = useRecoilState<string>(recoilEventName);
   const [period, setPeriod] = useRecoilState<string>(recoilPeriod);
 
+ 
+
   const [facilitiesThree, setFacilitiesThree] = useState<FacilitiesThree>({
     karaoke: true,
     amp: true,
@@ -151,8 +153,6 @@ export default function GroupReservation() {
     code: facilityCodeMapOne[key as keyof FacilitiesOne].code,
   }));
 
-  
-  
   //const { data, isLoading, error } = useCodeInfo(); 
 
   const isReservation = () => { // 예약하기 버튼 활성화 조건
@@ -174,8 +174,28 @@ export default function GroupReservation() {
     }
   }
 
-  const isShowSelectOptions = () => {
+   const isSecondSelectOptions = () => {
+    if(secondStoreState                                      // 스토어 선택
+    && tableSelectState                            // 날짜 선택 
+    ) {
+      return true;
+    } else {
+      return false;
+    } 
+  }
 
+  
+
+  const isShowSelectOptions = () => {
+    if(storeState                                      // 스토어 선택
+    && selectedDateState                            // 날짜 선택
+    && selectedTimeState                            // 시간 선택
+    && (adultCnt !== "0") 
+    ) {
+      return true;
+    } else {
+      return false;
+    } 
   }
 
   const handleClick = (event:any) => {
@@ -301,8 +321,8 @@ const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
             adultCnt={adultCnt}
             childCnt={childCnt}
           />
-          <ArrowBox>
-            <ArrowButton direction={showComponents} onClick={handleDownClick} />
+          <ArrowBox disabled={!isShowSelectOptions()}>
+            <ArrowButton direction={showComponents || !isShowSelectOptions()} onClick={handleDownClick} />
           </ArrowBox>
           <FisrtSelectOptions>
             <StyledDiv>
@@ -319,11 +339,11 @@ const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
                 </CountDisplay>
               </CountContainer>
               {
-                showComponents && <CustomerSelect />
+                (showComponents || !isShowSelectOptions()) && <CustomerSelect />
               }
             </StyledDiv>
 
-            <BarZone show={showComponents} />
+            <BarZone show={showComponents || !isShowSelectOptions()} />
             <StyledDiv disabled={(adultCnt === "0" || childCnt === "0") && (adultCnt === "0")}>
               <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%"  }}>
                 <Image 
@@ -337,13 +357,13 @@ const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
                   { selectedDateState ? formatDate(selectedDate) : "날짜를 선택해주세요" }
                 </div>
               </div>
-              <DatePickerWrapper show={showComponents}>
+              <DatePickerWrapper show={showComponents || !isShowSelectOptions()}>
                   <MyCalendar />
               </DatePickerWrapper>
               
             </StyledDiv>
             
-            <BarZone show={showComponents} />
+            <BarZone show={showComponents || !isShowSelectOptions()} />
             <StyledDiv disabled={!selectedDateState}>
               <div style={{ display:"flex", alignItems:"center", marginLeft:"1.5%" }}>
                   <Image 
@@ -357,12 +377,12 @@ const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
                       { selectedTimeState ? timeRange : "시간을 선택해 주세요" }
                   </h3> 
               </div>
-              <TimePickerContainer show={showComponents}>
+              <TimePickerContainer show={showComponents || !isShowSelectOptions()}>
                 <TimePicker />
               </TimePickerContainer>
            
             </StyledDiv>
-            <BarZone show={showComponents} />
+            <BarZone show={showComponents || !isShowSelectOptions()} />
             <StyledDiv disabled={!selectedTimeState}>
               <div style={{ display:"flex", alignItems:"center", marginLeft:"3%" }}>
                 <Image 
@@ -376,7 +396,7 @@ const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
                 </div>
               </div>
               {
-                (<Stores show={showComponents}>
+                (<Stores show={showComponents || !isShowSelectOptions()}>
                 {
                   StoreFirstDataFnb.map((store, id) => (
                     <SelectedStore key={id} id={id} store={store} onSelect={() => handleSelectComponent(id)} isSelected={id === visibleComponentId}/>
@@ -391,30 +411,38 @@ const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
 
           <SecondSelectBox>
             <SelectHeaderBox>
-              <Image 
+            
+            <Image 
                 src="/icon/icon-main-quick-addition.svg" 
                 width={29} 
                 height={24} 
                 alt="Customer" 
               />
               <Title style={{width: "85px"}}>선택사항</Title>
-              <div style={{ width:"100%" , color:"#A2A2A2", borderBottom: storeState ? "2px solid #DCDCDC" : "2px solid red" , fontSize:"16px"}}>
+              <div style={{  width:"100%" , color: "#A2A2A2", borderBottom: !isSecondSelectOptions() || !isShowSelectOptions() ? "2px solid red" : "2px solid #DCDCDC"  , fontSize:"16px", textAlign: "center"}}>
                 {
-                   "비즈니스 타입 / Circle 타입 / 추가요청 (노래방기기, 식사제공)"
+                  !isSecondSelectOptions() || !isShowSelectOptions() ? "추가 선택사항을 모두 선택해 주세요" :  `${secondStore} 타입 / ${tableTypeName} 타입 `
                 }
               </div>
+            
+              
             </SelectHeaderBox>
-            <FLEX_1>
-              <SecondArrowBox>
-                <ArrowButton direction={showSelectComponents} onClick={handleShowSelectBoxClick} />
+            <FLEX_1 >
+              <SecondArrowBox disabled={!isShowSelectOptions()}>
+                <ArrowButton direction={showSelectComponents || !isShowSelectOptions()} onClick={handleShowSelectBoxClick}  />
               </SecondArrowBox>
             </FLEX_1>
           </SecondSelectBox>
-          <SecondSelectOptions show={showSelectComponents}>
-            <StyledDiv style={{ flex: 1 }}>
+
+
+          <SecondSelectOptions show={showSelectComponents || !isShowSelectOptions()}>
+            {
+              showSelectComponents && isShowSelectOptions() 
+              &&
+              <StyledDiv style={{ flex: 1 }}>
               <Title style={{ marginLeft: "40px" }}>F&B 타입</Title>
               {
-                (<Stores style={{ marginLeft: "30px" }} show={showSelectComponents}>
+                (<Stores style={{ marginLeft: "30px" }} show={showSelectComponents || isShowSelectOptions()}>
                 {
                   StoreSelectDataType.map((store, id) => (
                     
@@ -424,10 +452,15 @@ const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
                 </Stores>)   
               }
             </StyledDiv>
-            <SecondBarZone show={showSelectComponents}/>
-            <StyledDiv style={{ flex: 1 }}>
+            }
+           
+            <SecondBarZone show={showSelectComponents || isShowSelectOptions()}/>
+            {
+              showSelectComponents && isShowSelectOptions() 
+              &&
+              <StyledDiv style={{ flex: 1 }}>
               <Title style={{ marginLeft: "35px" }}>테이블 타입</Title>
-              <Stores style={{ marginLeft: "35px" }} show={showSelectComponents}>
+              <Stores style={{ marginLeft: "35px" }} show={showSelectComponents || isShowSelectOptions()}>
                 {
                   TableTypeData.map((table, id) => (
                     
@@ -436,47 +469,59 @@ const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
                 }
               </Stores>
             </StyledDiv>
-            <SecondBarZone show={showSelectComponents}/>
-            <StyledDiv style={{ flex: 2.5}}>
-              <Title style={{ marginLeft: "35px" }}>기본제공 부대시설</Title>
-              <BaseAmentiesBox>
-                <div style={{ flex: 1.5 }}>
-                  <div style={{ width: "160px", height: "190px", border: "1px solid #dcdcdc", marginTop: "11%", marginLeft: "20%", borderRadius: "10px" }}>
-                    <div style={{ display: "flex", width: "auto", height: "15%", background:"#ECECEC" , justifyContent: "center", alignItems: "center", borderTopLeftRadius: "10px", borderTopRightRadius: "10px",boxSizing: "border-box"  }}>
-                      <div style={{ fontSize: "13px", fontWeight: "bold" }}>음향 ∙ 영상장비</div>
+            }
+            
+            <SecondBarZone show={showSelectComponents || isShowSelectOptions()}/>
+            {
+              showSelectComponents && isShowSelectOptions() 
+              &&
+              <StyledDiv style={{ flex: 2.5}}>
+                <Title style={{ marginLeft: "35px" }}>기본제공 부대시설</Title>
+                <BaseAmentiesBox>
+                  <div style={{ flex: 1.5 }}>
+                    <div style={{ width: "160px", height: "190px", border: "1px solid #dcdcdc", marginTop: "11%", marginLeft: "20%", borderRadius: "10px" }}>
+                      <div style={{ display: "flex", width: "auto", height: "15%", background:"#ECECEC" , justifyContent: "center", alignItems: "center", borderTopLeftRadius: "10px", borderTopRightRadius: "10px",boxSizing: "border-box"  }}>
+                        <div style={{ fontSize: "13px", fontWeight: "bold" }}>음향 ∙ 영상장비</div>
+                      </div>
+                        <AdditionalFacilitiesOne 
+                          facilities={facilitiesOne}
+                          onFacilityChange={handleFacilityChangeOne}
+                        />
                     </div>
-                    <AdditionalFacilitiesOne 
-                      facilities={facilitiesOne}
-                      onFacilityChange={handleFacilityChangeOne}
+                  </div>
+                  <div style={{ flex: 3 }}>
+                    <div style={{ width: "320px", height: "190px", border: "1px solid #dcdcdc", marginTop: "5.5%", marginLeft: "15%", borderRadius: "10px" }}>
+                      <div style={{ display: "flex", width: "auto", height: "15%", background:"#ECECEC" , justifyContent: "center", alignItems: "center", borderTopLeftRadius: "10px", borderTopRightRadius: "10px",boxSizing: "border-box"  }}>
+                        <div style={{ fontSize: "13px", fontWeight: "bold" }}>부대시설</div>
+                      </div>
+                      <AdditionalFacilitiesTwo 
+                        facilities={facilitiesTwo}
+                        onFacilityChange={handleFacilityChangeTwo}
+                      />
+                    </div> 
+                  </div>
+                  <div style={{ flex: 1}} />
+                </BaseAmentiesBox>
+              </StyledDiv>
+            }
+            
+            <SecondBarZone show={showSelectComponents || isShowSelectOptions()}/>
+            {
+              showSelectComponents && isShowSelectOptions() 
+              &&
+              <StyledDiv style={{ flex: 1.8 }}>
+                <Title style={{ marginLeft: "60px" }}>추가요청 부대시설</Title>
+                <div style={{ width: "170px", height: "190px", border: "1px solid #dcdcdc", marginTop: "4.5%", marginLeft: "15%", borderRadius: "10px" }}>
+                  <div style={{display: "flex", marginTop:"3%", marginLeft: "5%"}}>
+                    <AdditionalFacilitiesThree 
+                      facilities={facilitiesThree}
+                      onFacilityChange={handleFacilityChangeThree}
                     />
                   </div>
                 </div>
-                <div style={{ flex: 3 }}>
-                  <div style={{ width: "320px", height: "190px", border: "1px solid #dcdcdc", marginTop: "5.5%", marginLeft: "15%", borderRadius: "10px" }}>
-                    <div style={{ display: "flex", width: "auto", height: "15%", background:"#ECECEC" , justifyContent: "center", alignItems: "center", borderTopLeftRadius: "10px", borderTopRightRadius: "10px",boxSizing: "border-box"  }}>
-                      <div style={{ fontSize: "13px", fontWeight: "bold" }}>부대시설</div>
-                    </div>
-                    <AdditionalFacilitiesTwo 
-                      facilities={facilitiesTwo}
-                      onFacilityChange={handleFacilityChangeTwo}
-                    />
-                  </div> 
-                </div>
-                <div style={{ flex: 1}} />
-              </BaseAmentiesBox>
-            </StyledDiv>
-            <SecondBarZone show={showSelectComponents}/>
-            <StyledDiv style={{ flex: 1.8 }}>
-              <Title style={{ marginLeft: "60px" }}>추가요청 부대시설</Title>
-              <div style={{ width: "170px", height: "190px", border: "1px solid #dcdcdc", marginTop: "4.5%", marginLeft: "15%", borderRadius: "10px" }}>
-                <div style={{display: "flex", marginTop:"3%", marginLeft: "5%"}}>
-                  <AdditionalFacilitiesThree 
-                    facilities={facilitiesThree}
-                    onFacilityChange={handleFacilityChangeThree}
-                  />
-                </div>
-              </div>
-            </StyledDiv>
+              </StyledDiv>
+            }
+            
           </SecondSelectOptions>
           <BorderBottomLine />
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-evenly", height: "15%" }}>
@@ -659,12 +704,6 @@ const TextBoxBorderBot = styled.div`
     font-size: 20px;
 `;
 
-const ArrowBox = styled.div`
-  position: absolute;
-  top: 100px;
-  right: 25px;
-`;
-
 const DatePickerWrapper = styled.div<{show:boolean}>`
     text-align:center;
     transition: max-height 0.3s ease, opacity 0.3s ease;
@@ -712,10 +751,22 @@ const FLEX_1 = styled.div`
   flex:1;
 `;
 
-const SecondArrowBox = styled.div`
+const SecondArrowBox = styled.div<{disabled:boolean}>`
   display: flex;
   justify-content: flex-end;
   margin-right: 65px;
+  pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
+  user-select: ${(props) => (props.disabled ? 'none' : 'auto')};
+`;
+
+const ArrowBox = styled.div<{disabled:boolean}>`
+  position: absolute;
+  top: 100px;
+  right: 25px;
+  pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
+  user-select: ${(props) => (props.disabled ? 'none' : 'auto')};
 `;
 
 const BaseAmentiesBox = styled.div`
