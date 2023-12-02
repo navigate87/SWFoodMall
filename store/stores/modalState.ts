@@ -14,6 +14,11 @@ export const modalConfirmShowState = atom<boolean>({
     default: false,
 });
 
+export const recoilShowConfirmGroupModal = atom<boolean>({
+    key: "reservationConfirmGroupModal",
+    default: false,
+})
+
 export const recoilSelectedStore = atom<string>({
     key: "selectedStore",
     default: "",
@@ -129,3 +134,22 @@ export const recoilPeriod = atom<string>({
     default: ''
 })
 
+interface Facility {
+    code: string;
+    name: string;
+}
+
+export const recoilFacilitiesThree = atom<Facility[]>({
+    key: 'facilitiesThree',
+    default: [],
+})
+
+export const recoilFacilitiesTwo = atom<Facility[]>({
+    key: 'facilitiesTwo',
+    default: [],
+})
+
+export const recoilFacilitiesOne = atom<Facility[]>({
+    key: 'facilitiesOne',
+    default: [],
+})

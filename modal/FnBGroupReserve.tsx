@@ -1,5 +1,5 @@
-import { modalConfirmShowState, recoilSecondStoreOption, recoilSecondStoreState, recoilStoreCode, modalShowState,recoilShowGroupModal, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilReserveOption, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState, recoilTimeRange, recoilTableTypeName, recoilTableTypeSelect, recoilTableTypeCode, recoilEventName, recoilPeriod } from "@/store/stores/modalState";
-import { useRecoilState } from "recoil";
+import { recoilShowConfirmGroupModal, recoilSecondStoreOption, recoilSecondStoreState, recoilStoreCode, modalShowState,recoilShowGroupModal, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilReserveOption, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState, recoilTimeRange, recoilTableTypeName, recoilTableTypeSelect, recoilTableTypeCode, recoilEventName, recoilPeriod, recoilFacilitiesThree, recoilFacilitiesTwo, recoilFacilitiesOne } from "@/store/stores/modalState";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import Image from "next/image";
 import ArrowButton from "@/components/F&B/ArrowButton";
@@ -25,66 +25,88 @@ type StyledDivProps = {
   show?: boolean;
 }
 
-const facilityCodeMapThree: { [key in keyof FacilitiesThree]: { code: string;  } } = {
-  karaoke: { code: "FSA01",  },
-  amp: { code: "FSA02",  },
-  tv: { code: "FSA03",  },
-  meal: { code: "FSA04",  },
+const facilityCodeMapThree: { [key in keyof FacilitiesThree]: { code: string; name:string  } } = {
+  karaoke: { code: "FSA01", name: "노래방기기" },
+  amp: { code: "FSA02", name: "이동식 엠프" },
+  tv: { code: "FSA03", name: "이동식 TV" },
+  meal: { code: "FSA04", name: "식사제공" },
 };
 
-const facilityCodeMapTwo: { [key in keyof FacilitiesTwo]: { code: string;  } } = {
-  stage: { code: "FFI01",  },
-  banner: { code: "FFI03",  },
-  hanger: { code: "FFI04",  },
-  blind: { code: "FFI05",  },
-  partition: { code: "FFI06",  },
-  parkingSpace: { code: "FFI02" }
+const facilityCodeMapTwo: { [key in keyof FacilitiesTwo]: { code: string; name:string } } = {
+  stage: { code: "FFI01", name: "단상" },
+  banner: { code: "FFI03", name: "현수막" },
+  hanger: { code: "FFI04", name: "행거" },
+  blind: { code: "FFI05", name: "블라인드" },
+  partition: { code: "FFI06", name:"파티션"  },
+  parkingSpace: { code: "FFI02", name: "주차공간" }
 };
 
-const facilityCodeMapOne: { [key in keyof FacilitiesOne]: { code: string;  } } = {
-  screen: { code: "FFA01",  },
-  projector: { code: "FFA02",  },
-  wirelessMic: { code: "FFA03",  },
-  pinMic: { code: "FFA04",  },
+const facilityCodeMapOne: { [key in keyof FacilitiesOne]: { code: string; name:string } } = {
+  screen: { code: "FFA01", name:"스크린" },
+  projector: { code: "FFA02", name:"빔프로젝트"  },
+  wirelessMic: { code: "FFA03", name:"무선 마이크" },
+  pinMic: { code: "FFA04", name:"핀 마이크" },
 };
 
 
 
 export default function GroupReservation() {
   
-  const [currentValue, setCurrentValue] = useRecoilState<string>(recoilReserveOption);
-  const [showGroupModal, setShowGroupModal] = useRecoilState<boolean>(recoilShowGroupModal);
-  const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
-  const [showConfirmModal, setShowConfirmModal] = useRecoilState<boolean>(modalConfirmShowState);
-  const [selectedStoreName, setSelectedStoreName] = useRecoilState<string>(recoilSelectedStore);
-  const [storeState, setStoreState] = useRecoilState<boolean>(recoilStoreState);
+  // 현재 다이닝인지,F&B인지 
+  const [currentValue, setCurrentValue] = useRecoilState<string>(recoilReserveOption);                                  
+  // F&B 팝업
+  const [showGroupModal, setShowGroupModal] = useRecoilState<boolean>(recoilShowGroupModal);                            
+  // F&B 예약 내용 확인 팝업
+  const [showConfirmGroupModal, setShowConfirmGroupModal] = useRecoilState<boolean>(recoilShowConfirmGroupModal);       
+  // 성인 일반 Count
+  const [adultCnt, setAdultCnt] = useRecoilState<string>(recoilAdultCnt);
+  // 소인 어린이 Count
+  const [childCnt, setChildCnt] = useRecoilState<string>(recoilChildCnt);
+  // 날짜 & 날짜 선택 상태 체크
   const [selectedDate, setSelectedDate] = useRecoilState<Date>(recoilSelectedDate);
   const [selectedDateState, setSelectedDateState] = useRecoilState<boolean>(recoilDateSelectState);
+  // 장소명  & 장소 선택 상태 체크
+  const [selectedStoreName, setSelectedStoreName] = useRecoilState<string>(recoilSelectedStore);                       
+  const [storeState, setStoreState] = useRecoilState<boolean>(recoilStoreState);
+  // 시간 선택 상태 & 시간 간격
   const [selectedTimeState, setSelectedTimeState] = useRecoilState<boolean>(recoilTimeState); 
-  const [childCnt, setChildCnt] = useRecoilState<string>(recoilChildCnt);
-  const [adultCnt, setAdultCnt] = useRecoilState<string>(recoilAdultCnt);
-  const [errorText, setErrorText] = useState<boolean>(false);
-  const [time, setTime] = useRecoilState<string>(recoilSelectedTime);
-  const [visibleComponentId, setVisibleComponentId] = useState<number | null>(null);
-  const [visibleSecondTypeId, setVisibleSecondTypedId] = useState<number | null>(null);
-  const [name, setName] = useRecoilState<string>(recoilReservationName);
-  const [contact, setContact] = useRecoilState<string>(recoilReservationContact);
-  const [email, setEmail] = useRecoilState<string>(recoilReservationEmail);
   const [timeRange, setTimeRange] = useRecoilState(recoilTimeRange);
+  // 인원 날짜 시간 장소 전부 체크 상태시 선택사항 열리는 조건 상태
   const [showComponents, setShowComponents] = useState<boolean>(true);
+  // 선택 사항 열리는 조건 상태
   const [showSelectComponents, setShowSelectComponents] = useState<boolean>(false);
+  // 이메일 에러 체크 
+  const [errorText, setErrorText] = useState<boolean>(false);
+  // 장소 선택된 ID값
+  const [visibleComponentId, setVisibleComponentId] = useState<number | null>(null);
+  // F&B 타입 선택 ID값
+  const [visibleSecondTypeId, setVisibleSecondTypedId] = useState<number | null>(null);
+  // 테이블 타입 선택 ID 값
+  const [visibleTableTypeId, setVisibleTableTypeId] = useState<number | null>(null);
+  // F&B 타입 명 & F&B 타입 선택 상태 & F&B 선택 Code(디비에 보낼 데이터)
   const [secondStore , setSecondStore] = useRecoilState<string>(recoilSecondStoreOption)
   const [secondStoreState, setSecondStoreState] = useRecoilState<boolean>(recoilSecondStoreState);
   const [secondStoreCode, setSecondStoreCode] = useRecoilState<string>(recoilStoreCode);
+  // 테이블 타입명 & 테이블 타입 선택 상태 & 테이블 선택 코드(디비에 보낼 데이터)
   const [tableTypeName , setTableTypeName] = useRecoilState<string>(recoilTableTypeName)
   const [tableSelectState, setTableSelectState] = useRecoilState<boolean>(recoilTableTypeSelect);
   const [tableTypeCode, setTableTypeCode] = useRecoilState<string>(recoilTableTypeCode);
-  const [visibleTableTypeId, setVisibleTableTypeId] = useState<number | null>(null);
+  // 예약자명
+  const [name, setName] = useRecoilState<string>(recoilReservationName);
+  // 연락처
+  const [contact, setContact] = useRecoilState<string>(recoilReservationContact);
+  // 이메일
+  const [email, setEmail] = useRecoilState<string>(recoilReservationEmail);
+  
+  // 행사명
   const [eventName, setEventName] = useRecoilState<string>(recoilEventName);
+  // 주최기간
   const [period, setPeriod] = useRecoilState<string>(recoilPeriod);
-
- 
-
+  
+  const setFacilitiesItemThree = useSetRecoilState(recoilFacilitiesThree);
+  const setFacilitiesItemTwo = useSetRecoilState(recoilFacilitiesTwo);
+  const setFacilitiesItemOne = useSetRecoilState(recoilFacilitiesOne);
+  // 추가 요청 부대시설 체크 상태
   const [facilitiesThree, setFacilitiesThree] = useState<FacilitiesThree>({
     karaoke: true,
     amp: true,
@@ -92,6 +114,7 @@ export default function GroupReservation() {
     meal: true
   });
 
+  // 부대시설 체크 상태 default false
   const [facilitiesTwo, setFacilitiesTwo] = useState<FacilitiesTwo>({
     stage: false,
     banner: false,
@@ -101,6 +124,7 @@ export default function GroupReservation() {
     parkingSpace: false,
   });
 
+  // 음향 영상장비 체크상태 default false
   const [facilitiesOne, setFacilitiesOne] = useState<FacilitiesOne>({
     screen: false,
     projector: false,
@@ -108,51 +132,59 @@ export default function GroupReservation() {
     pinMic: false,
   }); 
 
+  // 추가 요청 부대시설 체크
   const handleFacilityChangeThree = (facilityThree : keyof FacilitiesThree) => {
     setFacilitiesThree(prev => ({
       ...prev,
       [facilityThree]: !prev[facilityThree]
     }));
 
-    console.log("여기에 값은 뭐가 나옴? facilityThree",facilityThree);
+    console.log("추가요청 부대시설? facilityThree",facilityThree);
   };
 
+  // 기본제공부대시설 - 부대시설 체크 
   const handleFacilityChangeTwo = (facilityTwo : keyof FacilitiesTwo) => {
     setFacilitiesTwo(prev => ({
       ...prev,
       [facilityTwo]: !prev[facilityTwo]
     }));
 
-    console.log("여기에 값은 뭐가 나옴? facilityTwo",facilityTwo);
+    console.log("부대시설? facilityTwo",facilityTwo);
   };
 
+  // 기본제공부대시설 - 음향 영상장비 체크
   const handleFacilityChangeOne = (facilityOne : keyof FacilitiesOne) => {
     setFacilitiesOne(prev => ({
       ...prev,
       [facilityOne]: !prev[facilityOne]
     }));
 
-    console.log("여기에 값은 뭐가 나옴? facilityOne",facilityOne);
+    console.log("음향 영상장비? facilityOne",facilityOne);
   };
-
+  
+  // 추가 요청 부대 시설 코드 (디비에 보낼 데이터)
   const selectedFacilitiesThree = Object.entries(facilitiesThree)
     .filter(([key, value]) => !value)
     .map(([key]) => ({
       code: facilityCodeMapThree[key as keyof FacilitiesThree].code,
+      name: facilityCodeMapThree[key as keyof FacilitiesThree].name,
   }));
-
+  // 부대 시설 코드(디비에 보낼 데이터)
   const selectedFacilitiesTwo = Object.entries(facilitiesTwo)
   .filter(([key, value]) => !value)
   .map(([key]) => ({
     code: facilityCodeMapTwo[key as keyof FacilitiesTwo].code,
+    name: facilityCodeMapTwo[key as keyof FacilitiesTwo].name
   }));
-
+  // 음향 영상 장비(디비에 보낼 데이터)
   const selectedFacilitiesOne = Object.entries(facilitiesOne)
   .filter(([key, value]) => !value)
   .map(([key]) => ({
     code: facilityCodeMapOne[key as keyof FacilitiesOne].code,
+    name: facilityCodeMapOne[key as keyof FacilitiesOne].name
   }));
 
+  // Init Data 확인용
   //const { data, isLoading, error } = useCodeInfo(); 
 
   const isReservation = () => { // 예약하기 버튼 활성화 조건
@@ -160,7 +192,7 @@ export default function GroupReservation() {
         storeState                                      // 스토어 선택
         && selectedDateState                            // 날짜 선택
         && selectedTimeState                            // 시간 선택
-        && (adultCnt !== "0")       // 인원 선택
+        && (adultCnt !== "0")                           // 인원 선택
         && name !== ""                                  // 이름 
         && email !== ""                                 // 이메일    
         && contact !== ""                               // 연락처
@@ -174,9 +206,9 @@ export default function GroupReservation() {
     }
   }
 
-   const isSecondSelectOptions = () => {
-    if(secondStoreState                                      // 스토어 선택
-    && tableSelectState                            // 날짜 선택 
+  const isSecondSelectOptions = () => {
+    if(secondStoreState                            // F&B 선택
+    && tableSelectState                            //  선택 
     ) {
       return true;
     } else {
@@ -184,13 +216,11 @@ export default function GroupReservation() {
     } 
   }
 
-  
-
   const isShowSelectOptions = () => {
-    if(storeState                                      // 스토어 선택
+    if(storeState                                   // 스토어 선택
     && selectedDateState                            // 날짜 선택
     && selectedTimeState                            // 시간 선택
-    && (adultCnt !== "0") 
+    && (adultCnt !== "0")                           // 인원 선택
     ) {
       return true;
     } else {
@@ -219,7 +249,7 @@ export default function GroupReservation() {
     setEventName("");
     setPeriod("");
     document.body.style.overflow = "auto";
-}
+  }
 
   const handleDownClick = () => {
       setShowComponents(!showComponents);
@@ -244,35 +274,34 @@ export default function GroupReservation() {
   }
 
   const handleModalConfirm = (event:any) => {
-    setShowConfirmModal(true)
-    setShowModal(false);
+    setShowConfirmGroupModal(true)
+    setShowGroupModal(false);
     document.body.style.overflow = "hidden";
-}
-
-const handleEmailChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
-  const email = e.target.value;
-
-  if(emailRegex.test(email)) {
-      setEmail(email)
-      setErrorText(false)
-  } else {
-      setEmail("");
-      setErrorText(true);
   }
-}
 
-const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const regex = /^\d{10,11}$/;
+  const handleEmailChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const email = e.target.value;
+
+    if(emailRegex.test(email)) {
+        setEmail(email)
+        setErrorText(false)
+    } else {
+        setEmail("");
+        setErrorText(true);
+    }
+  }
+
+  const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const regex = /^\d{10,11}$/;
     const inputValue = e.target.value;
-
     if (regex.test(inputValue) || inputValue === '') {
       setContact(inputValue);
     } else {
       setContact("");
     }
-}
+  }
   
   function formatDate(date: Date) : string {
     const days = ['(일)', '(월)', '(화)', '(수)', '(목)', '(금)', '(토)'];
@@ -284,15 +313,16 @@ const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
   }
 
   useEffect(() => {
-    // console.log("추가 요청 부대시설",selectedFacilitiesThree);
-    // console.log("부대시설",selectedFacilitiesTwo);
-    // console.log("음양 영상장비",selectedFacilitiesOne);
-  
-
     const reservationReady = isReservation();
+
+    setFacilitiesItemThree(selectedFacilitiesThree);
+    setFacilitiesItemTwo(selectedFacilitiesTwo);
+    setFacilitiesItemOne(selectedFacilitiesOne);
     
-    
-  }, [storeState, selectedDateState, selectedTimeState, adultCnt, childCnt, name, email, contact, errorText, period, eventName]);
+
+    // console.log("값 뭐 들어있을까?", selectedFacilitiesThree);
+
+  }, [storeState, selectedDateState, selectedTimeState, adultCnt, childCnt, name, email, contact, errorText, period, eventName,facilitiesThree, facilitiesTwo,facilitiesOne]);
 
   return (
     <>
@@ -553,7 +583,7 @@ const handleContact = (e: React.ChangeEvent<HTMLInputElement>) => {
             <div style={{flex:1}}>
                 <div style={{display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column"}}>
                   <div style={{ width: "100%", margin: "10px"}}>
-                    <div style={{ display: errorText ? "block" : "none", position:"absolute", left: "730px", bottom: "120px", fontSize: "10px", color: "#ff0000" }}>이메일 주소를 정확히 입력해주세요</div>
+                    <div style={{ display: errorText ? "block" : "none", position:"absolute", left: "730px", bottom: showSelectComponents ? "120px" : "110px" , fontSize: "10px", color: "#ff0000" }}>이메일 주소를 정확히 입력해주세요</div>
                     <span style={{ marginRight:"4%" }}>이메일<span style={{ color: "#f84040" }}>*</span></span>
                     <input type="text" onChange={handleEmailChange} style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 예) foodmail@foodmail.co.kr" />
                     

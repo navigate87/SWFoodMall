@@ -219,7 +219,7 @@ const ContentBox = styled.div`
 `;
 
 const Contents = styled.div`
-  width: 380px;
+  width: 370px;
   height: 30px;
   margin-left: 14px;
   margin-top: 3px;

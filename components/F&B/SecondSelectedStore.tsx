@@ -14,7 +14,7 @@ export default function SecondSelectedStore({id, store, onSelect, isSelected}: {
     const selectStore = () => {
         setSecondStore(store.alt);
         setSecondStoreState(true);
-        setSecondStoreCode(id.toString());
+        setSecondStoreCode(store.code);
         onSelect(id);
     }
 

@@ -14,7 +14,7 @@ export default function SelectedStore({id, store, onSelect, isSelected}: {id:num
     const selectStore = () => {
         setSelectedStoreName(store.alt);
         setStoreState(true);
-        setStoreCode(id.toString());
+        setStoreCode(store.code);
         onSelect(id);
     }
 

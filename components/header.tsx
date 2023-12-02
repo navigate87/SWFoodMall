@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import Image from "next/image";
 import { useRecoilState } from "recoil";
-import { modalConfirmShowState, modalShowState, recoilReserveOption, recoilShowGroupModal } from "@/store/stores/modalState";
+import { modalConfirmShowState, modalShowState, recoilReserveOption, recoilShowGroupModal,recoilShowConfirmGroupModal } from "@/store/stores/modalState";
 import Reservation from "@/modal/reservation";
 import ConfirmModal from "@/modal/confirmReservation";
 import { useState } from "react";
 import GroupReservation from "@/modal/FnBGroupReserve";
+import ConfirmGroupModal from "@/modal/confirmGroupReservation";
 
 type show = {
   show?:boolean;
@@ -15,6 +16,7 @@ export default function Header() {
   const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
   const [showConfirmModal, setShowConfirmModal] = useRecoilState<boolean>(modalConfirmShowState);
   const [showGroupModal, setShowGroupModal] = useRecoilState<boolean>(recoilShowGroupModal);
+  const [showConfirmGroupModal, setShowConfirmGroupModal] = useRecoilState<boolean>(recoilShowConfirmGroupModal);
   
   const handleClick = (event:any) => {
     setShowModal(true);
@@ -32,6 +34,7 @@ export default function Header() {
       document.body.style.overflow = "hidden";
     } else if(innerText === "F&B") {
       setShowGroupModal(true);
+      //setShowConfirmGroupModal(true);
       document.body.style.overflow = "hidden";
     }
 
@@ -91,6 +94,7 @@ export default function Header() {
       {showModal && <Reservation />} 
       {showGroupModal && <GroupReservation />}
       {showConfirmModal && <ConfirmModal />}
+      {showConfirmGroupModal && <ConfirmGroupModal />}
     </>
     
   );

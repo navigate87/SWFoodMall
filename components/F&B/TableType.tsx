@@ -15,7 +15,7 @@ export default function TableTypeSelect({id, table, onSelect, isSelected}: {id:n
     const selectStore = () => {
         setTableTypeName(table.alt);
         setTableSelectState(true);
-        setTableTypeCode(id.toString());
+        setTableTypeCode(table.code);
         onSelect(id);
     }
 

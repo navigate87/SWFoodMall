@@ -1,6 +1,6 @@
-import { ReservationRequest, ReservationResponse } from "@/type/Reservation";
+import { ReservationRequest, ReservationResponse, ReservationGroupRequest } from "@/type/Reservation";
 import axios from "axios";
-import { GET_CODE_INFO, RESERVATION_REQUEST_DINING } from "./pathlist";
+import { GET_CODE_INFO, RESERVATION_REQUEST_DINING, RESERVATION_REQUEST_FB } from "./pathlist";
 import { useQuery } from "react-query";
 axios.defaults.withCredentials = false;
 axios.defaults.timeout = 5000;
@@ -52,5 +52,13 @@ export const reserveDining = async ( data: ReservationRequest ) : Promise<Reserv
     });
 
     return response.data;
+}
+
+export const reserveFnb = async ( data: ReservationGroupRequest ) : Promise<ReservationResponse> => {
+  const response = await axios.post<ReservationResponse>(`${API_SERVER_BASE_URL}${RESERVATION_REQUEST_FB}`, data, {
+      withCredentials: true,
+  });
+  console.log("여기 데이터 어떻게 저장되니?", response.data);
+  return response.data;
 }
 
