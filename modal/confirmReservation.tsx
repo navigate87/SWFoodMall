@@ -24,6 +24,13 @@ export default function ConfirmModal() {
 
   const { mutate, isLoading, isError, data } = useMutation(reserveDining);
   
+  const formatPhoneNumber = (phoneNumber:string) => {
+    if (phoneNumber.length !== 11) {
+      return 'Invalid number'; // 유효하지 않은 번호일 경우
+    }
+    // 번호 형식에 맞게 대시(-)를 추가
+    return phoneNumber.slice(0, 3) + '-' + phoneNumber.slice(3, 7) + '-' + phoneNumber.slice(7);
+  }
 
   function formatDate(date: Date) : string {
     const days = ['(일)', '(월)', '(화)', '(수)', '(목)', '(금)', '(토)'];
@@ -133,7 +140,7 @@ export default function ConfirmModal() {
                   <Contents>
                     <KeyInfo>연락처</KeyInfo>
                     <Bar></Bar>
-                    <ValueInfo>{contact}</ValueInfo>
+                    <ValueInfo>{formatPhoneNumber(contact)}</ValueInfo>
                   </Contents>
                   <Contents>
                     <KeyInfo>식당</KeyInfo>
@@ -219,7 +226,7 @@ const ContentBox = styled.div`
 `;
 
 const Contents = styled.div`
-  width: 370px;
+  width: 380px;
   height: 30px;
   margin-left: 14px;
   margin-top: 3px;

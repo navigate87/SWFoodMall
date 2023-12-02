@@ -210,29 +210,29 @@ export default function Reservation() {
                                 alt="text" 
                                 style={{marginRight:"2%"}}
                             />
-                            <div style={{ margin:"1%" }}>필수입력<span style={{ color: "#f84040" }}>*</span></div>
+                            <div style={{ margin:"1%", fontSize: "18px", fontWeight: "bold" }}>필수입력<span style={{ color: "#f84040" }}>*</span></div>
                         </div>
                     </div>
                     
                     <div style={{flex:1}}>
-                        <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+                        <div style={{display:"flex", alignItems:"center", }}>
                             <span style={{ marginRight:"1%" }}>예약자명<span style={{ color: "#f84040" }}>*</span></span>
                             <input type="text" onChange={(e) => setName(e.target.value) } style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 예약자 이름 입력" />
                         </div>
                         
                     </div>
                     <div style={{flex:1}}>
-                        <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+                        <div style={{display:"flex", alignItems:"center", }}>
+                            <div style={{ display: errorText ? "block" : "none", position:"absolute", left: "720px", bottom: "85px" , fontSize: "10px", color: "#ff0000" }}>이메일 주소를 정확히 입력해주세요</div> 
                             <div style={{ marginRight:"2%" }}>이메일<span style={{ color: "#f84040" }}>*</span></div>
                             <input type="text" onChange={handleEmailChange} style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 예) foodmail@foodmail.co.kr" />
                         </div>
                         
                     </div>
                     <div style={{flex:1}}>
-                        <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+                        <div style={{display:"flex", alignItems:"center", }}>
                         <div style={{ marginRight:"2%" }}>연락처<span style={{ color: "#f84040" }}>*</span></div>
                             <input type="text" onChange={ (e) => setContact(e.target.value) } style={{width:"200px", height: "35px", border:"2px solid #cbcbcb", borderRadius:"5px", fontSize:"12px"}} placeholder=" 숫자만 입력해주세요." />
-                            <div style={{ display: errorText ? "block" : "none", position:"absolute", marginBottom: "55px", marginRight: "41%" , fontSize: "10px", color: "#ff0000" }}>이메일 주소를 정확히 입력해주세요</div>
                         </div>
                     </div>
                     <div style={{flex:1}}>
