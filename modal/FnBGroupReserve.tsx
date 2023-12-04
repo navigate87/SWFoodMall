@@ -138,8 +138,6 @@ export default function GroupReservation() {
       ...prev,
       [facilityThree]: !prev[facilityThree]
     }));
-
-    console.log("추가요청 부대시설? facilityThree",facilityThree);
   };
 
   // 기본제공부대시설 - 부대시설 체크 
@@ -148,8 +146,6 @@ export default function GroupReservation() {
       ...prev,
       [facilityTwo]: !prev[facilityTwo]
     }));
-
-    console.log("부대시설? facilityTwo",facilityTwo);
   };
 
   // 기본제공부대시설 - 음향 영상장비 체크
@@ -158,8 +154,6 @@ export default function GroupReservation() {
       ...prev,
       [facilityOne]: !prev[facilityOne]
     }));
-
-    console.log("음향 영상장비? facilityOne",facilityOne);
   };
   
   // 추가 요청 부대 시설 코드 (디비에 보낼 데이터)
@@ -319,9 +313,6 @@ export default function GroupReservation() {
     setFacilitiesItemTwo(selectedFacilitiesTwo);
     setFacilitiesItemOne(selectedFacilitiesOne);
     
-
-    // console.log("값 뭐 들어있을까?", selectedFacilitiesThree);
-
   }, [storeState, selectedDateState, selectedTimeState, adultCnt, childCnt, name, email, contact, errorText, period, eventName,facilitiesThree, facilitiesTwo,facilitiesOne]);
 
   return (
@@ -490,7 +481,7 @@ export default function GroupReservation() {
               &&
               <StyledDiv style={{ flex: 1 }}>
               <Title style={{ marginLeft: "35px" }}>테이블 타입</Title>
-              <Stores style={{ marginLeft: "35px" }} show={showSelectComponents || isShowSelectOptions()}>
+              <Stores style={{ marginLeft: "35px" }} show={showSelectComponents && isShowSelectOptions()}>
                 {
                   TableTypeData.map((table, id) => (
                     
