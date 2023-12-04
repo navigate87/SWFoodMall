@@ -131,33 +131,41 @@ export default function ConfirmGroupModal() {
       mem_id: 'foodmall_test',
     }
 
-    mutate(data);
+    mutate(data, {
+      onSuccess: () => {
+        alert('예약이 완료되었습니다.');
+        setShowConfirmGroupModal(false);
+        document.body.style.overflow = "auto";
+        setShowGroupModal(false);
+        setStoreState(false);
+        setStoreCode("");
+        setSelectedStoreName("");
+        setSelectedTimeState(false);
+        setSelectedDateState(false);
+        setAdultCnt("0");
+        setChildCnt("0");
+        setName("");
+        setContact("");
+        setEmail("");
+        setTimeRange("");
+        setPeriod("");
+        setEventName("");
+        setSecondStoreState(false);
+        setSecondStoreCode("");
+        setSecondStore("");
+        setTableTypeName("");
+        setTableTypeCode("");
+        setTableSelectState(false);
+        setSelectedFacilitiesThree([]);
+        setSelectedFacilitiesTwo([]);
+        setSelectedFacilitiesOne([]);
+      },
+      onError: () => {
+        alert('예약에 실패했습니다. 다시 시도해주세요.');
+      }
+    });
 
-    setShowConfirmGroupModal(false);
-    document.body.style.overflow = "auto";
-    setShowGroupModal(false);
-    setStoreState(false);
-    setStoreCode("");
-    setSelectedStoreName("");
-    setSelectedTimeState(false);
-    setSelectedDateState(false);
-    setAdultCnt("0");
-    setChildCnt("0");
-    setName("");
-    setContact("");
-    setEmail("");
-    setTimeRange("");
-    setPeriod("");
-    setEventName("");
-    setSecondStoreState(false);
-    setSecondStoreCode("");
-    setSecondStore("");
-    setTableTypeName("");
-    setTableTypeCode("");
-    setTableSelectState(false);
-    setSelectedFacilitiesThree([]);
-    setSelectedFacilitiesTwo([]);
-    setSelectedFacilitiesOne([]);
+  
   }
 
   const handleCancel = (event:any) => {

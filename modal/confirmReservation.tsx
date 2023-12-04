@@ -68,19 +68,27 @@ export default function ConfirmModal() {
       mem_id: 'foodmall_test',
     }
 
-    mutate(data);
+    mutate(data, {
+      onSuccess: () => {
+        alert('예약이 완료되었습니다.');
+        setShowConfirmModal(false);
+        document.body.style.overflow = "auto";
+        setShowModal(false);
+        setStoreState(false);
+        setSelectedTimeState(false);
+        setSelectedDateState(false);
+        setAdultCnt("0");
+        setChildCnt("0");
+        setName("");
+        setContact("");
+        setEmail("");
+      }, 
+      onError: () => {
+        alert('예약에 실패했습니다. 다시 시도해주세요.');
+      }
+    });
 
-    setShowConfirmModal(false);
-    document.body.style.overflow = "auto";
-    setShowModal(false);
-    setStoreState(false);
-    setSelectedTimeState(false);
-    setSelectedDateState(false);
-    setAdultCnt("0");
-    setChildCnt("0");
-    setName("");
-    setContact("");
-    setEmail("");
+    
   }
 
   const handleCancel = (event:any) => {
