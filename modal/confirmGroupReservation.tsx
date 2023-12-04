@@ -62,10 +62,7 @@ export default function ConfirmGroupModal() {
   }
 
   function combineAndFormatFacilities(facilityOne: string[], facilityTwo: string[]) {
-    // Combine the two arrays
     const combinedFacilities = [...facilityOne, ...facilityTwo];
-
-    // Create a string with each element separated by a comma
     const facilitiesString = combinedFacilities.join(", ");
 
     setFacilitiesString(facilitiesString);

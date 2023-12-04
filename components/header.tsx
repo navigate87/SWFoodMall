@@ -90,6 +90,17 @@ export default function Header() {
             </ProfileUl>
           </Profile>
         </Section>
+        <GuideBox>
+          <GuideCafeBox>
+            <GuideCafe>
+              <p style={{fontSize:"10px", color:"#fff", margin: "3px"}}>1F</p>
+              <p style={{fontSize:"13px", fontWeight:"bold", color:"#fff", margin: "3px"}}>카페</p>
+            </GuideCafe>
+          </GuideCafeBox>
+          <CafeOverLayBox>
+            <Image style={{ opacity:"0.1",    }} width={369} height={250} alt="cafe-overlay" src={"image/overlay-foodmall-1.svg"} />
+          </CafeOverLayBox>
+        </GuideBox>
       </Container>
       {showModal && <Reservation />} 
       {showGroupModal && <GroupReservation />}
@@ -205,6 +216,48 @@ const Option = styled.li`
     color: #f84040;
   }
 `;
+
+const GuideBox = styled.div`
+  border: 1px solid #000;
+  height: 91.3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1300;
+`;
+
+const GuideCafeBox = styled.div`
+  position: absolute;
+  border-radius: 50%;
+  bottom: 260px;
+  left: 510px;
+  background: rgba(0,0,0, 0.3);
+  height: 65px;
+  width: 68px;
+
+  &:hover {
+    background: #f84040;
+  } 
+`;
+
+const GuideCafe = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  border-radius: 50%;
+  flex-direction: column;
+`;
+
+const CafeOverLayBox = styled.div`
+  position: absolute;
+  height: 250px;
+  width: 369px;
+  bottom: 103px;
+  left: 579px;
+`; 
+
+
 
 
 
