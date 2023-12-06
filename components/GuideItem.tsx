@@ -41,13 +41,13 @@ export default GuideItem
 const GuideStoreBox = styled.div<{ box_bottom: number, box_left: number, isVisible: boolean}>`
   position: absolute;
   border-radius: 50%;
-  background: ${({ isVisible }) => (isVisible ? "#f84040" : 'rgba(0,0,0, 0.3)')};
+  background: ${({ isVisible }) => (isVisible ? "#ff0000" : 'rgba(0,0,0, 0.5)')};
   bottom: ${({ box_bottom }) => box_bottom}px;
   left: ${({ box_left }) => box_left}px;
   height: 65px;
   width: 68px;
   cursor: pointer;
-  z-index: ${({ isVisible }) => (isVisible ? "101" : "none")};
+  z-index: ${({ isVisible }) => (isVisible ? "104" : "100")};
   &:hover{
     background: #f84040;
   }
@@ -60,7 +60,7 @@ const GuideStore = styled.div<{isVisible:boolean}>`
   height: 100%;
   border-radius: 50%;
   flex-direction: column;
-
+  
 `;
 
 const GuideOverLayBox = styled.div<{ width:number, height:number, bottom:number, left:number, isVisible:boolean }>`
@@ -71,7 +71,7 @@ const GuideOverLayBox = styled.div<{ width:number, height:number, bottom:number,
   left: ${({ left }) => left}px;
   filter:  ${({ isVisible }) => (isVisible ? "opacity(8%) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.7)) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.7)) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.7))" : "none")} ;
   display: ${({ isVisible }) => (isVisible ? "block" : "none")};
-  
+  //z-index: ${({ isVisible }) => (isVisible ? "101" : "none")};
 `;
 
 const FloorText = styled.p`
