@@ -8,7 +8,6 @@ export interface GuideData {
     left: number;
     height: number;
     width: number;
-    z_value:number;
 }
 
 export const GuideDataProps: GuideData[] = [
@@ -18,11 +17,10 @@ export const GuideDataProps: GuideData[] = [
         floor: '1F',
         box_bottom: 260,
         box_left: 520,
-        bottom: 103,
-        left: 579,
+        bottom: -129,
+        left: 59,
         height: 250,
         width: 369,
-        z_value: 200
     },
     {
         overlay_src: '/image/overlay-foodmall-2.svg',
@@ -30,23 +28,21 @@ export const GuideDataProps: GuideData[] = [
         floor: '2F',
         box_bottom: 360,
         box_left: 520,
-        bottom: 225,
-        left: 579,
+        bottom: -107,
+        left: 59,
         height: 218,
         width: 350,
-        z_value: 200
     },
     {
         overlay_src: '/image/overlay-foodmall-3-4.svg',
         alt: '한식∙정육',
         floor: '3F~4F',
-        box_bottom: 460,
+        box_bottom: 500,
         box_left: 520,
-        bottom: 316,
-        left: 579,
+        bottom: -155,
+        left: 58,
         height: 305,
         width: 374,
-        z_value: 200
     },
     {
         overlay_src: '/image/overlay-foodmall-5.svg',
@@ -54,11 +50,10 @@ export const GuideDataProps: GuideData[] = [
         floor: '5F',
         box_bottom: 620,
         box_left: 520,
-        bottom: 493,
-        left: 579,
+        bottom: -97,
+        left: 59,
         height: 243,
         width: 373,
-        z_value: 200
     },
     {
         overlay_src: '/image/overlay-hotel-2.svg',
@@ -66,11 +61,10 @@ export const GuideDataProps: GuideData[] = [
         floor: '2F',
         box_bottom: 225,
         box_left: 1350,
-        bottom: 118,
-        left: 929,
+        bottom: -79,
+        left: -420,
         height: 200,
         width: 448,
-        z_value: 200
     },
     {
         overlay_src: '/image/overlay-hotel-3.svg',
@@ -78,34 +72,31 @@ export const GuideDataProps: GuideData[] = [
         floor: '3F',
         box_bottom: 335,
         box_left: 1350,
-        bottom: 206,
-        left: 929,
+        bottom: -101,
+        left: -420,
         height: 205,
         width: 448,
-        z_value: 200
     },
     {
-        overlay_src: '/image/overlay-hotel-3.svg',
+        overlay_src: '/image/overlay-hotel-4-10.svg',
         alt: '객실',
         floor: '4F~10F',
         box_bottom: 460,
         box_left: 1350,
-        bottom: 286,
-        left: 959,
+        bottom: -146,
+        left: -391,
         height: 340,
         width: 419,
-        z_value: 200
     },
     {
-        overlay_src: '/image/overlay-hotel-3.svg',
+        overlay_src: '/image/overlay-hotel-11-12.svg',
         alt: '연회장',
         floor: '11F~12F',
         box_bottom: 610,
         box_left: 1350,
-        bottom: 502,
-        left: 959,
+        bottom: -77,
+        left: -391,
         height: 222,
         width: 419,
-        z_value: 200
     },
 ] 
