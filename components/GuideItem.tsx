@@ -69,7 +69,7 @@ const GuideOverLayBox = styled.div<{ width:number, height:number, bottom:number,
   height: ${({ height }) => height}px;
   bottom: ${({ bottom }) => bottom}px;
   left: ${({ left }) => left}px;
-  filter:  ${({ isVisible }) => (isVisible ? "opacity(8%) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.7)) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.7)) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.7))" : "none")} ;
+  filter:  ${({ isVisible }) => (isVisible ? "opacity(8%) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.2)) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.2)) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.7))" : "none")} ;
   display: ${({ isVisible }) => (isVisible ? "block" : "none")};
   //z-index: ${({ isVisible }) => (isVisible ? "101" : "none")};
 `;

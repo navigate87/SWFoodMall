@@ -62,7 +62,7 @@ const Container = styled.div`
 `;
 const EventBox = styled.div`
   border-radius: 125px;
-  background:#F6F6F6;
+  background:#f8f8f8;
   height: 15vh;
   width: 80%;
   position: relative;
