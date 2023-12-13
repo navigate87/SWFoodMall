@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54">
+    <defs>
+        <filter id="6seahgrbha" x="0" y="0" width="54" height="54" filterUnits="userSpaceOnUse">
+            <feOffset/>
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feFlood flood-opacity=".161"/>
+            <feComposite operator="in" in2="blur"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g style="filter:url(#6seahgrbha)">
+        <circle data-name="타원 49" cx="18" cy="18" r="18" transform="translate(9 9)" style="fill:#fff"/>
+    </g>
+    <path data-name="사각형 188" transform="rotate(90 4 30)" style="fill:#22201f" d="M0 0h2v14H0z"/>
+    <path data-name="사각형 237" transform="rotate(180 14 17)" style="fill:#22201f" d="M0 0h2v14H0z"/>
+</svg>

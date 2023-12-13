@@ -150,7 +150,7 @@ const SlideContainer = styled.div`
         cursor: pointer;
         display: block;
         height: 3px;
-        width: 125px;
+        width: 110px;
         /* border-radius: 100%; */
         padding: 0;
     }

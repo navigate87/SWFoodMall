@@ -5,8 +5,9 @@ export default function Footer() {
   return (
     <Wrap>
       <FLEX1 />
+      <FLEX1 />
       <ImgContainer>
-        <Image alt="Swfood" src="/image/bi-color.svg" width={80} height={80} />
+        <Image alt="Swfood" src="/image/bi-color.svg" width={118} height={80} />
       </ImgContainer>
         
       <LeftSection>
@@ -46,7 +47,7 @@ export default function Footer() {
               <InfoBoxUlLi>|</InfoBoxUlLi>
               <InfoBoxUlLi>사업자등록번호 <span> : </span>01-85-39823</InfoBoxUlLi>
               <InfoBoxUlLi>|</InfoBoxUlLi>
-              <InfoBoxUlLi>사업자정보확인 <span> </span>사업자등록증</InfoBoxUlLi>
+              <InfoBoxUlLi><span style={{ cursor: "pointer", borderBottom:"1px solid #A4A4A4" }}>사업자정보확인</span> <span>&nbsp; </span><span style={{ cursor: "pointer", borderBottom:"1px solid #A4A4A4" }}>사업자등록증</span></InfoBoxUlLi>
               <InfoBoxUlLi>|</InfoBoxUlLi>
               <InfoBoxUlLi>통신판매업 신고 <span> : </span> 제 2018-서울중구-1731호</InfoBoxUlLi>
             </InfoBoxUl>
@@ -86,7 +87,7 @@ const FLEX1 = styled.div`
 `;
 const LeftSection = styled.div`
   flex: 3;
-  padding-bottom: 20px;
+  margin-bottom: 40px;
 `;
 
 const CsInfoUl = styled.ul`
@@ -95,7 +96,7 @@ const CsInfoUl = styled.ul`
 `;
 
 const CsInfoUlLi = styled.li`
-  margin: 0 9px;
+  margin: 5px 20px;
 `;
 
 const RightSection = styled.div`
@@ -109,7 +110,8 @@ const LeftFlexBox = styled.div`
 
 const ImgContainer = styled.div`
   flex: 1;
-  padding-bottom: 20px;
+  margin-bottom: 60px;
+  margin-right: 20px;
 `;
 
 const ImgBox = styled.div`
@@ -125,7 +127,7 @@ const CsFontStyleP1 = styled.p`
 const CsFontStyleH3 = styled.h3`
   padding-top: 18px;
   font-weight: bold;
-  font-size: 25px;
+  font-size: 30px;
 `;
 
 const CsFontStyleP2 = styled.span`
@@ -140,7 +142,7 @@ const CsFontStyleP3 = styled.span`
 const RightFlexBox = styled.div`
   display: flex;
   flex-direction: column;
-  padding-bottom: 25px;
+  margin-bottom: 30px;
 `;
 
 const InfoBox = styled.div`
@@ -149,13 +151,14 @@ const InfoBox = styled.div`
 
 const InfoBoxUl = styled.ul`
   display: flex;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 `;
 
 const InfoBoxUlLi = styled.li`
   font-size: 10px;
-  margin: 0 7px;
+  margin: 8px 5px;
   color: #A4A4A4;
+  
 `;
 
 const CopyBox = styled.div`

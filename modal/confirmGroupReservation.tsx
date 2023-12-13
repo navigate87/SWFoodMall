@@ -1,7 +1,7 @@
-import { reserveFnb } from "@/api/api";
+import { reserveFnb, reservedDate } from "@/api/api";
 import { TableTypeData } from "@/data/TableType";
 import { recoilStoreCode,recoilTimeRange,recoilSecondStoreOption,recoilSecondStoreState,recoilEventName,recoilPeriod,recoilShowConfirmGroupModal, recoilShowGroupModal, recoilAdultCnt, recoilChildCnt, recoilDateSelectState, recoilReservationContact, recoilReservationEmail, recoilReservationName, recoilSelectedDate, recoilSelectedStore, recoilSelectedTime, recoilStoreState, recoilTimeState, recoilFacilitiesThree, recoilTableTypeName, recoilTableTypeSelect, recoilTableTypeCode, recoilFacilitiesTwo, recoilFacilitiesOne } from "@/store/stores/modalState";
-import {  ReservationGroupRequest} from "@/type/Reservation";
+import {  ReservationGroupRequest, FnbReservedDateRequest} from "@/type/Reservation";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
@@ -37,7 +37,7 @@ export default function ConfirmGroupModal() {
   const [tableSelectState, setTableSelectState] = useRecoilState<boolean>(recoilTableTypeSelect);
   const [tableTypeCode, setTableTypeCode] = useRecoilState<string>(recoilTableTypeCode);
   const { mutate, isLoading, isError, data } = useMutation(reserveFnb);
-  
+  const { mutate:mutateReservedDate, isLoading: isLoadingReservedDate, isError: isErrorReservedDate, data: dataReservedDate } = useMutation(reservedDate);
   const [selectedFacilitiesThree, setSelectedFacilitiesThree] = useRecoilState(recoilFacilitiesThree);
   const [selectedFacilitiesTwo, setSelectedFacilitiesTwo] = useRecoilState(recoilFacilitiesTwo);
   const [selectedFacilitiesOne, setSelectedFacilitiesOne] = useRecoilState(recoilFacilitiesOne);
@@ -161,8 +161,6 @@ export default function ConfirmGroupModal() {
         alert('예약에 실패했습니다. 다시 시도해주세요.');
       }
     });
-
-  
   }
 
   const handleCancel = (event:any) => {
@@ -205,12 +203,23 @@ export default function ConfirmGroupModal() {
 
     const timeString = timeRange;
     splitTimeRange(timeString);
-
+    
     const tempFacilityOneName = facilityOneName;
     const tempFacilityTwoName = facilityTwoName;
  
     combineAndFormatFacilities(tempFacilityOneName, tempFacilityTwoName);
 
+    // const data:FnbReservedDateRequest = {
+    //   order_date: "202312",
+    // }
+    // mutateReservedDate(data, {
+    //   onSuccess: () => {
+    //     console.log("데이터 뭐 받아와요?");
+    //   },
+    //   onError: () => {
+    //     alert('못불러옴')
+    //   }
+    // });
     
   })
   
@@ -299,7 +308,6 @@ export default function ConfirmGroupModal() {
                  )  :
                     (
                       <p>선택 안함</p>
-                
                 )}
                 </TableIconBox>
             </TableTypeBox>

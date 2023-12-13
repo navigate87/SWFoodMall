@@ -105,7 +105,6 @@ export default function Reservation() {
 
     useEffect(() => {
         const reservationReady = isReservation();
-        console.log("rerservationReady",isReservation() )
     }, [storeState, selectedDateState, selectedTimeState, adultCnt, childCnt, name, email, contact, errorText]);
     
     return (

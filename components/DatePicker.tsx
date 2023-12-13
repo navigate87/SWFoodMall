@@ -186,7 +186,7 @@ const useCalendar = (year: number, month: number) => {
     const specialDates: Date[] = [
       new Date(currentYear, 11, 25), // Christmas
       new Date(currentYear, 9, 31),  // Halloween
-      new Date(currentYear, 1, 14),  // Valentine's Day
+      new Date(currentYear+1, 1, 14),  // Valentine's Day
       // 다른 특별한 날짜들을 여기에 추가하세요.
     ]; 
     const isThisYearSpecialDay = specialDates.some((specialDate: Date) => 
@@ -203,7 +203,7 @@ const useCalendar = (year: number, month: number) => {
       isSpecialDay: isThisYearSpecialDay,
       isPastDay: day < today,
     };
-};
+  };
 
   const checkIfSpecialDay = (date: Date): boolean => {
     // Define special dates here

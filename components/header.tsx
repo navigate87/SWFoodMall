@@ -12,12 +12,13 @@ import GuideItem from "./GuideItem";
 import { wrap } from "module";
 import StoreInfoCard from "./StoreInfoCard";
 import { StoreInfoDataProps, StoreInfoProps } from "@/data/StoreInfoType";
+import { reservedDate } from "@/api/api";
+import { useMutation } from "react-query";
+import { FnbReservedDateRequest } from "@/type/Reservation";
 
 type show = {
   show?:boolean;
 }
-
-
 
 export default function Header() {
   const [showModal, setShowModal] = useRecoilState<boolean>(modalShowState);
@@ -28,12 +29,13 @@ export default function Header() {
   const [isLanguageSelect, setIsLanguageSelect] = useState<boolean>(false);
   const [isShowHelpOption, setIsShowHelpOption] = useState<boolean>(false);
   const [showConfirmGroupModal, setShowConfirmGroupModal] = useRecoilState<boolean>(recoilShowConfirmGroupModal);
+  const { mutate:mutateReservedDate, isLoading: isLoadingReservedDate, isError: isErrorReservedDate, data: dataReservedDate } = useMutation(reservedDate);
   const [overlayStatus, setOverlayStatus] = useState<{[key: string]: boolean}>(
     GuideDataProps.reduce((acc, item) => ({ ...acc, [item.alt]: false }), {})
   );
   const [selectedStoreInfo, setSelectedStoreInfo] = useState<StoreInfoDataProps>();
 
-  const isAnyOverlayActive = Object.values(overlayStatus).some(status => status)
+  const isAnyOverlayActive = Object.values(overlayStatus).some(status => status);
 
   const handleGuideClick = (alt:string) => {
     setOverlayStatus(prev => ({ ...prev, [alt]: !prev[alt] }));
@@ -59,7 +61,18 @@ export default function Header() {
       document.body.style.overflow = "hidden";
     } else if(innerText === "F&B") {
       setShowGroupModal(true);
-      //setShowConfirmGroupModal(true);
+
+      // const data:FnbReservedDateRequest = {
+      //   order_date: "202312",
+      // }
+      // mutateReservedDate(data, {
+      // onSuccess: () => {
+      //   alert('월별 날짜 api 호출 못불러옴!');
+      // },
+      // onError: () => {
+      //   alert('못불러옴');
+      // }
+      // });
       document.body.style.overflow = "hidden";
     }
 
@@ -70,8 +83,6 @@ export default function Header() {
   }
 
   useEffect(() => {
-    console.log('showOptions', showOptions);
-    console.log('isSelectedLanguage', isLanguageSelect );
   },[showOptions,isLanguageSelect ])
 
   return (
@@ -173,10 +184,8 @@ export default function Header() {
 }
 
 const Container = styled.div`
-  /* width: 100%; */
   height: 100%;
   background-image: url("image/main-foodmall-img.png");
-  /* background-size: 100% 100%; */
   background-position: center center;
   background-repeat: no-repeat;
 `;
@@ -369,7 +378,8 @@ const GuideBackground = styled.div`
   position: fixed;
   top: 0; left: 0; bottom: 0; right: 0;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 101;
+  z-index: 300;
+  
 `;
 
 const DropdownContainer = styled.div`

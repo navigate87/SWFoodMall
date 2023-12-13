@@ -41,3 +41,18 @@ export interface ReservationGroupResponse {
     state: boolean;
     order_no?: string;
 }
+
+export interface FnbReservedDateRequest {
+    order_date: string;
+}
+
+interface FnbRowData {
+    order_path: string;
+    order_data: string;
+}
+
+export interface FnbReservedDateResponse {
+    state: boolean;
+    row: FnbRowData[]
+}
+

@@ -11,11 +11,13 @@ interface GuideItemProps {
 
 const GuideItem: React.FC<GuideItemProps> = ({ data, isVisible, onClick }) => {
     return (
-        <GuideStoreBox box_bottom={data.box_bottom} box_left={data.box_left} isVisible={isVisible} >
-            <GuideStore isVisible={isVisible} onClick={onClick}>
-                <FloorText>{data.floor}</FloorText>
-                <StoreNameText>{data.alt}</StoreNameText>
-            </GuideStore>
+        <>
+            <GuideStoreBox box_bottom={data.box_bottom} box_left={data.box_left} isVisible={isVisible} >
+                <GuideStore isVisible={isVisible} onClick={onClick}>
+                    <FloorText>{data.floor}</FloorText>
+                    <StoreNameText>{data.alt}</StoreNameText>
+                </GuideStore>
+            </GuideStoreBox>
             <GuideOverLayBox 
                 width={data.width} 
                 height={data.height} 
@@ -24,14 +26,18 @@ const GuideItem: React.FC<GuideItemProps> = ({ data, isVisible, onClick }) => {
                 isVisible={isVisible}
                 onClick={onClick}
             >
-                <Image 
-                    src={data.overlay_src} 
-                    width={data.width} 
-                    height={data.height} 
-                    alt={data.alt} 
-                />
+                <MixBlendModeBox isVisible={isVisible}>
+                    <Image 
+                        style={{ position: "relative", zIndex:"400" }}
+                        src={data.overlay_src} 
+                        width={data.width} 
+                        height={data.height} 
+                        alt={data.alt} 
+                    />
+                </MixBlendModeBox>
             </GuideOverLayBox>
-        </GuideStoreBox>
+        </>
+        
         
     )
 }
@@ -47,7 +53,7 @@ const GuideStoreBox = styled.div<{ box_bottom: number, box_left: number, isVisib
   height: 65px;
   width: 68px;
   cursor: pointer;
-  z-index: ${({ isVisible }) => (isVisible ? "104" : "100")};
+  z-index: ${({ isVisible }) => (isVisible ? "400" : "300")};
   &:hover{
     background: #f84040;
   }
@@ -60,7 +66,8 @@ const GuideStore = styled.div<{isVisible:boolean}>`
   height: 100%;
   border-radius: 50%;
   flex-direction: column;
-  
+  position: relative;
+  z-index: 400;
 `;
 
 const GuideOverLayBox = styled.div<{ width:number, height:number, bottom:number, left:number, isVisible:boolean }>`
@@ -69,9 +76,14 @@ const GuideOverLayBox = styled.div<{ width:number, height:number, bottom:number,
   height: ${({ height }) => height}px;
   bottom: ${({ bottom }) => bottom}px;
   left: ${({ left }) => left}px;
-  filter:  ${({ isVisible }) => (isVisible ? "opacity(8%) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.2)) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.2)) drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.7))" : "none")} ;
+  z-index: 350;
   display: ${({ isVisible }) => (isVisible ? "block" : "none")};
   //z-index: ${({ isVisible }) => (isVisible ? "101" : "none")};
+`;
+
+const MixBlendModeBox =styled.div<{isVisible:boolean}>`
+    position: absolute;
+    z-index: 50;
 `;
 
 const FloorText = styled.p`

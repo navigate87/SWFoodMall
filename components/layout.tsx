@@ -4,6 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Image from "next/image";
 
 interface LayoutItemProp {
   children?: React.ReactNode;
@@ -20,7 +21,13 @@ export default function Layout({ children }: LayoutItemProp) {
         <Container>
           <EventBox>
             <EventFlexBox>
-              <EventText><p>EVENT NOTICE  &nbsp;&nbsp;&nbsp;&nbsp;<span> ✛ </span></p></EventText>
+              <EventText>
+                <div style={{ display:"flex", justifyContent:"center", alignItems:"center" }}>
+                  <div style={{ marginLeft: "15px" }}>EVENT NOTICE</div>  
+                  
+                    <Image style={{ marginLeft:"10px" }} src={"/icon/btn-더보기.svg"} alt="+" width={36} height={36} /> 
+                </div>
+              </EventText>
             </EventFlexBox>
             <EventFlexBox>
               <EventListBox>
@@ -31,14 +38,14 @@ export default function Layout({ children }: LayoutItemProp) {
                 </EventListTextBox>
               </EventListBox>
               <EventListBox>
-                <EventListCircle>NEW</EventListCircle>
+                <EventListCircle>EVENT</EventListCircle>
                 <EventListTextBox>
                   <EventTextDate>[성원정] 2023.06.16 ~ 2023.08.31</EventTextDate>
                   <div>전복삼계탕 시즌 메뉴 예약</div>
                 </EventListTextBox>
               </EventListBox>
               <EventListBox>
-                <EventListCircle>NEW</EventListCircle>
+                <EventListCircle>신제품</EventListCircle>
                 <EventListTextBox>
                   <EventTextDate>[성원정] 2023.06.16 ~ 2023.08.31</EventTextDate>
                   <div>전복삼계탕 시즌 메뉴 예약</div>
@@ -60,6 +67,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
 `;
+
 const EventBox = styled.div`
   border-radius: 125px;
   background:#f8f8f8;
@@ -93,17 +101,19 @@ const EventListBox = styled.div`
 const EventListCircle = styled.div`
   border-radius: 50%;
   height: 85%;
+  width: 12%;
   background: #343434;
   color: #FFF;
   margin-left: 7px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 `;
+
 const EventListTextBox = styled.div`
   margin: 0 25px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
 `;
@@ -111,7 +121,7 @@ const EventListTextBox = styled.div`
 const EventTextDate = styled.div`
   color: #888888;
   font-size:13px;
-  margin-right: 5px;
+  //margin-right: 5px;
   margin-bottom: 5px;
 `;
 

@@ -1,6 +1,6 @@
-import { ReservationRequest, ReservationResponse, ReservationGroupRequest } from "@/type/Reservation";
+import { ReservationRequest, ReservationResponse, ReservationGroupRequest,FnbReservedDateRequest,FnbReservedDateResponse } from "@/type/Reservation";
 import axios from "axios";
-import { GET_CODE_INFO, RESERVATION_REQUEST_DINING, RESERVATION_REQUEST_FB } from "./pathlist";
+import { GET_CODE_INFO, RESERVATION_REQUEST_DINING, RESERVATION_REQUEST_FB,RESERVATION_FB_DATE_CHECK } from "./pathlist";
 import { useQuery } from "react-query";
 axios.defaults.withCredentials = false;
 axios.defaults.timeout = 5000;
@@ -37,7 +37,6 @@ interface CodeInfoResponse {
 
 const fetchCodeInfo = async (): Promise<CodeInfoResponse> => {
   const response = await axios.get('/sr_system_api/common/init.php?action=getCodeInfo');
-  console.log("여기 데이터 뭐 들어올까?", response.data)
   return response.data;
 };
 
@@ -58,7 +57,14 @@ export const reserveFnb = async ( data: ReservationGroupRequest ) : Promise<Rese
   const response = await axios.post<ReservationResponse>(`${API_SERVER_BASE_URL}${RESERVATION_REQUEST_FB}`, data, {
       withCredentials: true,
   });
-  console.log("여기 데이터 어떻게 저장되니?", response.data);
+  return response.data;
+}
+
+export const reservedDate = async ( data: FnbReservedDateRequest ) : Promise<FnbReservedDateResponse> => {
+  const response = await axios.post<FnbReservedDateResponse>(`${API_SERVER_BASE_URL}${RESERVATION_FB_DATE_CHECK}`, data, {
+      withCredentials: true,
+  });
+  console.log("여기에 무슨값 받아옴?",response.data)
   return response.data;
 }
 

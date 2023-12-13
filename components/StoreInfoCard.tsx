@@ -78,11 +78,8 @@ const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo }) => {
 
 export default StoreInfoCard;
 
-
-
-
 const InfoCardContainer = styled.div<{isLeft:boolean}>`
-  z-index: 300;
+  z-index: 350;
   position: absolute;
   left: ${({ isLeft }) => (isLeft? "50" : "1450")}px;
   bottom: 88px;
