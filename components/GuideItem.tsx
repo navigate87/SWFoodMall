@@ -1,7 +1,8 @@
 import { GuideData } from '@/data/GuideType';
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import styled, {keyframes} from 'styled-components';
 import Image from 'next/image';
+
 
 interface GuideItemProps {
     data: GuideData;
@@ -10,32 +11,51 @@ interface GuideItemProps {
 }
 
 const GuideItem: React.FC<GuideItemProps> = ({ data, isVisible, onClick }) => {
+    const [isOverlayVisible, setIsOverlayVisible] = useState(isVisible);
+
+    useEffect(() => {
+        if (!isVisible) {
+            // isVisible이 false가 되면 애니메이션 후에 숨김 처리
+            const timer = setTimeout(() => {
+                setIsOverlayVisible(false);
+            }, 900); // 애니메이션 시간과 일치
+            return () => clearTimeout(timer);
+        } else {
+            setIsOverlayVisible(true);
+        }
+    }, [isVisible]);
+
+
     return (
         <>
             <GuideStoreBox box_bottom={data.box_bottom} box_left={data.box_left} isVisible={isVisible} >
-                <GuideStore isVisible={isVisible} onClick={onClick}>
+                <GuideStore onClick={onClick}>
                     <FloorText>{data.floor}</FloorText>
                     <StoreNameText>{data.alt}</StoreNameText>
                 </GuideStore>
             </GuideStoreBox>
-            <GuideOverLayBox 
-                width={data.width} 
-                height={data.height} 
-                bottom={data.bottom} 
-                left={data.left} 
-                isVisible={isVisible}
-                onClick={onClick}
-            >
-                <MixBlendModeBox isVisible={isVisible}>
-                    <Image 
-                        style={{ position: "relative", zIndex:"400" }}
-                        src={data.overlay_src} 
-                        width={data.width} 
-                        height={data.height} 
-                        alt={data.alt} 
-                    />
-                </MixBlendModeBox>
-            </GuideOverLayBox>
+            {
+                isOverlayVisible &&
+                <GuideOverLayBox 
+                    width={data.width} 
+                    height={data.height} 
+                    bottom={data.bottom} 
+                    left={data.left} 
+                    isVisible={isVisible}
+                    onClick={onClick}
+                >
+                    <MixBlendModeBox isVisible={isVisible}>
+                        <Image 
+                            style={{ position: "relative", zIndex:"400" }}
+                            src={data.overlay_src} 
+                            width={data.width} 
+                            height={data.height} 
+                            alt={data.alt} 
+                        />
+                    </MixBlendModeBox>
+                </GuideOverLayBox>
+            }
+            
         </>
         
         
@@ -53,13 +73,14 @@ const GuideStoreBox = styled.div<{ box_bottom: number, box_left: number, isVisib
   height: 65px;
   width: 68px;
   cursor: pointer;
+  /* z-index: 500; */
   z-index: ${({ isVisible }) => (isVisible ? "400" : "300")};
   &:hover{
     background: #f84040;
   }
 `;
 
-const GuideStore = styled.div<{isVisible:boolean}>`
+const GuideStore = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,6 +91,30 @@ const GuideStore = styled.div<{isVisible:boolean}>`
   z-index: 400;
 `;
 
+const slideInTopToBottom = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const slideInBottomToTop = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 const GuideOverLayBox = styled.div<{ width:number, height:number, bottom:number, left:number, isVisible:boolean }>`
   position: absolute;
   width: ${({ width }) => width}px;
@@ -78,6 +123,8 @@ const GuideOverLayBox = styled.div<{ width:number, height:number, bottom:number,
   left: ${({ left }) => left}px;
   z-index: 350;
   display: ${({ isVisible }) => (isVisible ? "block" : "none")};
+  animation: ${({ isVisible }) => (isVisible ? slideInTopToBottom : slideInBottomToTop)} 0.7s ease-out;
+
   //z-index: ${({ isVisible }) => (isVisible ? "101" : "none")};
 `;
 

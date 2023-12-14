@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Image from 'next/image';
 import { StoreInfoProps, StoreInfoDataProps } from '@/data/StoreInfoType';
 
@@ -78,6 +78,32 @@ const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo }) => {
 
 export default StoreInfoCard;
 
+const slideInLeftToRight = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
+
+const slideInRightToLeft = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
+
+ 
+
 const InfoCardContainer = styled.div<{isLeft:boolean}>`
   z-index: 350;
   position: absolute;
@@ -85,6 +111,7 @@ const InfoCardContainer = styled.div<{isLeft:boolean}>`
   bottom: 88px;
   width: 432px;
   height: 636px;
+  animation: ${({ isLeft }) => (isLeft ? slideInLeftToRight : slideInRightToLeft)} 0.5s ease-out;
 `;
 
 const ImageContainer = styled.div``;
