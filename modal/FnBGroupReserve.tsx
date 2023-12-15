@@ -223,6 +223,7 @@ export default function GroupReservation() {
   }
 
   const handleClick = (event:any) => {
+    
     setShowGroupModal(false);
     setStoreState(false);
     setSelectedTimeState(false);

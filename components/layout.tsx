@@ -24,8 +24,7 @@ export default function Layout({ children }: LayoutItemProp) {
               <EventText>
                 <div style={{ display:"flex", justifyContent:"center", alignItems:"center" }}>
                   <div style={{ marginLeft: "15px" }}>EVENT NOTICE</div>  
-                  
-                    <Image style={{ marginLeft:"10px" }} src={"/icon/btn-더보기.svg"} alt="+" width={36} height={36} /> 
+                  <Image style={{ marginLeft:"10px", cursor:"pointer" }} src={"/icon/btn-더보기.svg"} alt="+" width={36} height={36} /> 
                 </div>
               </EventText>
             </EventFlexBox>

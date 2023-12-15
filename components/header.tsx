@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Image from "next/image";
 import { useRecoilState } from "recoil";
 import { modalConfirmShowState, modalShowState, recoilReserveOption, recoilShowGroupModal,recoilShowConfirmGroupModal } from "@/store/stores/modalState";
@@ -43,6 +43,7 @@ export default function Header() {
     const findStoreInfo = StoreInfoProps.find(storeInfo => storeInfo.alt === alt);
     setSelectedStoreInfo(findStoreInfo);
   }
+
   const handleClick = (event:any) => {
     setShowModal(true);
     document.body.style.overflow = "hidden";
@@ -83,7 +84,48 @@ export default function Header() {
   }
 
   useEffect(() => {
-  },[showOptions,isLanguageSelect ])
+    const handleOutsideClick = (event: any) => {
+      const target = event.target as HTMLElement;
+      const innerText = event.target.value;
+      if(innerText === 0) {
+        setCurrentValue("Dining");
+      } else if (innerText === 1) {
+        setCurrentValue("F&B");
+      }
+      
+      if (showOptions && target && !target.closest("#select-box")) {
+        if(target.closest("#dining_option")) {
+          document.body.style.overflow = "hidden";
+          setShowModal(true);
+          
+        }
+        if(target.closest("#fnb_option")) {
+          document.body.style.overflow = "hidden";
+          setShowGroupModal(true);
+        }
+        if(target.closest("#room_option")) {
+          // 객실
+        }
+        
+        setShowOptions(false);
+      }
+      if (isLanguageSelect && target && !target.closest("#select-language-box")) {
+        setIsLanguageSelect(false);
+      }
+      if (isShowHelpOption && target && !target.closest("#select-help-option-box")) {
+        setIsShowHelpOption(false);
+      }
+      
+    };
+
+    // 문서에 클릭 이벤트 리스너를 추가합니다.
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    // 컴포넌트가 언마운트될 때 이벤트 리스너를 제거합니다.
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  },[showOptions,isLanguageSelect,isShowHelpOption])
 
   return (
     <>
@@ -102,12 +144,12 @@ export default function Header() {
                 <Image alt="메뉴" src={"icon/Search-icon.svg"} width={25} height={25} />
               </NavTabUlLi>
               <SelectBox onClick={() => setShowOptions((prev) => !prev)}>
-                <Label show={!showOptions}>예약</Label>
+                <Label onMouseOver={() => setShowOptions(true)} show={!showOptions}>예약</Label>
                 <SelectOptions show={showOptions}>
-                  <Option style={{ pointerEvents: "none", fontSize: "15px", color:"rgba(81,81,81,0.8)" }}>예약</Option>
-                  <Option value={0} onClick={handleOnChangeSelectValue}>Dining</Option>
-                  <Option value={1} onClick={handleOnChangeSelectValue}>F&B</Option>
-                  <Option value={2} onClick={handleOnChangeSelectValue}>객실</Option>
+                  <Option style={{cursor:"none", pointerEvents: "none", fontSize: "15px", color:"rgba(81,81,81,0.8)" }}>예약</Option>
+                  <Option id="dining_option" value={0}>Dining</Option>
+                  <Option id="fnb_option" value={1}>F&B</Option>
+                  <Option id="room_option" value={2}>객실</Option>
                 </SelectOptions>
               </SelectBox>
               <NavTabUlLi>EVENT</NavTabUlLi>
@@ -116,15 +158,27 @@ export default function Header() {
           <Profile>
             <ProfileUl>
               <ProfileUlLi>
-                <SelectLanguageBox onClick={() => setIsLanguageSelect((prev) => !prev)}>
-                  <LanguageLabel isSelected={!isLanguageSelect}>KR</LanguageLabel>
-                  <SelectDirection isSelected={!isLanguageSelect} />
+                <SelectLanguageBox id="select-language-box" onClick={() => setIsLanguageSelect((prev) => !prev)}>
+                  {
+                    !isLanguageSelect && 
+                    <LanguageOptionBox>
+                      <LanguageLabel isSelected={!isLanguageSelect}>KR</LanguageLabel>
+                      <SelectDirection>
+                        <Image src={"/icon/icon-셀렉트_down.webp"} width={12} height={9} alt="down" />
+                      </SelectDirection>
+                    </LanguageOptionBox>
+                  }
                   <LanguageOptions show={isLanguageSelect}>
                     <div style={{ display:"flex", justifyContent: "center", alignItems: "center", margin: "5px" }}>
                       <LanguageLabel isSelected={!isLanguageSelect}>KR</LanguageLabel> 
-                      <SelectDirection isSelected={!isLanguageSelect} />
+                      {
+                        isLanguageSelect && 
+                        <SelectDirection>
+                          <Image src={"/icon/icon-셀렉트_up.svg"} width={12} height={20} alt="down" />
+                        </SelectDirection>
+                      }
                     </div>
-                    <div style={{ border:"1px solid #ededed", width:"80%", marginLeft: "6px"}}></div>
+                    <div style={{ borderBottom:"1px solid #ededed", width:"70%", marginLeft: "8px", marginBottom: "9px"}}></div>
                     <Option value={0} onClick={handleOnChangeSelectValue}>KR</Option>
                     <Option value={1} onClick={handleOnChangeSelectValue}>EN</Option>
                     <Option value={2} onClick={handleOnChangeSelectValue}>CN</Option>
@@ -136,17 +190,19 @@ export default function Header() {
                 <Image style={{ marginTop: "15%" }} alt="메뉴" src={"icon/my-login.svg"} width={40} height={40} />
               </ProfileUlLi>
               <ProfileUlLi>
-                <Image onClick={()=>setIsShowHelpOption((prev) => !prev)} style={{ marginTop: "15%" }} alt="메뉴" src={"icon/고객센터.svg"} width={40} height={40} />
-                <div style={{ position: "absolute", right: "108px", top:"60px" }}>
-                  <SelectBox onClick={() => setIsShowHelpOption((prev) => !prev)}>
-                    <SelectOptions show={isShowHelpOption}>
+                <HelpHoverContainer onMouseOver={() => setIsShowHelpOption(true)}>
+                  <Image onClick={()=>setIsShowHelpOption((prev) => !prev)} style={{ marginTop: "15%" }} alt="메뉴" src={"icon/고객센터.svg"} width={40} height={40} />
+                </HelpHoverContainer>
+                <SelectHelpOptionBox id="select-help-option-box">
+                  <SelectBox  onClick={() => setIsShowHelpOption((prev) => !prev)}>
+                    <SelectHelpOptions show={isShowHelpOption}>
                       <Option value={0} onClick={handleOnChangeSelectValue}>이용안내</Option>
                       <Option value={1} onClick={handleOnChangeSelectValue}>공지사항</Option>
                       <Option value={2} onClick={handleOnChangeSelectValue}>FAQ</Option>
                       <Option value={3} onClick={handleOnChangeSelectValue}>1:1문의</Option>
-                    </SelectOptions>
+                    </SelectHelpOptions>
                   </SelectBox>
-                </div>
+                </SelectHelpOptionBox>
               </ProfileUlLi>
               <ProfileUlLi>
                 <Image style={{ marginTop: "15%" }} alt="메뉴" src={"icon/장바구니.svg"} width={50} height={50} />
@@ -224,6 +280,18 @@ const NavTabUlLi = styled.li`
   cursor: pointer;
 `;
 
+const LanguageOptionBox = styled.div`
+  border: 1px solid #fff;
+  width: 70px;
+  display: flex; 
+  border-radius: 15px; 
+  height: 25px; 
+  justify-content: center; 
+  align-items: center;
+  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+  opacity: 1;
+`;
+
 const Profile = styled.div`
   flex: 8; 
 `;
@@ -267,17 +335,16 @@ const LanguageLabel = styled.label<{isSelected:boolean}>`
   cursor: pointer;
 `;
 
-const SelectDirection = styled.div<{isSelected:boolean}>`
-  margin-bottom: ${(isSelected) => (isSelected ? "5" : "-5")}px; 
+const SelectDirection = styled.div`
+  //margin-bottom: ${(isSelected) => (isSelected ? "5" : "-5")}px; 
   margin-left: 8px;
-  width: 8px; 
-  height: 8px; 
-  border-top:1px solid #FFF;
-  border-right:1px solid #FFF;
-  transform: ${(isSelected) => (isSelected ? "rotate(135deg)" : "rotate(325deg)")};
-  transition: transform 0.3s ease;
+  /* width: 8px; 
+  height: 8px;  */
+  /* border-top:1px solid #FFF;
+  border-right:1px solid #FFF; */
+  /* transform: ${(isSelected) => (isSelected ? "rotate(135deg)" : "rotate(325deg)")};
+  transition: transform 0.3s ease; */
   display: ${(isSelected) => (isSelected ? "block" : "none")};
-  
 `;
 
 const SelectBox = styled.div`
@@ -318,6 +385,37 @@ const SelectOptions = styled.ul<show>`
   z-index: 10; // 다른 컨텐츠 위에 표시되도록 z-index를 설정합니다.
 `;
 
+const HelpHoverContainer = styled.div`
+  
+`;
+
+const SelectHelpOptionBox = styled.div`
+  position: absolute; 
+  right: 108px;
+  top: 60px;
+`;
+
+const SelectHelpOptions = styled.ul<show>`
+  position: absolute;
+  list-style: none;
+  left: 0;
+  text-align: center;
+  right: 0;
+  width: 60px;
+  overflow: hidden;
+  top: -5px;
+  padding: 0;
+  border-radius: 5px;
+  background-color: rgba(42,42,42,0.4);
+  color: #fefefe;
+  max-height: ${(props) => (props.show ? "none" : "0")};
+  transition: all  0.3s ease-in-out;
+  opacity: ${(props) => (props.show ? '1' : '0')};
+  visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
+  z-index: 10; // 다른 컨텐츠 위에 표시되도록 z-index를 설정합니다.
+`;
+
+
 const HelpOptions = styled.ul<show>`
   position: absolute;
   list-style: none;
@@ -335,25 +433,29 @@ const HelpOptions = styled.ul<show>`
   transition: all  0.3s ease-in-out;
   opacity: ${(props) => (props.show ? '1' : '0')};
   visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
-  z-index: 10; // 다른 컨텐츠 위에 표시되도록 z-index를 설정합니다.
+  z-index: 10; 
 `;
 
 const LanguageOptions = styled.ul<show>`
   position: absolute;
   list-style: none;
-  bottom : -80px;
+  //bottom : -80px;
+  top:18px;
   text-align: center;
   width: 60px;
   overflow: hidden;
   padding: 0;
-  border-radius: 8px;
+  border-radius: 20px;
   background-color: rgba(42,42,42,0.4);
   color: #fefefe;
-  max-height: ${(props) => (props.show ? "none" : "0")};
-  transition: all  0.3s ease-in-out;
+  //max-height: ${(props) => (props.show ? "none" : "0")};
   opacity: ${(props) => (props.show ? '1' : '0')};
-  visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
+  //visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
   z-index: 10;
+  transform: translateY(${({ show }) => (show ? '0' : '-5px')});
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  max-height: ${({ show }) => (show ? '200px' : '0')};
 `;
 
 const Option = styled.li`
