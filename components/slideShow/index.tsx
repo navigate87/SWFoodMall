@@ -3,8 +3,19 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css"
 import styled from "styled-components";
 import { useState } from "react";
-
-export default function SlideShow() {
+import Image from "next/image";
+// 이미지 데이터 타입
+interface ImageData {
+    img_src: string;
+    alt: string;
+    path: string;
+  }
+  
+  // 슬라이더 프롭스 타입
+  interface SliderProps {
+    images: ImageData[];
+  }
+const  SlideShow: React.FC<SliderProps> = ({ images }) => {
 
     const [slideIndex, setSlideIndex] = useState(0);
     const settings = {
@@ -13,88 +24,35 @@ export default function SlideShow() {
         speed: 500,
         // autoplay: true,
         // autoplaySpeed: 2000,
-        slidesToShow: 5,
+        slidesToShow: 8,
         className: "center",
         dotsClass: "dots_custom",
         centerMode: true,
-        centerPadding: "50px",
+        centerPadding: "90px",
         beforeChange: (current:number, next:number) => {
             return setSlideIndex(current)
         },
         draggable: false,
         arrows:false,
         slideToScroll: 5,
-        respansive: [
-            {
-                breakpoint: 1440,
-                settings: {
-                    slidesToShow: 5
-                }
-            },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 5
-                }
-            },
-            {
-                breakpoint: 720,
-                settings: {
-                    slidesToShow: 3
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 2
-                }
-            },
-            {
-                breakpoint: 320,
-                settings: {
-                    slidesToShow: 1
-                }
-            }
-        ]
     }
 
     return (
         <SlideContainer>
             <StyledSlider {...settings}>
-                <div>
-                    <h3>1</h3>
-                </div>
-                <div>
-                    <h3>2</h3>
-                </div>
-                <div>
-                    <h3>3</h3>
-                </div>
-                <div>
-                    <h3>4</h3>
-                </div>
-                <div>
-                    <h3>5</h3>
-                </div>
-                <div>
-                    <h3>6</h3>
-                </div>
-                <div>
-                    <h3>7</h3>
-                </div>
-                <div>
-                    <h3>8</h3>
-                </div>
-                <div>
-                    <h3>9</h3>
-                </div>
-                <div>
-                    <h3>10</h3>
-                </div>
+                {
+                    images.map((image, index) => (
+                        <div>
+                            <Image src={image.img_src} alt={image.alt} width={200} height={200} />
+                        </div>
+                    ))
+                }
             </StyledSlider>    
         </SlideContainer>
     )
 }
+
+export default SlideShow;
 
 const StyledSlider = styled(Slider)`
     width: 100%;
@@ -107,7 +65,7 @@ const SlideContainer = styled.div`
         color: #e67e22;
         opacity: 1;
         font-size: 80px;
-        transform: scale(1.06);
+        transform: scale(1.8);
         transition: all 300ms ease;
         line-height: 100px;
         margin: 10px;
