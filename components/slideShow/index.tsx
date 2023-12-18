@@ -2,8 +2,9 @@ import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css"
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 // 이미지 데이터 타입
 interface ImageData {
     img_src: string;
@@ -24,26 +25,32 @@ const  SlideShow: React.FC<SliderProps> = ({ images }) => {
         speed: 500,
         // autoplay: true,
         // autoplaySpeed: 2000,
-        slidesToShow: 8,
+        slidesToShow: 7,
         className: "center",
         dotsClass: "dots_custom",
         centerMode: true,
-        centerPadding: "90px",
+        centerPadding: "170px",
         beforeChange: (current:number, next:number) => {
             return setSlideIndex(current)
         },
         draggable: false,
         arrows:false,
-        slideToScroll: 5,
+        slideToScroll: 1,
     }
+
+    useEffect(() => {
+        console.log("현재 인덱스값",slideIndex)
+    })
 
     return (
         <SlideContainer>
             <StyledSlider {...settings}>
                 {
                     images.map((image, index) => (
-                        <div>
-                            <Image src={image.img_src} alt={image.alt} width={200} height={200} />
+                        <div style={{ display: "flex", justifyContent:"center", alignItems: "center"}}>
+                            <Link href={image.path}>
+                                <Image style={{ cursor:"pointer" }} src={image.img_src} alt={image.alt} width={200} height={200} />
+                            </Link>
                         </div>
                     ))
                 }
@@ -56,61 +63,66 @@ export default SlideShow;
 
 const StyledSlider = styled(Slider)`
     width: 100%;
-    position: absolute;
+    position: relative;
     margin: 0 auto;
+    
+    box-sizing: border-box;
 `;
 
 const SlideContainer = styled.div`
-    .center .slick-center h3{
-        color: #e67e22;
-        opacity: 1;
-        font-size: 80px;
-        transform: scale(1.8);
-        transition: all 300ms ease;
-        line-height: 100px;
-        margin: 10px;
-        padding: 10%;
-        text-align: center;
-    }
-    .center h3 {
-        background: #00558b;
-        color: #fff;
-        font-size: 36px;
-        line-height: 100px;
-        margin: 10px;
-        padding: 5%;
-        position: relative;
-        text-align: center;
-        opacity: 0.8;
-        transition: all 300ms ease;
-        transform: scale(0.99);
+    .slick-slider {
+        width: 100%;
     }
 
+    .center .slick-center {
+        color: #e67e22;
+        opacity: 1;
+        transform: scale(1.2);
+        text-align: center;
+        transition: all 300ms ease;
+        padding: 20px;
+        margin-left: 20px;
+        margin-right: 48px;
+        margin-bottom: 30px;
+    }
+
+    .slick-list {
+        object-fit: cover;
+        display: flex;
+        align-items: center;
+        /* justify-content: center; */
+    }
+
+    .slick-track {
+        display: flex;
+        align-items: center;
+        left: 0;
+        right: 0;
+    }
+    
     .dots_custom {
-        display: inline-block;
-        vertical-align: middle;
+        display: block;
+        //vertical-align: middle;
         margin: auto 0;
-        padding: 0;
+        padding: 30px;
     }
 
     .dots_custom li {
         list-style: none;
         cursor: pointer;
         display: inline-block;
-        margin: 30px 0px;
-        padding: 0;
+        margin: 10px 0px;
     }
 
     .dots_custom li button {
         border: none;
+        position: relative ;
         background: #d1d1d1;
         color: transparent;
         cursor: pointer;
         display: block;
         height: 3px;
-        width: 110px;
-        /* border-radius: 100%; */
-        padding: 0;
+        width: 140px;
     }
 
     .dots_custom li.slick-active button {
