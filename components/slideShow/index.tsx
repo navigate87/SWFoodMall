@@ -29,7 +29,7 @@ const  SlideShow: React.FC<SliderProps> = ({ images }) => {
         className: "center",
         dotsClass: "dots_custom",
         centerMode: true,
-        centerPadding: "170px",
+        centerPadding: "110px",
         beforeChange: (current:number, next:number) => {
             return setSlideIndex(current)
         },
@@ -49,7 +49,7 @@ const  SlideShow: React.FC<SliderProps> = ({ images }) => {
                     images.map((image, index) => (
                         <div style={{ display: "flex", justifyContent:"center", alignItems: "center"}}>
                             <Link href={image.path}>
-                                <Image style={{ cursor:"pointer" }} src={image.img_src} alt={image.alt} width={200} height={200} />
+                                <Image style={{ cursor:"pointer" }} src={image.img_src} alt={image.alt} width={180} height={180} />
                             </Link>
                         </div>
                     ))
@@ -65,7 +65,6 @@ const StyledSlider = styled(Slider)`
     width: 100%;
     position: relative;
     margin: 0 auto;
-    
     box-sizing: border-box;
 `;
 
@@ -83,14 +82,13 @@ const SlideContainer = styled.div`
         padding: 20px;
         margin-left: 20px;
         margin-right: 48px;
-        margin-bottom: 30px;
+        //margin-bottom: 30px;
     }
 
     .slick-list {
         object-fit: cover;
         display: flex;
         align-items: center;
-        /* justify-content: center; */
     }
 
     .slick-track {
@@ -98,12 +96,12 @@ const SlideContainer = styled.div`
         align-items: center;
         left: 0;
         right: 0;
+        bottom: 20;
     }
     
     .dots_custom {
         display: block;
-        //vertical-align: middle;
-        margin: auto 0;
+        margin: auto auto;
         padding: 30px;
     }
 

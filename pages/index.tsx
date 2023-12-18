@@ -28,7 +28,6 @@ export default function Home() {
           <CustomTextH1 weight="bold" fontSize="35">인스타그램에 놀러오세요!</CustomTextH1>
           <CustomTextH2 weight="lighter" fontSize="14" color="#B2B2B2" style={{margin: "10px"}}>@sungwon_foodmall</CustomTextH2>    
           <div style={{ margin: "50px auto", marginBottom: "50px", boxSizing: "border-box" }}>
-            {/* <ImageSlider images={SlideData} /> */}
             <SlideShow images={SlideData} />
           </div>
         </div>

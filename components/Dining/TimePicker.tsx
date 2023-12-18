@@ -15,14 +15,18 @@ const PickerWrapper = styled.div`
   justify-content: flex-start;
 `;
 
-const TimeButton = styled.button<{ isSelected: boolean }>`
+const TimeButton = styled.button<{ isSelected: boolean, isDisabled?: boolean }>`
   height: 32px;
   width: 81px;
   margin-right: 10px;
   margin-bottom: 10px;
   margin-left: 10px;
-  background: ${({ isSelected }) => (isSelected ? '#f84040' : '#white')};
+  background: ${({ isSelected, isDisabled }) => (isSelected ? '#f84040' : (isDisabled ? '#e0e0e0' : 'white'))};
+  color: ${({ isSelected, isDisabled }) => (isSelected ? 'white' : (isDisabled ? '#a0a0a0' : 'black'))};
+  cursor: ${({ isDisabled }) => (isDisabled ? 'not-allowed' : 'pointer')};
+  /* background: ${({ isSelected }) => (isSelected ? '#f84040' : '#white')};
   color: ${({ isSelected }) => (isSelected ? 'white' : 'black')};
+  cursor: pointer; */
   border: 1px solid #ddd;
   border-radius: 5px;
   cursor: pointer;
@@ -30,7 +34,7 @@ const TimeButton = styled.button<{ isSelected: boolean }>`
   transition: background-color 0.3s, border-color 0.3s;
   border-radius: 10px;
   &:hover {
-    border: 1px solid #f84040;
+    border: ${({ isDisabled }) => isDisabled ? '1px solid #ddd' : '1px solid #f84040'};
   }
 
   &:focus {
@@ -54,7 +58,9 @@ type Time = {
   minute: number;
 };
 
-
+const getCurrentHour = () => {
+  return new Date().getHours();
+}
 interface TimePickerProps {
   onTimeSelected: (time: string) => void;
 }
@@ -92,7 +98,9 @@ const TimePicker: React.FC<TimePickerProps> = ({ onTimeSelected }) => {
               <TimeButton
                 key={hour}
                 isSelected={hour === selectedHour}
-                onClick={() => selectHour(hour)}
+                isDisabled={hour < getCurrentHour()}
+                onClick={() => hour >= getCurrentHour() && selectHour(hour)}
+                //onClick={() => selectHour(hour)}
               >
                 {hour}:00
               </TimeButton>

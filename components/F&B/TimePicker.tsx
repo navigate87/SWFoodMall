@@ -1,5 +1,5 @@
 import { recoilTimeRange, recoilTimeState } from '@/store/stores/modalState';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
@@ -15,22 +15,25 @@ const PickerWrapper = styled.div`
   justify-content: flex-start;
 `;
 
-const TimeButton = styled.button<{ isSelected: boolean }>`
+const TimeButton = styled.button<{ isSelected: boolean, isDisabled?: boolean }>`
   height: 32px;
   width: 81px;
   margin-right: 10px;
   margin-bottom: 10px;
   margin-left: 10px;
-  background: ${({ isSelected }) => (isSelected ? '#f84040' : '#white')};
+  background: ${({ isSelected, isDisabled }) => (isSelected ? '#f84040' : (isDisabled ? '#e0e0e0' : 'white'))};
+  color: ${({ isSelected, isDisabled }) => (isSelected ? 'white' : (isDisabled ? '#a0a0a0' : 'black'))};
+  cursor: ${({ isDisabled }) => (isDisabled ? 'not-allowed' : 'pointer')};
+  /* background: ${({ isSelected }) => (isSelected ? '#f84040' : '#white')};
   color: ${({ isSelected }) => (isSelected ? 'white' : 'black')};
+  cursor: pointer; */
   border: 1px solid #ddd;
   border-radius: 5px;
-  cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s, border-color 0.3s;
   border-radius: 10px;
   &:hover {
-    border: 1px solid #f84040;
+    border: ${({ isDisabled }) => isDisabled ? '1px solid #ddd' : '1px solid #f84040'};
   }
 
   &:focus {
@@ -67,7 +70,15 @@ const TimePicker: React.FC = () => {
     });
     const hours = Array.from({ length: 11 }, (_, index) => 10 + index);
     const durations: TimeOption[] = ['2시간', '3시간', '6시간', '9시간', '종일'];
-   
+    
+    const getCurrentTime = () => {
+      return new Date().toLocaleTimeString();
+    }
+
+    const getCurrentHour = () => {
+      return new Date().getHours();
+    }
+
     const timeToMinutes = (time: string) => {
       const [hours, minutes] = time.split('시간').map(Number);
       return hours * 60 + (minutes || 0);
@@ -109,6 +120,10 @@ const TimePicker: React.FC = () => {
           updateTimeRange(selectedHour, duration);
         }
     };
+
+    useEffect(() => {
+      console.log("현재 시간",getCurrentTime());
+    })
   
     return (
       <>
@@ -119,7 +134,9 @@ const TimePicker: React.FC = () => {
               <TimeButton
                 key={hour}
                 isSelected={hour === selectedHour}
-                onClick={() => selectHour(hour)}
+                isDisabled={hour < getCurrentHour()}
+                onClick={() => hour >= getCurrentHour() && selectHour(hour)}
+                // onClick={() => selectHour(hour)}
               >
                 {hour < 10 ? `0${hour}:00` : `${hour}:00`}
               </TimeButton>

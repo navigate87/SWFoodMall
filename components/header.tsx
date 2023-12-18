@@ -159,6 +159,16 @@ export default function Header() {
             <ProfileUl>
               <ProfileUlLi>
                 <SelectLanguageBox id="select-language-box" onClick={() => setIsLanguageSelect((prev) => !prev)}>
+                {/* <DropdownContainer>
+                  <DropdownButton onClick={() => setIsLanguageSelect((prev) => !prev)}>
+                    드롭다운 메뉴
+                  </DropdownButton>
+                  <DropdownContent isSelected={!isLanguageSelect}>
+                    <DropdownItem href="#">링크 1</DropdownItem>
+                    <DropdownItem href="#">링크 2</DropdownItem>
+                    <DropdownItem href="#">링크 3</DropdownItem>
+                  </DropdownContent>
+                </DropdownContainer> */}
                   {
                     !isLanguageSelect && 
                     <LanguageOptionBox>
@@ -329,10 +339,45 @@ const HelpOptionBox = styled.div`
   cursor: pointer;
 `;
 
-const LanguageLabel = styled.label<{isSelected:boolean}>`
+
+
+const LanguageLabel = styled.div<{isSelected:boolean}>`
   font-size: 14px;
   display: ${(isSelected) => (isSelected ? "block" : "none")};
   cursor: pointer;
+`;
+
+const DropdownContainer = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+const DropdownButton = styled.button`
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+`;
+
+const DropdownContent = styled.div<{isSelected:boolean}>`
+  display: ${(isSelected) => (isSelected ? "block" : "none")};
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+`;
+
+const DropdownItem = styled.a`
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+
+  &:hover {
+    background-color: #f1f1f1
+  }
 `;
 
 const SelectDirection = styled.div`
@@ -484,44 +529,44 @@ const GuideBackground = styled.div`
   
 `;
 
-const DropdownContainer = styled.div`
-  display: flex;
-`;
+// const DropdownContainer = styled.div`
+//   display: flex;
+// `;
 
-const DropdownButton = styled.button`
-  //background-color: #4CAF50;
-  display: flex;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-`;
+// const DropdownButton = styled.button`
+//   //background-color: #4CAF50;
+//   display: flex;
+//   color: white;
+//   padding: 10px;
+//   border: none;
+//   cursor: pointer;
+// `;
 
-const DropdownContent = styled.div`
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 70px;
-  top: 10px;
-  text-align: center;
-  box-shadow: 2px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+// const DropdownContent = styled.div`
+//   display: none;
+//   position: absolute;
+//   background-color: #f9f9f9;
+//   min-width: 70px;
+//   top: 10px;
+//   text-align: center;
+//   box-shadow: 2px 8px 16px 0px rgba(0,0,0,0.2);
+//   z-index: 1;
 
-  ${DropdownContainer}:hover & {
-    display: block;
-  }
-`;
+//   ${DropdownContainer}:hover & {
+//     display: block;
+//   }
+// `;
 
-const DropdownItem = styled.a`
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+// const DropdownItem = styled.a`
+//   color: black;
+//   padding: 12px 16px;
+//   text-decoration: none;
+//   display: block;
 
-  &:hover {
-    color: #f84040;
-  }
-`;
+//   &:hover {
+//     color: #f84040;
+//   }
+// `;
 
 
 
