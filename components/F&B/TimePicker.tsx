@@ -24,9 +24,6 @@ const TimeButton = styled.button<{ isSelected: boolean, isDisabled?: boolean }>`
   background: ${({ isSelected, isDisabled }) => (isSelected ? '#f84040' : (isDisabled ? '#e0e0e0' : 'white'))};
   color: ${({ isSelected, isDisabled }) => (isSelected ? 'white' : (isDisabled ? '#a0a0a0' : 'black'))};
   cursor: ${({ isDisabled }) => (isDisabled ? 'not-allowed' : 'pointer')};
-  /* background: ${({ isSelected }) => (isSelected ? '#f84040' : '#white')};
-  color: ${({ isSelected }) => (isSelected ? 'white' : 'black')};
-  cursor: pointer; */
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 16px;

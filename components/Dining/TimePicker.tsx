@@ -81,7 +81,6 @@ const TimePicker: React.FC<TimePickerProps> = ({ onTimeSelected }) => {
       
       if (selectedMinute !== null) {
         onTimeSelected(`${hour}:${selectedMinute.toString().padStart(2, '0')}`);
-        
       }
     };
   
@@ -104,10 +103,10 @@ const TimePicker: React.FC<TimePickerProps> = ({ onTimeSelected }) => {
                 isSelected={hour === selectedHour}
                 isDisabled={hour < getCurrentHour()}
                 onClick={() => hour >= getCurrentHour() && selectHour(hour)}
-                //onClick={() => selectHour(hour)}
               >
                 {hour}:00
               </TimeButton>
+
             ))}
           </PickerWrapper>
         </PickerSection>
