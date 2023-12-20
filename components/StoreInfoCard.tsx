@@ -1,27 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Image from 'next/image';
 import { StoreInfoProps, StoreInfoDataProps } from '@/data/StoreInfoType';
 
 interface StoreInfoCardProps {
     storeInfo?: StoreInfoDataProps
+    isVisible?: boolean
 }
 
-const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo }) => {
+const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo, isVisible }) => {
   if (!storeInfo) {
     return <div>정보가 없습니다.</div>;
   }
 
+  const [isCardVisible, setIsCardVisible] = useState<boolean | undefined>();
+  const [display, setDisplay] = useState('block');
+
+ 
+//   useEffect(() => {
+//     console.log("isVisible", isVisible);
+//     if (isVisible) {
+//       setIsCardVisible(true);
+//     } else {
+//         const timer = setTimeout(() => {
+//           setIsCardVisible(false);
+//         }, 2000); // 애니메이션 지속 시간에 맞춰 설정
+//         return () => clearTimeout(timer);
+//     }
+// }, [isVisible]);
+
+  // if (!isCardVisible) {
+  //   return null;
+  // }
+
   const isPosChange = () => {
-    if(storeInfo.alt === "카페" || 
-      storeInfo.alt === "일식" ||
-      storeInfo.alt === "한식∙정육" ||
-      storeInfo.alt === "루프가든"
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    return ['카페', '일식', '한식∙정육', '루프가든'].includes(storeInfo.alt);
+    // if(storeInfo.alt === "카페" || 
+    //   storeInfo.alt === "일식" ||
+    //   storeInfo.alt === "한식∙정육" ||
+    //   storeInfo.alt === "루프가든"
+    // ) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   }
 
   const isRoomOrHall = () => {
@@ -44,7 +66,7 @@ const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo }) => {
   }
 
   return (
-    <InfoCardContainer isLeft={isPosChange()}>
+    <InfoCardContainer isLeft={isPosChange()} isVisible={isVisible}>
       <ImageContainer>
         <Image src={storeInfo.imgSrc} width={432} height={340} alt={storeInfo.alt} />
       </ImageContainer>
@@ -78,6 +100,26 @@ const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo }) => {
 
 export default StoreInfoCard;
 
+const fadeOutLeft = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+`;
+
+const fadeOutRight = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+`;
+
 const slideInLeftToRight = keyframes`
   from {
     opacity: 0;
@@ -104,7 +146,7 @@ const slideInRightToLeft = keyframes`
 
  
 
-const InfoCardContainer = styled.div<{isLeft:boolean}>`
+const InfoCardContainer = styled.div<{isLeft:boolean, isVisible?: boolean}>`
   z-index: 350;
   position: absolute;
   left: ${({ isLeft }) => (isLeft? "50" : "1450")}px;
@@ -112,6 +154,14 @@ const InfoCardContainer = styled.div<{isLeft:boolean}>`
   width: 432px;
   height: 636px;
   animation: ${({ isLeft }) => (isLeft ? slideInLeftToRight : slideInRightToLeft)} 0.5s ease-out;
+  /* opacity: ${({ isVisible }) => (isVisible ? "1" : "0")};
+  visibility: ${({ isVisible }) => (isVisible ? "visible" : "hidden")};
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out; */
+  /* animation: ${({ isLeft, isVisible }) => 
+    isVisible 
+      ? (isLeft ? slideInLeftToRight : slideInRightToLeft) 
+      : (isLeft ? fadeOutLeft : fadeOutRight)
+  } 0.5s ease-out forwards; */
 `;
 
 const ImageContainer = styled.div``;

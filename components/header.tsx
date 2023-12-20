@@ -34,12 +34,12 @@ export default function Header() {
     GuideDataProps.reduce((acc, item) => ({ ...acc, [item.alt]: false }), {})
   );
   const [selectedStoreInfo, setSelectedStoreInfo] = useState<StoreInfoDataProps>();
-
+  const [storeInfoCardVisible, setStoreInfoCardVisible] = useState<boolean>(false);
+  const [storeInfoCardAnimating, setStoreInfoCardAnimating] = useState(false);
   const isAnyOverlayActive = Object.values(overlayStatus).some(status => status);
 
   const handleGuideClick = (alt:string) => {
     setOverlayStatus(prev => ({ ...prev, [alt]: !prev[alt] }));
-
     const findStoreInfo = StoreInfoProps.find(storeInfo => storeInfo.alt === alt);
     setSelectedStoreInfo(findStoreInfo);
   }
@@ -125,8 +125,37 @@ export default function Header() {
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
+
+    
   },[showOptions,isLanguageSelect,isShowHelpOption])
 
+  // const handleStoreInfoVisibility = (isVisible:boolean) => {
+  //   if (isVisible) {
+  //     setStoreInfoCardVisible(true);
+  //   } else {
+  //     setStoreInfoCardVisible(true); // 애니메이션 시작
+  //     setTimeout(() => {
+  //       setStoreInfoCardVisible(false); // 애니메이션 완료 후 컴포넌트 언마운트
+  //       //setStoreInfoCardAnimating(false); // 애니메이션 상태 초기화
+  //     }, 2000); // 애니메이션 지속 시간
+  //   }
+  // };
+
+  useEffect(() => {
+    // setStoreInfoCardVisible(isAnyOverlayActive);
+    // if(isAnyOverlayActive) {
+    //   setStoreInfoCardVisible(true);
+    // } else {
+    //   setStoreInfoCardVisible(false);
+    // console.log("이거 확인이 되야되",storeInfoCardVisible);
+    // }
+    // const activeOverlays = Object.values(overlayStatus).some(status => status);
+    // setTimeout(() => {
+    //         setStoreInfoCardVisible(!activeOverlays); // 애니메이션 완료 후 컴포넌트 언마운트
+    //         //setStoreInfoCardAnimating(false); // 애니메이션 상태 초기화
+    //       }, 2000); 
+    // setStoreInfoCardVisible(activeOverlays);
+  }, [overlayStatus,isAnyOverlayActive]);
   return (
     <>
       <Container>
@@ -237,6 +266,7 @@ export default function Header() {
         isAnyOverlayActive && 
         <StoreInfoCard 
           storeInfo={selectedStoreInfo}
+          isVisible={storeInfoCardVisible}
         />
       }
       {showModal && <Reservation />} 

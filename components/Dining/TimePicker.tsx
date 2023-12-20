@@ -29,7 +29,7 @@ const TimeButton = styled.button<{ isSelected: boolean, isDisabled?: boolean }>`
   cursor: pointer; */
   border: 1px solid #ddd;
   border-radius: 5px;
-  cursor: pointer;
+  /* cursor: pointer; */
   font-size: 16px;
   transition: background-color 0.3s, border-color 0.3s;
   border-radius: 10px;
@@ -60,6 +60,10 @@ type Time = {
 
 const getCurrentHour = () => {
   return new Date().getHours();
+}
+
+const getCurrentMinute = () => {
+  return new Date().getMinutes();
 }
 interface TimePickerProps {
   onTimeSelected: (time: string) => void;
@@ -114,8 +118,9 @@ const TimePicker: React.FC<TimePickerProps> = ({ onTimeSelected }) => {
               <TimeButton 
                 style={{ width:"81px" }}
                 key={minute}
+                isDisabled={minute < getCurrentMinute() && minute.toString() !== "00" }
                 isSelected={minute === selectedMinute}
-                onClick={() => selectMinute(minute)}
+                onClick={() => minute >= getCurrentMinute() && selectMinute(minute)}
               >
                 {minute.toString().padStart(2, '0')}
               </TimeButton>
