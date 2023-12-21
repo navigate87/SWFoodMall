@@ -33,25 +33,6 @@ export default function Header() {
   const [overlayStatus, setOverlayStatus] = useState<{[key: string]: boolean}>(
     GuideDataProps.reduce((acc, item) => ({ ...acc, [item.alt]: false }), {})
   );
-  const [selectedStoreInfo, setSelectedStoreInfo] = useState<StoreInfoDataProps>();
-  const [storeInfoCardVisible, setStoreInfoCardVisible] = useState<boolean>(false);
-  const [storeInfoCardAnimating, setStoreInfoCardAnimating] = useState(false);
-  const isAnyOverlayActive = Object.values(overlayStatus).some(status => status);
-
-  const handleGuideClick = (alt:string) => {
-    setOverlayStatus(prev => ({ ...prev, [alt]: !prev[alt] }));
-    const findStoreInfo = StoreInfoProps.find(storeInfo => storeInfo.alt === alt);
-    setSelectedStoreInfo(findStoreInfo);
-  }
-
-  const handleClick = (event:any) => {
-    setShowModal(true);
-    document.body.style.overflow = "hidden";
-  }
-
-  const closeAllOverlays = () => {
-    setOverlayStatus(GuideDataProps.reduce((acc, item) => ({ ...acc, [item.alt]: false }), {}));
-  };
   
   const handleOnChangeSelectValue = (e:any) => {
     const { innerText } = e.target;
@@ -129,33 +110,6 @@ export default function Header() {
     
   },[showOptions,isLanguageSelect,isShowHelpOption])
 
-  // const handleStoreInfoVisibility = (isVisible:boolean) => {
-  //   if (isVisible) {
-  //     setStoreInfoCardVisible(true);
-  //   } else {
-  //     setStoreInfoCardVisible(true); // 애니메이션 시작
-  //     setTimeout(() => {
-  //       setStoreInfoCardVisible(false); // 애니메이션 완료 후 컴포넌트 언마운트
-  //       //setStoreInfoCardAnimating(false); // 애니메이션 상태 초기화
-  //     }, 2000); // 애니메이션 지속 시간
-  //   }
-  // };
-
-  useEffect(() => {
-    // setStoreInfoCardVisible(isAnyOverlayActive);
-    // if(isAnyOverlayActive) {
-    //   setStoreInfoCardVisible(true);
-    // } else {
-    //   setStoreInfoCardVisible(false);
-    // console.log("이거 확인이 되야되",storeInfoCardVisible);
-    // }
-    // const activeOverlays = Object.values(overlayStatus).some(status => status);
-    // setTimeout(() => {
-    //         setStoreInfoCardVisible(!activeOverlays); // 애니메이션 완료 후 컴포넌트 언마운트
-    //         //setStoreInfoCardAnimating(false); // 애니메이션 상태 초기화
-    //       }, 2000); 
-    // setStoreInfoCardVisible(activeOverlays);
-  }, [overlayStatus,isAnyOverlayActive]);
   return (
     <>
       <Container>
@@ -188,16 +142,6 @@ export default function Header() {
             <ProfileUl>
               <ProfileUlLi>
                 <SelectLanguageBox id="select-language-box" onClick={() => setIsLanguageSelect((prev) => !prev)}>
-                {/* <DropdownContainer>
-                  <DropdownButton onClick={() => setIsLanguageSelect((prev) => !prev)}>
-                    드롭다운 메뉴
-                  </DropdownButton>
-                  <DropdownContent isSelected={!isLanguageSelect}>
-                    <DropdownItem href="#">링크 1</DropdownItem>
-                    <DropdownItem href="#">링크 2</DropdownItem>
-                    <DropdownItem href="#">링크 3</DropdownItem>
-                  </DropdownContent>
-                </DropdownContainer> */}
                   {
                     !isLanguageSelect && 
                     <LanguageOptionBox>
@@ -249,7 +193,7 @@ export default function Header() {
             </ProfileUl>
           </Profile>
         </Section>
-        <GuideBox>  
+        {/* <GuideBox>  
           {
             GuideDataProps.map((item) => (
               <GuideItem
@@ -260,31 +204,22 @@ export default function Header() {
               />
             ))
           }
-        </GuideBox>
+        </GuideBox> */}
       </Container>
-      {
-        isAnyOverlayActive && 
-        <StoreInfoCard 
-          storeInfo={selectedStoreInfo}
-          isVisible={storeInfoCardVisible}
-        />
-      }
+      
       {showModal && <Reservation />} 
       {showGroupModal && <GroupReservation />}
       {showConfirmModal && <ConfirmModal />}
       {showConfirmGroupModal && <ConfirmGroupModal />}
-      {isAnyOverlayActive && <GuideBackground onClick={closeAllOverlays}/>}
+      
     </>
     
   );
 }
 
 const Container = styled.div`
-  height: 100%;
-  background-image: url("image/main-foodmall-img.png");
-  background-position: center center;
-  background-repeat: no-repeat;
-`;
+  height: 60px;
+`; 
 
 const Section = styled.div`
   height: 60px;
@@ -359,66 +294,14 @@ const SelectLanguageBox = styled.div`
   cursor: pointer;
 `;
 
-const HelpOptionBox = styled.div`
-  width:55px;
-  height:23px; 
-  border-radius:5px; 
-  display:flex; 
-  justify-content:center; 
-  align-items:center;
-  cursor: pointer;
-`;
-
-
-
 const LanguageLabel = styled.div<{isSelected:boolean}>`
   font-size: 14px;
   display: ${(isSelected) => (isSelected ? "block" : "none")};
   cursor: pointer;
 `;
 
-const DropdownContainer = styled.div`
-  position: relative;
-  display: inline-block;
-`;
-
-const DropdownButton = styled.button`
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-`;
-
-const DropdownContent = styled.div<{isSelected:boolean}>`
-  display: ${(isSelected) => (isSelected ? "block" : "none")};
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-`;
-
-const DropdownItem = styled.a`
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-
-  &:hover {
-    background-color: #f1f1f1
-  }
-`;
-
 const SelectDirection = styled.div`
-  //margin-bottom: ${(isSelected) => (isSelected ? "5" : "-5")}px; 
   margin-left: 8px;
-  /* width: 8px; 
-  height: 8px;  */
-  /* border-top:1px solid #FFF;
-  border-right:1px solid #FFF; */
-  /* transform: ${(isSelected) => (isSelected ? "rotate(135deg)" : "rotate(325deg)")};
-  transition: transform 0.3s ease; */
   display: ${(isSelected) => (isSelected ? "block" : "none")};
 `;
 
@@ -487,7 +370,7 @@ const SelectHelpOptions = styled.ul<show>`
   transition: all  0.3s ease-in-out;
   opacity: ${(props) => (props.show ? '1' : '0')};
   visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
-  z-index: 10; // 다른 컨텐츠 위에 표시되도록 z-index를 설정합니다.
+  z-index: 10; 
 `;
 
 
@@ -523,9 +406,7 @@ const LanguageOptions = styled.ul<show>`
   border-radius: 20px;
   background-color: rgba(42,42,42,0.4);
   color: #fefefe;
-  //max-height: ${(props) => (props.show ? "none" : "0")};
   opacity: ${(props) => (props.show ? '1' : '0')};
-  //visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
   z-index: 10;
   transform: translateY(${({ show }) => (show ? '0' : '-5px')});
   transition: all 0.3s ease-in-out;
@@ -544,59 +425,6 @@ const Option = styled.li`
 
 
 
-const GuideBox = styled.div`
-  height: 91.3%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const GuideBackground = styled.div`
-  position: fixed;
-  top: 0; left: 0; bottom: 0; right: 0;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 300;
-  
-`;
-
-// const DropdownContainer = styled.div`
-//   display: flex;
-// `;
-
-// const DropdownButton = styled.button`
-//   //background-color: #4CAF50;
-//   display: flex;
-//   color: white;
-//   padding: 10px;
-//   border: none;
-//   cursor: pointer;
-// `;
-
-// const DropdownContent = styled.div`
-//   display: none;
-//   position: absolute;
-//   background-color: #f9f9f9;
-//   min-width: 70px;
-//   top: 10px;
-//   text-align: center;
-//   box-shadow: 2px 8px 16px 0px rgba(0,0,0,0.2);
-//   z-index: 1;
-
-//   ${DropdownContainer}:hover & {
-//     display: block;
-//   }
-// `;
-
-// const DropdownItem = styled.a`
-//   color: black;
-//   padding: 12px 16px;
-//   text-decoration: none;
-//   display: block;
-
-//   &:hover {
-//     color: #f84040;
-//   }
-// `;
 
 
 

@@ -8,7 +8,7 @@ export default function List() {
     // console.log(router)
     return (
         <Layout>
-            
+            123
         </Layout>
     )
 }
