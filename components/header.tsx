@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import Image from "next/image";
 import { useRecoilState } from "recoil";
 import { modalConfirmShowState, modalShowState, recoilReserveOption, recoilShowGroupModal,recoilShowConfirmGroupModal } from "@/store/stores/modalState";
@@ -7,14 +7,6 @@ import ConfirmModal from "@/modal/confirmReservation";
 import { useEffect, useState } from "react";
 import GroupReservation from "@/modal/FnBGroupReserve";
 import ConfirmGroupModal from "@/modal/confirmGroupReservation";
-import { GuideDataProps } from "@/data/GuideType";
-import GuideItem from "./GuideItem";
-import { wrap } from "module";
-import StoreInfoCard from "./StoreInfoCard";
-import { StoreInfoDataProps, StoreInfoProps } from "@/data/StoreInfoType";
-import { reservedDate } from "@/api/api";
-import { useMutation } from "react-query";
-import { FnbReservedDateRequest } from "@/type/Reservation";
 
 type show = {
   show?:boolean;
@@ -29,10 +21,6 @@ export default function Header() {
   const [isLanguageSelect, setIsLanguageSelect] = useState<boolean>(false);
   const [isShowHelpOption, setIsShowHelpOption] = useState<boolean>(false);
   const [showConfirmGroupModal, setShowConfirmGroupModal] = useRecoilState<boolean>(recoilShowConfirmGroupModal);
-  const { mutate:mutateReservedDate, isLoading: isLoadingReservedDate, isError: isErrorReservedDate, data: dataReservedDate } = useMutation(reservedDate);
-  const [overlayStatus, setOverlayStatus] = useState<{[key: string]: boolean}>(
-    GuideDataProps.reduce((acc, item) => ({ ...acc, [item.alt]: false }), {})
-  );
   
   const handleOnChangeSelectValue = (e:any) => {
     const { innerText } = e.target;
@@ -40,29 +28,12 @@ export default function Header() {
 
     if(innerText === "Dining") {
       setShowModal(true);
-      document.body.style.overflow = "hidden";
     } else if(innerText === "F&B") {
       setShowGroupModal(true);
-
-      // const data:FnbReservedDateRequest = {
-      //   order_date: "202312",
-      // }
-      // mutateReservedDate(data, {
-      // onSuccess: () => {
-      //   alert('월별 날짜 api 호출 못불러옴!');
-      // },
-      // onError: () => {
-      //   alert('못불러옴');
-      // }
-      // });
-      document.body.style.overflow = "hidden";
+      
     }
-
+    document.body.style.overflow = "hidden";
   };
-
-  const languageDropDown = () => {
-    setIsLanguageSelect(!isLanguageSelect)
-  }
 
   useEffect(() => {
     const handleOutsideClick = (event: any) => {
@@ -173,9 +144,9 @@ export default function Header() {
                 <Image style={{ marginTop: "15%" }} alt="메뉴" src={"icon/my-login.svg"} width={40} height={40} />
               </ProfileUlLi>
               <ProfileUlLi>
-                <HelpHoverContainer onMouseOver={() => setIsShowHelpOption(true)}>
+                <div onMouseOver={() => setIsShowHelpOption(true)}>
                   <Image onClick={()=>setIsShowHelpOption((prev) => !prev)} style={{ marginTop: "15%" }} alt="메뉴" src={"icon/고객센터.svg"} width={40} height={40} />
-                </HelpHoverContainer>
+                </div>
                 <SelectHelpOptionBox id="select-help-option-box">
                   <SelectBox  onClick={() => setIsShowHelpOption((prev) => !prev)}>
                     <SelectHelpOptions show={isShowHelpOption}>
@@ -193,18 +164,6 @@ export default function Header() {
             </ProfileUl>
           </Profile>
         </Section>
-        {/* <GuideBox>  
-          {
-            GuideDataProps.map((item) => (
-              <GuideItem
-                key={item.alt}
-                data={item}
-                isVisible={overlayStatus[item.alt]}
-                onClick={() => handleGuideClick(item.alt)}
-              />
-            ))
-          }
-        </GuideBox> */}
       </Container>
       
       {showModal && <Reservation />} 
@@ -340,11 +299,7 @@ const SelectOptions = styled.ul<show>`
   transition: all  0.3s ease-in-out;
   opacity: ${(props) => (props.show ? '1' : '0')};
   visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
-  z-index: 10; // 다른 컨텐츠 위에 표시되도록 z-index를 설정합니다.
-`;
-
-const HelpHoverContainer = styled.div`
-  
+  z-index: 10;
 `;
 
 const SelectHelpOptionBox = styled.div`
@@ -373,31 +328,9 @@ const SelectHelpOptions = styled.ul<show>`
   z-index: 10; 
 `;
 
-
-const HelpOptions = styled.ul<show>`
-  position: absolute;
-  list-style: none;
-  left: 0;
-  text-align: center;
-  right: 0;
-  width: 60px;
-  overflow: hidden;
-  top: -5px;
-  padding: 0;
-  border-radius: 25px;
-  background-color: rgba(42,42,42,0.4);
-  color: #fefefe;
-  max-height: ${(props) => (props.show ? "none" : "0")};
-  transition: all  0.3s ease-in-out;
-  opacity: ${(props) => (props.show ? '1' : '0')};
-  visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
-  z-index: 10; 
-`;
-
 const LanguageOptions = styled.ul<show>`
   position: absolute;
   list-style: none;
-  //bottom : -80px;
   top:18px;
   text-align: center;
   width: 60px;

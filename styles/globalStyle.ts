@@ -61,6 +61,45 @@ a, a:visited {
 li, ul {
   list-style: none;
 }
+
+.slide-fade-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.slide-fade-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms ease-in, transform 300ms ease-in;
+}
+.slide-fade-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.slide-fade-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 500ms ease-in, transform 500ms ease-in;
+}
+
+/* 반대 슬라이드 방향 */
+.reverse-slide-fade-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+.reverse-slide-fade-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms ease-in, transform 300ms ease-in;
+}
+.reverse-slide-fade-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reverse-slide-fade-exit-active {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 500ms ease-in, transform 500ms ease-in;
+}
 `;
 
 

@@ -4,7 +4,7 @@ import Layout from "@/components/Layout";
 import Head from "next/head";
 import styles from "@/styles/Button.module.scss"
 import { useRouter } from "next/router";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { HtmlProps } from "next/dist/shared/lib/html-context.shared-runtime";
 import { Html } from "next/document";
 import SlideShow from "@/components/slideShow"
@@ -16,6 +16,7 @@ import GuideItem from "@/components/GuideItem";
 import { useState } from "react";
 import { StoreInfoDataProps, StoreInfoProps } from "@/data/StoreInfoType";
 import StoreInfoCard from "@/components/StoreInfoCard";
+import { CSSTransition } from "react-transition-group";
 export default function Home() {
   // eslint-disable-next-line prettier/prettier
   const router = useRouter();
@@ -34,6 +35,14 @@ export default function Home() {
     setOverlayStatus(GuideDataProps.reduce((acc, item) => ({ ...acc, [item.alt]: false }), {}));
   };
 
+  const getAnimationClass = (storeName:string) => {
+    if (['레스토랑', '뷔페', '객실', '연회장'].includes(storeName)) {
+      return 'reverse-slide-fade';
+    } else {
+      return 'slide-fade';
+    }
+  }
+
   return (
     <Layout>
       <Head>
@@ -41,11 +50,11 @@ export default function Home() {
         <meta name="description" content="성원푸드" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "-60px" }}>
+      <div style={{ display: "flex", justifyContent: "center",  margin: "-60px" }}>
         <Image src={"/image/main-foodmall-img.png"} width={1330} height={936} alt="main" />
          <GuideBox>  
           {
-              GuideDataProps.map((item) => (
+            GuideDataProps.map((item) => (
               <GuideItem
                 key={item.alt}
                 data={item}
@@ -55,13 +64,21 @@ export default function Home() {
             ))
           }
         </GuideBox>
-        {
-          isAnyOverlayActive && 
+        <CSSTransition
+          in={isAnyOverlayActive}
+          timeout={300}
+          classNames={getAnimationClass(selectedStoreInfo?.alt ?? '')}
+          unmountOnExit
+        >
+        {/* {
+          isAnyOverlayActive &&  */}
           <StoreInfoCard 
             storeInfo={selectedStoreInfo}
             isVisible={storeInfoCardVisible}
           />
-        }
+        {/* } */}
+        </CSSTransition>
+        
         {isAnyOverlayActive && <GuideBackground onClick={closeAllOverlays}/>}
       </div>
       

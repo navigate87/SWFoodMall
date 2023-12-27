@@ -13,37 +13,8 @@ const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo, isVisible }) =
     return <div>정보가 없습니다.</div>;
   }
 
-  const [isCardVisible, setIsCardVisible] = useState<boolean | undefined>();
-  const [display, setDisplay] = useState('block');
-
- 
-//   useEffect(() => {
-//     console.log("isVisible", isVisible);
-//     if (isVisible) {
-//       setIsCardVisible(true);
-//     } else {
-//         const timer = setTimeout(() => {
-//           setIsCardVisible(false);
-//         }, 2000); // 애니메이션 지속 시간에 맞춰 설정
-//         return () => clearTimeout(timer);
-//     }
-// }, [isVisible]);
-
-  // if (!isCardVisible) {
-  //   return null;
-  // }
-
   const isPosChange = () => {
     return ['카페', '일식', '한식∙정육', '루프가든'].includes(storeInfo.alt);
-    // if(storeInfo.alt === "카페" || 
-    //   storeInfo.alt === "일식" ||
-    //   storeInfo.alt === "한식∙정육" ||
-    //   storeInfo.alt === "루프가든"
-    // ) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
   }
 
   const isRoomOrHall = () => {
@@ -143,8 +114,6 @@ const slideInRightToLeft = keyframes`
     transform: translateX(0);
   }
 `;
-
- 
 
 const InfoCardContainer = styled.div<{isLeft:boolean, isVisible?: boolean}>`
   z-index: 350;
@@ -254,4 +223,7 @@ const DetailedViewButton = styled.div`
   font-size: 15px;
   color: #707070;
   cursor: pointer;
+  &:hover {
+    border: 2px solid #f84040;
+  }
 `;

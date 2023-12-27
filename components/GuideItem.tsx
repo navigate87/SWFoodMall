@@ -23,6 +23,7 @@ const GuideItem: React.FC<GuideItemProps> = ({ data, isVisible, onClick }) => {
         } else {
             setIsOverlayVisible(true);
         }
+        
     }, [isVisible]);
 
 
