@@ -153,3 +153,8 @@ export const recoilFacilitiesOne = atom<Facility[]>({
     key: 'facilitiesOne',
     default: [],
 })
+
+export const recoilHallInfo = atom<boolean>({
+    key: 'hallInfo',
+    default: false
+})

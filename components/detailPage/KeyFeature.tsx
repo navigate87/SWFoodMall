@@ -1,27 +1,36 @@
+import { recoilHallInfo } from '@/store/stores/modalState';
 import Image from 'next/image';
 import React from 'react';
-import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import styled, {css, keyframes} from 'styled-components';
 
 
 interface KeyFeatureProps {
   imageUrl: string;
   label: string;
   detail: string;
-  position: string;
+  animate: boolean;
 }
 
-const KeyFeature: React.FC<KeyFeatureProps> = ({ imageUrl, label, detail, position }) => {
+const KeyFeature: React.FC<KeyFeatureProps> = ({ imageUrl, label, detail, animate }) => {
+  const [hallInfoPopup, setHallInfoPopup] = useRecoilState<boolean>(recoilHallInfo);
+  
+  const handleMoreClick = () => {
+    setHallInfoPopup(true);
+    document.body.style.overflow = "hidden";
+  }
+  
   return (
         <Feature>
-            <FeatureBox>
-                <FeatureImage src={imageUrl} alt={label} width={360} height={80} />
-                <FeatureDetails Left={position}>
+            <FeatureBox animate={animate}>
+                <FeatureImage animate={animate} src={imageUrl} alt={label} width={360} height={animate ? 120 : 80} />
+                <FeatureDetails animate={animate}>
                     <FeatureTextBox1>
                         <FeatureTextBox2>
                             <FeatureText>{label}</FeatureText>
                             <Divider />
                             <FeatureText>{detail}</FeatureText>
-                            <FeatureTextBox3>
+                            <FeatureTextBox3 animate={animate}>
                                 <div>
                                     <Image src={"/icon/icon-sub-fullbanner-key-group.svg"} alt="groupkey" height={16} width={24} />
                                 </div>
@@ -31,8 +40,12 @@ const KeyFeature: React.FC<KeyFeatureProps> = ({ imageUrl, label, detail, positi
                                 </div>
                             </FeatureTextBox3>
                         </FeatureTextBox2>
+
+                      <FeatureAddLookBox animate={animate} onClick={handleMoreClick}>
+                        <FeatureAddText>더보기</FeatureAddText>
+                        <Image color={"#fff"} src={"/icon/icon_plus.png"} alt="Add" width={10} height={10} />
+                      </FeatureAddLookBox>
                     </FeatureTextBox1>
-                    
                 </FeatureDetails>
             </FeatureBox>
         </Feature>
@@ -41,35 +54,57 @@ const KeyFeature: React.FC<KeyFeatureProps> = ({ imageUrl, label, detail, positi
 
 export default KeyFeature;
 
-
-
 const Feature = styled.span`
-  margin: 30px;
+    margin: 30px;
+    
+    
 `;
 
-const FeatureBox = styled.span`
+const borderBottomChange = keyframes`
+    from {
+        width: 0%;
+    }
+    to {
+        width: 350px;
+    }
+`;
+
+const FeatureBox = styled.span<{animate:boolean}>`
+    position: relative;
     width: 365px;
     height: 80px;
+    ${({ animate }) => animate && css`
+    &:after {
+      
+      content: '';
+      position: absolute;
+      //border: 1px solid #fff;
+      margin-bottom: 2px;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: red;
+      margin-left:5px;
+      border-radius: 15px;
+      animation: ${borderBottomChange} 20s linear forwards;
+    }
+  `}
 `;
 
-const FeatureImage = styled(Image)`
+const FeatureImage = styled(Image)<{animate:boolean}>`
   opacity: 0.5;
-  background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
-  cursor: pointer;
+  border: ${({animate}) => (animate ? "2px solid #fff" : "none")};
 `;
 
-const FeatureDetails = styled.div<{Left:string}>`
+const FeatureDetails = styled.div<{animate:boolean}>`
   position: absolute;
-  bottom: -25px;
+  bottom: ${({animate}) => (animate ? 15 : -25)}px;
   width: 360px;
   height: 80px;
-  left: ${({Left})=> Left}px;
-  cursor: pointer;
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column; */
+  left: 0;
+  
 `;
 
 const FeatureTextBox1 = styled.div`
@@ -99,10 +134,28 @@ const Divider = styled.div`
   height: 15px;
 `; 
 
-const FeatureTextBox3 = styled.div`
+const FeatureTextBox3 = styled.div<{animate:boolean}>`
     margin-left: 20px;
-    display: flex;
+    display: ${({animate}) => (animate ? "none" : "flex")};
     justify-content: center;
     align-items: center;
     flex-direction: column;
+`;
+
+const FeatureAddLookBox = styled.div<{animate:boolean}>`
+  display: ${({animate}) => (animate ? "flex" : "none")};
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #fff;
+  border-radius: 15px;
+  height: 30px;
+  width: 100px;
+  margin: 15px;
+  cursor: pointer;
+`;
+
+const FeatureAddText = styled.div`
+  color: #fff;
+  font-size: 14px;
+  margin-right: 5px;
 `;

@@ -70,13 +70,10 @@ export default function Home() {
           classNames={getAnimationClass(selectedStoreInfo?.alt ?? '')}
           unmountOnExit
         >
-        {/* {
-          isAnyOverlayActive &&  */}
           <StoreInfoCard 
             storeInfo={selectedStoreInfo}
             isVisible={storeInfoCardVisible}
           />
-        {/* } */}
         </CSSTransition>
         
         {isAnyOverlayActive && <GuideBackground onClick={closeAllOverlays}/>}

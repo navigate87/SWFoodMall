@@ -100,6 +100,21 @@ li, ul {
   transform: translateX(100%);
   transition: opacity 500ms ease-in, transform 500ms ease-in;
 }
+
+.banner-fade-enter {
+  opacity: 0.5;
+}
+.banner-fade-enter-active {
+  opacity: 1;
+  transition: opacity 0.7s linear forwards;
+}
+.banner-fade-exit {
+  opacity: 1;
+}
+.banner-fade-exit-active {
+  opacity: 0;
+  transition: opacity 10s linear forwards;
+}
 `;
 
 
