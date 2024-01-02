@@ -11,39 +11,29 @@ interface BannerProps {
 const Banner: React.FC<BannerProps> = ({ title, description, imageUrl, }) => {
 
   const [currentImageUrl, setCurrentImageUrl] = useState(imageUrl);
-  //const [isFading, setIsFading] = useState(false);
   const [fadeImage, setFadeImage] = useState('');
-
+  
   useEffect(() => {
     if (imageUrl !== currentImageUrl) {
-      setFadeImage(currentImageUrl); // 현재 이미지를 fadeImage로 설정
-      setCurrentImageUrl(imageUrl);  // 새 이미지를 currentImageUrl로 설정
-    }
+      setFadeImage(currentImageUrl); 
+      setCurrentImageUrl(imageUrl);  
+    } 
   }, [imageUrl, currentImageUrl]);
-  // useEffect(() => {
-  //   if (imageUrl !== currentImageUrl) {
-  //     setIsFading(true);
-  //     setTimeout(() => {
-  //       setCurrentImageUrl(imageUrl);
-  //       setIsFading(false);
-  //     }, 2000); // 이미지가 페이드 아웃되고 페이드 인되는 데 걸리는 시간
-  //   }
-  // }, [imageUrl]);
+
 
   return (
     <>
         <ImageWrapper>
-            {/* <StyledImage src={currentImageUrl} alt="Banner Image" width={1920} height={936} fading={isFading}/> */}
             <StyledImage src={currentImageUrl} alt="Banner Image" width={1920} height={936} />
 
             {
               fadeImage && (
-                <FadeImage src={fadeImage} alt="Fade Banner Image" width={1920} height={936} />
+                <FadeImage key={fadeImage} src={fadeImage} alt="Fade Banner Image" width={1920} height={936} />
               )
             }
         </ImageWrapper>
         
-        <TextOverlay>
+        <TextOverlay key={currentImageUrl}>
             <BannerText>
                 <LargeText>{title}</LargeText>
                 <MediumText>{description}</MediumText>
@@ -61,13 +51,6 @@ const ImageWrapper = styled.div`
   height: 936px; 
 `;
 
-// const StyledImage = styled(Image)<{fading?:boolean}>`
-//   transition: opacity 2s ease-in-out;
-//   opacity: ${({ fading }) => fading ? 0.8 : 1};
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-// `;
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -76,11 +59,13 @@ const fadeIn = keyframes`
     opacity: 1;
   }
 `;
-const StyledImage = styled(Image)<{fading?:boolean}>`
-  animation: ${fadeIn} 1s ease-in-out backwards;
+
+const StyledImage = styled(Image)`
+  animation: ${fadeIn} 2s linear forwards;
   position: absolute;
   top: 0;
   left: 0;
+  opacity: 1;
 `;
 
 const fadeOut = keyframes`
@@ -96,12 +81,14 @@ const FadeImage = styled(Image)`
   position: absolute;
   top: 0;
   left: 0;
-  animation: ${fadeOut} 1s ease-in-out forwards;
+  opacity: 1;
+  animation: ${fadeOut} 2s linear forwards;
 `;
 
 const TextOverlay = styled.div`
-    position: absolute;
-    width: 700px;
+  position: absolute;
+  width: 700px;
+  animation: ${fadeIn} 3s ease-in-out;
 `;
 
 const BannerText = styled.div`

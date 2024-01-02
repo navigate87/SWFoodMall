@@ -39,21 +39,11 @@ export default function HallDetail() {
     return (
         <Layout>
             <MainContainer>    
-                {/* <CSSTransition
-                    key={activeFeatureIndex}
-                    in={true}
-                    timeout={2000}
-                    classNames="banner-fade"
-                    unmountOnExit
-                > */}
-                    <Banner 
-                        title={currentFeature.title}
-                        description={currentFeature.description}
-                        imageUrl={currentFeature.imageUrl}
-                    />
-                {/* </CSSTransition>          */}
-                
-             
+                <Banner 
+                    title={currentFeature.title}
+                    description={currentFeature.description}
+                    imageUrl={currentFeature.imageUrl}
+                />
                 <KeyFeatureContainer>
                     <KeyFeatureBox>
                         <KeyFeature 
