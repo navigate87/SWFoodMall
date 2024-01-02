@@ -1,11 +1,11 @@
-import { recoilHallInfo } from "@/store/stores/modalState";
+import { recoilHallInfoState, recoilHallInfoData } from "@/store/stores/modalState";
 import Image from "next/image";
 import { useRecoilState } from "recoil";
 import styled from "styled-components"
 
 export default function HallInfoPopup() {
-    const [hallInfoPopup, setHallInfoPopup] = useRecoilState<boolean>(recoilHallInfo);
-    
+    const [hallInfoPopup, setHallInfoPopup] = useRecoilState<boolean>(recoilHallInfoState);
+    const [selectedHallData] = useRecoilState(recoilHallInfoData);
     const handleCloseClick = () => {
         setHallInfoPopup(false);
         document.body.style.overflow = "auto";
@@ -14,80 +14,76 @@ export default function HallInfoPopup() {
     return(
         <ModalBackground>
             <Container>
-                <div style={{ width:"1330px", height:"87px", display:"flex", justifyContent:"center", alignItems:"center", borderBottom:"1px solid #dcdcdc" }}>
-                    <div style={{ fontSize:"28px", fontWeight:"bold" }}>연회장</div>
+                <InfoTitle>
+                    <FontDiv size={28} weight="bold">연회장</FontDiv>
                     <ModalCancel onClick={handleCloseClick}><Image src={"icon/icon-popup-close.svg"} height={18} width={18} alt="popupclose"/></ModalCancel>
-                </div>
-                <div style={{ display:"flex" }}>
-                    <div style={{ flex:1, marginTop:"30px" }}>
-                        <div style={{ display:"flex", justifyContent:"center", marginBottom:"10px"}}>
-                            <div style={{ height:"52px", width:"280px", background:"#f6f5f5", borderRadius:"25px", display:"flex", justifyContent:"center", alignItems:"center", gap:"50px" }}>
-                                <div style={{ fontSize:"18px", fontWeight:"bold" }}>12F</div>
-                                <div style={{ fontSize:"18px", fontWeight:"bold" }}>중규모 연회장</div>
-                            </div>
-                            
-                        </div>
-                        <div style={{ display:"flex", justifyContent:"center", marginBottom:"10px"}}>
-                            <div style={{ height:"52px", width:"280px", background:"#f6f5f5", borderRadius:"25px", display:"flex", justifyContent:"center", alignItems:"center", gap:"50px" }}>
-                                <div style={{ fontSize:"18px", fontWeight:"bold" }}>11F</div>
-                                <div style={{ fontSize:"18px", fontWeight:"bold" }}>소규모 연회장</div>
-                            </div>
-                            
-                        </div>
-                        <div style={{ display:"flex", justifyContent:"center", marginBottom:"10px"}}>
-                            <div style={{ height:"52px", width:"280px", background:"#f6f5f5", borderRadius:"25px", display:"flex", justifyContent:"center", alignItems:"center", gap:"50px" }}>
-                                <div style={{ fontSize:"18px", fontWeight:"bold" }}>3F</div>
-                                <div style={{ fontSize:"18px", fontWeight:"bold" }}>소규모 연회장</div>
-                            </div>
-                            
-                        </div>
-                        <div style={{ display:"flex", justifyContent:"center", marginTop:"350px", paddingBottom:"30px", cursor:"pointer" }}>
-                            <div style={{ display:"flex", justifyContent:"center", alignItems:"center", background:"#f84040", width:"230px", height:"77px", gap:"10px", borderRadius:"50px" }}>
+                </InfoTitle>
+                <FlexDiv>
+                    <FlexCount flex={1} marginTop={30}>
+                        <FlexDiv justifyContent="center" marginBottom={10}>
+                            <FlexDiv width={280} height={52} background="#f6f6f6" borderRadius={25} justifyContent="center" alignItem="center" gap={50} >
+                                <FontDiv size={18} weight="bold">12F</FontDiv>
+                                <FontDiv size={18} weight="bold">중규모 연회장</FontDiv>
+                            </FlexDiv>
+                        </FlexDiv>
+                        <FlexDiv justifyContent="center" marginBottom={10}>
+                            <FlexDiv width={280} height={52} background="#f6f5f5" borderRadius={25} justifyContent="center" alignItem="center" gap={50}>
+                                <FontDiv size={18} weight="bold">11F</FontDiv>
+                                <FontDiv size={18} weight="bold">소규모 연회장</FontDiv>
+                            </FlexDiv>
+                        </FlexDiv>
+                        <FlexDiv justifyContent="center" marginBottom={10}>
+                            <FlexDiv width={280} height={52} background="#f6f5f5" borderRadius={25} justifyContent="center" alignItem="center" gap={50}>
+                                <FontDiv size={18} weight="bold">3F</FontDiv>
+                                <FontDiv size={18} weight="bold">소규모 연회장</FontDiv>
+                            </FlexDiv>
+                        </FlexDiv>
+                        <FlexDiv justifyContent="center" marginTop={350} cursor="pointer" paddingBottom={30}>
+                            <FlexDiv justifyContent="center" alignItem="center" background="#f84040" width={230} height={77} gap={10} borderRadius={50}>
                                 <Image  src={"/icon/icon-main-quick-reservation-on.svg"} alt="reservation" width={30} height={34} />
-                                <div style={{ color:"#fff", fontSize:"26px" }} >F&B 예약</div>
-                            </div>
-                        </div>
-                    </div>
+                                <FontDiv color="#fff" size={26}>F&B 예약</FontDiv>
+                            </FlexDiv>
+                        </FlexDiv>
+                    </FlexCount>
                     <div>
-                        <div style={{ height:"100%", borderLeft:"1px solid #dcdcdc" }}></div>
+                        <VerticalDivider />
                     </div>
-                    <div style={{ flex:3 }}>
-                        <div style={{ display:"flex", justifyContent:"center" }}>
+                    <FlexCount flex={3}>
+                        <FlexDiv justifyContent="center">
                             <Image src={"/image/Fnb popup img.webp"} alt="중규모 연회장" width={1020} height={440} />
-                        </div>
-                        <div style={{ display:"flex" }}>
-                            <div style={{ fontSize:"38px", fontWeight:"bold", margin:"40px"}}>중규모 연회장</div>
-                        </div>
-                        <div style={{ display:"flex" }}>
-                            <div style={{ flex:2, marginTop:"9px" }}>
-                                <div style={{ display:"flex", gap:"60px", alignItems:"center"}}>
-                                    <div style={{ display:"flex", gap:"3px", marginLeft:"40px", alignItems:"center" }}>
+                        </FlexDiv>
+                        <FlexDiv>
+                            <FontDiv size={38} weight="bold" margin={40}>{selectedHallData?.title}</FontDiv>
+                        </FlexDiv>
+                        <FlexDiv>
+                            <FlexCount flex={2} marginTop={9}>
+                                <FlexDiv gap={60} alignItem="center">
+                                    <FlexDiv gap={3} marginLeft={40} alignItem="center">
                                         <Image src={"/icon/icon-sub-quick-map.svg"} alt="네비" width={16} height={16}  />
-                                        <div style={{ color:"#474747", fontSize:"14px", fontWeight:"500" }}>위치</div>
-                                    </div>
-                                    <div style={{ fontSize:"16px", fontWeight:"bold" }}>스테이락 호텔 12층</div>
-                                </div>
-                                <div style={{ margin:"15px" }}></div>
-                                <div style={{ display:"flex", gap:"35px", alignItems:"center"}}>
-                                    <div style={{ display:"flex", gap:"3px", marginLeft:"40px", alignItems:"center" }}>
+                                        <FontDiv color="#474747" size={14} weight="500">위치</FontDiv>
+                                    </FlexDiv>
+                                    <FontDiv size={16} weight="bold">{selectedHallData?.location}</FontDiv>
+                                </FlexDiv>
+                                <MarginDiv marginValue={15}></MarginDiv>
+                                <FlexDiv gap={35} alignItem="center">
+                                    <FlexDiv gap={3} marginLeft={40} alignItem="center">
                                         <Image src={"/icon/icon-sub-quick-bubble.svg"} alt="인원" width={16} height={16}/>
-                                        <div style={{ color:"#474747", fontSize:"14px", fontWeight:"500" }}>수용인원</div>
-                                    </div>
-                                    <div style={{ fontSize:"16px", fontWeight:"bold" }}>최대 120명</div>
-                                </div>
-                            </div>
-                            <div style={{position:"absolute", borderLeft:"1px solid #dcdcdc", right:"710px", bottom:"35px",height:"70px"}}></div>
-                            <div style={{ flex:4 }}>
-                                <div style={{ width:"594px", height:"73px" }}>
-                                    <div style={{color:"#585858",fontSize:"14px", fontWeight:"500", lineHeight:"1.63", letterSpacing:"2px"}}>
-                                        120명 규모의 파티, 세미나, 리셉션 등 목적에 따라 다양한 스타일의 행사가 가능합니다.
-                                        또한 다양한 면적으로 공간 가변이 가능하고 원활한 행사 진행을 위한 대형스크린 및 각종 최신 장비가 구비되어 있습니다.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                        <FontDiv color="#474747" size={14} weight="500">수용인원</FontDiv>
+                                    </FlexDiv>
+                                    <FontDiv size={16} weight="bold">최대 {selectedHallData?.peopleCount}명</FontDiv>
+                                </FlexDiv>
+                            </FlexCount>
+                            <VerticalCustom></VerticalCustom>
+                            <FlexCount flex={4}>
+                                <DescBox>
+                                    <DescriptionArea>
+                                        {selectedHallData?.popupDescription}
+                                    </DescriptionArea>
+                                </DescBox>
+                            </FlexCount>
+                        </FlexDiv>
+                    </FlexCount>
+                </FlexDiv>
             </Container>
         </ModalBackground>
     )
@@ -118,4 +114,75 @@ const ModalCancel = styled.div`
     &:hover {
         border: 1px solid #f84040;
     }
+`;
+
+const InfoTitle = styled.div`
+    width:1330px; 
+    height:87px;
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    border-bottom:1px solid #dcdcdc;
+`;
+
+const FontDiv = styled.div<{size?:number, weight?:string, color?:string, margin?:number}>`
+    font-size: ${({size})=>(size)}px;
+    font-weight: ${({weight}) => weight};
+    color: ${({color}) => color};
+    margin: ${({ margin }) => margin}px;
+`;
+
+const FlexDiv = styled.div<{justifyContent?:string, alignItem?:string, marginTop?:number, marginLeft?:number, marginBottom?:number, gap?:number, borderRadius?:number, width?:number, height?:number, cursor?:string, background?:string, paddingBottom?:number }>`
+    display: flex;
+    justify-content: ${({ justifyContent }) => justifyContent};
+    align-items: ${({ alignItem }) => alignItem};
+    margin-top: ${({ marginTop }) => marginTop}px;
+    margin-left: ${({ marginLeft }) => marginLeft}px;
+    margin-bottom: ${({ marginBottom }) => marginBottom}px;
+    padding-bottom: ${({ paddingBottom }) => paddingBottom}px;
+    gap: ${({gap}) => gap}px;
+    border-radius: ${({ borderRadius }) => borderRadius}px;
+    width: ${({ width }) => width}px;
+    height: ${({ height }) => height}px;
+    cursor: ${({cursor}) => cursor};
+    background: ${({ background }) => background};
+
+    &:hover {
+        background:${({ background })=> (background !== "" ? background : "")};
+    }
+`;
+
+const FlexCount = styled.div<{flex?:number, marginTop?:number}>`
+    flex: ${({ flex })=>flex};
+    margin-top: ${({ marginTop })=> marginTop}px;
+`;
+
+const VerticalDivider = styled.div`
+    height: 100%;
+    border-left: 1px solid #dcdcdc;
+`;
+
+const VerticalCustom = styled.div`
+    position:absolute; 
+    border-left:1px solid #dcdcdc; 
+    right:710px;
+    bottom:35px; 
+    height:70px;
+`;
+
+const DescBox = styled.div`
+    width:594px; 
+    height:73px;
+`;
+
+const DescriptionArea = styled.div`
+    color:#585858;
+    font-size:14px; 
+    font-weight:500; 
+    line-height:1.63;
+    letter-spacing:2px;
+`;
+
+const MarginDiv = styled.div<{marginValue?:number}>`
+    margin: ${({ marginValue }) => marginValue}px;
 `;

@@ -1,5 +1,4 @@
-import { FacilitiesThree } from "@/data/CodoInfo";
-import { Time } from "@/type/Time";
+import { HallInfoDataProps } from "@/data/hallInfo";
 import { atom, RecoilEnv } from "recoil";
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
@@ -154,7 +153,12 @@ export const recoilFacilitiesOne = atom<Facility[]>({
     default: [],
 })
 
-export const recoilHallInfo = atom<boolean>({
-    key: 'hallInfo',
+export const recoilHallInfoState = atom<boolean>({
+    key: 'hallInfosState',
     default: false
+})
+
+export const recoilHallInfoData = atom<HallInfoDataProps | null>({
+    key: 'selectedHallDetailData',
+    default: null,
 })

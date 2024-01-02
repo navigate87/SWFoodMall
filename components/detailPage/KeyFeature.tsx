@@ -1,22 +1,30 @@
-import { recoilHallInfo } from '@/store/stores/modalState';
+import { HallInfoProps } from '@/data/hallInfo';
+import { recoilHallInfoData, recoilHallInfoState } from '@/store/stores/modalState';
 import Image from 'next/image';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import styled, {css, keyframes} from 'styled-components';
-
 
 interface KeyFeatureProps {
   imageUrl: string;
   label: string;
   detail: string;
   animate: boolean;
+  
 }
 
 const KeyFeature: React.FC<KeyFeatureProps> = ({ imageUrl, label, detail, animate }) => {
-  const [hallInfoPopup, setHallInfoPopup] = useRecoilState<boolean>(recoilHallInfo);
-  
+  const [hallInfoPopup, setHallInfoPopup] = useRecoilState<boolean>(recoilHallInfoState);
+  const [, setSelectedHallData] = useRecoilState(recoilHallInfoData);
   const handleMoreClick = () => {
+    const selectedHallData = HallInfoProps.find(hall => hall.floor === detail);
+
+    if (selectedHallData) {
+      setSelectedHallData(selectedHallData); // 전역 상태 업데이트
+    }
+
     setHallInfoPopup(true);
+    
     document.body.style.overflow = "hidden";
   }
   

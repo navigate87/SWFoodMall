@@ -11,12 +11,12 @@ import { CSSTransition } from "react-transition-group";
 import { HallInfoProps } from "@/data/hallInfo";
 import HallInfoPopup from "@/modal/hallInfo";
 import { useRecoilState } from "recoil";
-import { recoilHallInfo } from "@/store/stores/modalState";
+import { recoilHallInfoState } from "@/store/stores/modalState";
 /* eslint-disable prettier/prettier */
 export default function HallDetail() { 
     const router = useRouter();
     const [activeFeatureIndex, setActiveFeatureIndex] = useState<number>(0);
-    const [hallInfoPopup, setHallInfoPopup] = useRecoilState<boolean>(recoilHallInfo);
+    const [hallInfoPopup, setHallInfoPopup] = useRecoilState<boolean>(recoilHallInfoState);
  
     const totalFeatures = 3;
     const currentFeature = HallInfoProps[activeFeatureIndex];
@@ -25,7 +25,6 @@ export default function HallDetail() {
         
         if(activeFeatureIndex < totalFeatures) {
 
-            //console.log("Effect 실행됨. 현재인덱스:", activeFeatureIndex)
             const timer = setTimeout(() => {
                 
                 setActiveFeatureIndex((prevIndex) => (prevIndex + 1) % totalFeatures);
