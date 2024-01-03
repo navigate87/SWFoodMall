@@ -1,13 +1,10 @@
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
-import styles from "@/styles/Button.module.scss";
-import SlideShow from "@/components/slideShow";
 import Image from "next/image";
 import Banner from "@/components/detailPage/Banner";
 import styled from "styled-components";
 import KeyFeature from "@/components/detailPage/KeyFeature";
 import { useEffect, useState } from "react";
-import { CSSTransition } from "react-transition-group";
 import { HallInfoProps } from "@/data/hallInfo";
 import HallInfoPopup from "@/modal/hallInfo";
 import { useRecoilState } from "recoil";
@@ -35,6 +32,10 @@ export default function HallDetail() {
         }
     },[activeFeatureIndex]);
 
+    const handleFeatureClick = (index:number) => {
+        setActiveFeatureIndex(index);
+    }
+
     return (
         <Layout>
             <MainContainer>    
@@ -45,25 +46,18 @@ export default function HallDetail() {
                 />
                 <KeyFeatureContainer>
                     <KeyFeatureBox>
-                        <KeyFeature 
-                            imageUrl="/image/sub-fullbanner-key-img_middle.webp"
-                            label="중규모 연회장"
-                            detail="12F"
-                            animate={activeFeatureIndex === 0}
-
-                        />
-                        <KeyFeature 
-                            imageUrl="/image/sub-fullbanner-key-img_small.webp"
-                            label="소규모 연회장"
-                            detail="11F"
-                            animate={activeFeatureIndex === 1}
-                        />
-                        <KeyFeature 
-                            imageUrl="/image/sub-fullbanner-key-img_small_2.webp"
-                            label="소규모 연회장"
-                            detail="3F"
-                            animate={activeFeatureIndex === 2}
-                        />
+                        {
+                            HallInfoProps.map((feature, index) => (
+                                <KeyFeature 
+                                    key={index} // 고유한 key 값 필요
+                                    imageUrl={feature.imageUrlSmall}
+                                    label={feature.title}
+                                    detail={feature.floor}
+                                    animate={activeFeatureIndex === index}
+                                    // onClick={() => handleFeatureClick(index)}
+                                />
+                            ))
+                        }
                     </KeyFeatureBox>
                 </KeyFeatureContainer>
             </MainContainer>

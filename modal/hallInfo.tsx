@@ -1,14 +1,36 @@
-import { recoilHallInfoState, recoilHallInfoData } from "@/store/stores/modalState";
+import { HallInfoDataProps, HallInfoProps } from "@/data/hallInfo";
+import { recoilHallInfoState, recoilHallInfoData, recoilShowGroupModal } from "@/store/stores/modalState";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components"
 
 export default function HallInfoPopup() {
     const [hallInfoPopup, setHallInfoPopup] = useRecoilState<boolean>(recoilHallInfoState);
-    const [selectedHallData] = useRecoilState(recoilHallInfoData);
+    const [selectedHallData, setSelectedHallData] = useRecoilState(recoilHallInfoData);
+    const [selectedFloor, setSelectedFloor] = useState<string | null>(null); // 선택된 층을 추적하는 상태
+    const [showGroupModal, setShowGroupModal] = useRecoilState<boolean>(recoilShowGroupModal);
+    const handleHallClick = (hallData: HallInfoDataProps) => {
+        setSelectedHallData(hallData);
+        setSelectedFloor(hallData.floor);
+        setHallInfoPopup(true);
+    };
+
+    useEffect(() => {
+        if(!selectedFloor) {
+            setSelectedFloor(selectedHallData?.floor ?? null); 
+        }  
+    })
+    
     const handleCloseClick = () => {
         setHallInfoPopup(false);
+        setSelectedFloor(null);
         document.body.style.overflow = "auto";
+    }
+
+    const handleReservationClick = () => {
+        setHallInfoPopup(false);
+        setShowGroupModal(true);
     }
     
     return(
@@ -20,29 +42,21 @@ export default function HallInfoPopup() {
                 </InfoTitle>
                 <FlexDiv>
                     <FlexCount flex={1} marginTop={30}>
-                        <FlexDiv justifyContent="center" marginBottom={10}>
-                            <FlexDiv width={280} height={52} background="#f6f6f6" borderRadius={25} justifyContent="center" alignItem="center" gap={50} >
-                                <FontDiv size={18} weight="bold">12F</FontDiv>
-                                <FontDiv size={18} weight="bold">중규모 연회장</FontDiv>
-                            </FlexDiv>
-                        </FlexDiv>
-                        <FlexDiv justifyContent="center" marginBottom={10}>
-                            <FlexDiv width={280} height={52} background="#f6f5f5" borderRadius={25} justifyContent="center" alignItem="center" gap={50}>
-                                <FontDiv size={18} weight="bold">11F</FontDiv>
-                                <FontDiv size={18} weight="bold">소규모 연회장</FontDiv>
-                            </FlexDiv>
-                        </FlexDiv>
-                        <FlexDiv justifyContent="center" marginBottom={10}>
-                            <FlexDiv width={280} height={52} background="#f6f5f5" borderRadius={25} justifyContent="center" alignItem="center" gap={50}>
-                                <FontDiv size={18} weight="bold">3F</FontDiv>
-                                <FontDiv size={18} weight="bold">소규모 연회장</FontDiv>
-                            </FlexDiv>
-                        </FlexDiv>
+                        {
+                            HallInfoProps.map((hall, index) => (
+                                <FlexDiv key={index} onClick={() => handleHallClick(hall)} justifyContent="center" marginBottom={10} >
+                                    <FlexDiv width={280} height={52} background="#f6f5f5"  borderRadius={25} justifyContent="center" alignItem="center" gap={50} cursor="pointer" isSelected={selectedFloor === hall.floor}>
+                                        <FontDiv size={18} weight="bold">{hall.floor}</FontDiv>
+                                        <FontDiv size={18} weight="bold">{hall.title}</FontDiv>
+                                    </FlexDiv>
+                                </FlexDiv>
+                            ))
+                        }
                         <FlexDiv justifyContent="center" marginTop={350} cursor="pointer" paddingBottom={30}>
-                            <FlexDiv justifyContent="center" alignItem="center" background="#f84040" width={230} height={77} gap={10} borderRadius={50}>
+                            <FlexBtn onClick={handleReservationClick}>
                                 <Image  src={"/icon/icon-main-quick-reservation-on.svg"} alt="reservation" width={30} height={34} />
                                 <FontDiv color="#fff" size={26}>F&B 예약</FontDiv>
-                            </FlexDiv>
+                            </FlexBtn>
                         </FlexDiv>
                     </FlexCount>
                     <div>
@@ -132,7 +146,7 @@ const FontDiv = styled.div<{size?:number, weight?:string, color?:string, margin?
     margin: ${({ margin }) => margin}px;
 `;
 
-const FlexDiv = styled.div<{justifyContent?:string, alignItem?:string, marginTop?:number, marginLeft?:number, marginBottom?:number, gap?:number, borderRadius?:number, width?:number, height?:number, cursor?:string, background?:string, paddingBottom?:number }>`
+const FlexDiv = styled.div<{justifyContent?:string, alignItem?:string, marginTop?:number, marginLeft?:number, marginBottom?:number, gap?:number, borderRadius?:number, width?:number, height?:number, cursor?:string, background?:string, paddingBottom?:number, isSelected?:boolean }>`
     display: flex;
     justify-content: ${({ justifyContent }) => justifyContent};
     align-items: ${({ alignItem }) => alignItem};
@@ -145,11 +159,22 @@ const FlexDiv = styled.div<{justifyContent?:string, alignItem?:string, marginTop
     width: ${({ width }) => width}px;
     height: ${({ height }) => height}px;
     cursor: ${({cursor}) => cursor};
-    background: ${({ background }) => background};
+    background: ${({ isSelected }) => isSelected ? "#f6f6f6" : ""};
 
     &:hover {
-        background:${({ background })=> (background !== "" ? background : "")};
+        background: ${({ isSelected, background }) => isSelected ? "#f6f5f5" : (background !== "" ? background : "#f6f5f5")};
     }
+`;
+
+const FlexBtn = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f84040;
+    width: 230px;
+    height: 77px;
+    gap: 10px;
+    border-radius: 50px;
 `;
 
 const FlexCount = styled.div<{flex?:number, marginTop?:number}>`

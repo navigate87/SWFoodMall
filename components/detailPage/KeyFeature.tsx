@@ -10,7 +10,7 @@ interface KeyFeatureProps {
   label: string;
   detail: string;
   animate: boolean;
-  
+  // onClick: () => void;
 }
 
 const KeyFeature: React.FC<KeyFeatureProps> = ({ imageUrl, label, detail, animate }) => {
@@ -64,8 +64,6 @@ export default KeyFeature;
 
 const Feature = styled.span`
     margin: 30px;
-    
-    
 `;
 
 const borderBottomChange = keyframes`
@@ -81,6 +79,7 @@ const FeatureBox = styled.span<{animate:boolean}>`
     position: relative;
     width: 365px;
     height: 80px;
+    cursor: pointer;
     ${({ animate }) => animate && css`
     &:after {
       

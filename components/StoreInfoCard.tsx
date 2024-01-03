@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Image from 'next/image';
 import { StoreInfoProps, StoreInfoDataProps } from '@/data/StoreInfoType';
+import Link from 'next/link';
 
 interface StoreInfoCardProps {
     storeInfo?: StoreInfoDataProps
@@ -25,6 +26,20 @@ const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo, isVisible }) =
       return "모든 객실 보기"
     } else {
       return "자세히 보기"
+    }
+  }
+
+  const linkTarget = () => {
+    if(!storeInfo) {
+      return "/"
+    }
+
+    if(storeInfo.alt === "연회장") {
+      return "/hall";
+    } else if(storeInfo.alt === "한식∙정육") {
+      return "/swjung"
+    } else {
+      return "/"
     }
   }
 
@@ -57,12 +72,17 @@ const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo, isVisible }) =
           <InfoText>위치<DetailText> | {storeInfo.location}</DetailText></InfoText>
         </InfoRow>
         <ButtonRow>
-          <DetailedViewButton>
-            { isRoomOrHall() }
-            <div style={{ margin: "7px" }}>
-              <Image src={"/icon/icon_plus.svg"} width={12} height={12} alt="plus" />
-            </div>
-          </DetailedViewButton>
+          <Link href={linkTarget()}>
+            
+              <DetailedViewButton>
+                { isRoomOrHall() }
+                <div style={{ margin: "7px" }}>
+                  <Image src={"/icon/icon_plus.svg"} width={12} height={12} alt="plus" />
+                </div>
+              </DetailedViewButton>
+            
+          </Link>
+          
         </ButtonRow>
       </DetailsContainer>
     </InfoCardContainer>

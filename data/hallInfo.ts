@@ -3,6 +3,7 @@ export interface HallInfoDataProps {
     title: string;
     description: string;
     imageUrl: string;
+    imageUrlSmall: string;
     location: string;
     peopleCount: string;
     floor:string;
@@ -14,6 +15,7 @@ export const HallInfoProps: HallInfoDataProps[] = [
         title: "중규모 연회장",
         description: "스테이락 호텔 12층에 위치한 중규모 연회장으로 120명 규모의 파티, 세미나, 리셉션 등 목적에 따라 다양한 스타일의 행사가 가능합니다.",
         imageUrl:"/image/sub-fullbanner-img_hall.webp",
+        imageUrlSmall: "/image/sub-fullbanner-key-img_middle.webp",
         location:"스테이락 호텔 12층",
         peopleCount:"120",
         floor:"12F",
@@ -23,6 +25,7 @@ export const HallInfoProps: HallInfoDataProps[] = [
         title: "소규모 연회장",
         description: "스테이락 호텔 11층에 위치한 소규모 연회장으로 120명 규모의 파티, 세미나, 리셉션 등 목적에 따라 다양한 스타일의 행사가 가능합니다.",
         imageUrl:"/image/sub-fullbanner-img_small.webp",
+        imageUrlSmall: "/image/sub-fullbanner-key-img_small.webp",
         location:"스테이락 호텔 11층",
         peopleCount:"120",
         floor:"11F",
@@ -32,6 +35,7 @@ export const HallInfoProps: HallInfoDataProps[] = [
         title: "소규모 연회장",
         description: "스테이락 호텔 3층에 위치한 소규모 연회장으로 120명 규모의 파티, 세미나, 리셉션 등 목적에 따라 다양한 스타일의 행사가 가능합니다.",
         imageUrl:"/image/sub-fullbanner-img_swjung.webp",
+        imageUrlSmall: "/image/sub-fullbanner-key-img_small_2.webp",
         location:"스테이락 호텔 3층",
         peopleCount:"120",
         floor:"3F",
