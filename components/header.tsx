@@ -86,7 +86,7 @@ export default function Header() {
       <Container>
         <Section>
           <ImgBox>
-            <Image src="/image/bi.png" alt="swfood" width={72} height={44} />
+            <Image src="/image/bi.png" alt="swfood" width={52} height={32} />
           </ImgBox>
           <NavTab>
             <NavTabUl>
@@ -159,7 +159,7 @@ export default function Header() {
                 </SelectHelpOptionBox>
               </ProfileUlLi>
               <ProfileUlLi>
-                <Image style={{ marginTop: "15%" }} alt="메뉴" src={"icon/장바구니.svg"} width={50} height={50} />
+                <Image style={{ marginTop: "15%" }} alt="메뉴" src={"/icon/장바구니.png"} width={40} height={40} />
               </ProfileUlLi>
             </ProfileUl>
           </Profile>

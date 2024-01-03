@@ -9,7 +9,7 @@ import { HtmlProps } from "next/dist/shared/lib/html-context.shared-runtime";
 import { Html } from "next/document";
 import SlideShow from "@/components/slideShow"
 import Image from "next/image";
-import ImageSlider from "@/components/RealSlide";
+
 import { SlideData } from "@/data/ImgDataType";
 import { GuideDataProps } from "@/data/GuideType";
 import GuideItem from "@/components/GuideItem";

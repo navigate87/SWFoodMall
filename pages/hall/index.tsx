@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import Layout from "@/components/Layout";
+// import Layout from "@/components/Layout";
+import Layout from "@/components/Layout2"
 import Image from "next/image";
 import Banner from "@/components/detailPage/Banner";
 import styled from "styled-components";
@@ -31,6 +32,8 @@ export default function HallDetail() {
             return () => clearTimeout(timer);
         }
     },[activeFeatureIndex]);
+
+    
 
     const handleFeatureClick = (index:number) => {
         setActiveFeatureIndex(index);
