@@ -140,6 +140,15 @@ const borderBottomChange = keyframes`
     }
 `;
 
+const fadeIn = keyframes`
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+`;
+
 const hoverAnimation = css`
     content: '';
     position: absolute;
@@ -228,6 +237,8 @@ const BuildingBox = styled.div`
 
 const BuildingOverlay = styled.div<{disabled?:boolean}>`
     position:absolute; 
+    animation: ${fadeIn} 0.5s ease-in-out;
+    opacity: ${({disabled}) => (disabled ? "1" : "0")};
     display: ${({disabled}) => (disabled ? "block" : "none") };
 `;
 
