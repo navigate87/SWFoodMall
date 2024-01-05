@@ -166,7 +166,7 @@ export default function Header() {
                             <Image
                                 onClick={handleToggleClick} 
                                 style={{ cursor:"pointer" }}
-                                src={isToggled ? "/icon/icon-top-logo-toggle-Top.svg" : "/icon/icon-top-logo-toggle-Bottom.svg"} 
+                                src={!isToggled ? "/icon/icon-top-logo-toggle-Top.svg" : "/icon/icon-top-logo-toggle-Bottom.svg"} 
                                 alt="arrow" 
                                 width={32} 
                                 height={32} 
@@ -240,7 +240,9 @@ export default function Header() {
                     </FlexSection>
                 </Section>
             </Container>
-            {isToggled && <StoreSelectPopup />}
+            {isToggled && <StoreSelectPopup storeName={storeName ? (Array.isArray(storeName) ? storeName : [storeName]) : []} />}
+            {/* {isToggled && <StoreSelectPopup storeName={storeName ? (Array.isArray(storeName) ? storeName : [storeName]) : []} />} */}
+            {/* {isToggled && <StoreSelectPopup storeName={Array.isArray(storeName) ? storeName : [storeName]} />} */}
             {showModal && <Reservation />} 
             {showGroupModal && <GroupReservation />}
             {showConfirmModal && <ConfirmModal />}
