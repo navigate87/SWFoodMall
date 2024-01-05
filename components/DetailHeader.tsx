@@ -7,6 +7,11 @@ import Reservation from "@/modal/reservation";
 import ConfirmModal from "@/modal/confirmReservation";
 import GroupReservation from "@/modal/FnBGroupReserve";
 import ConfirmGroupModal from "@/modal/confirmGroupReservation";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { relative } from "path";
+import StoreSelectPopup from "@/modal/storeSelected";
+
 type show = {
     show?:boolean;
 }
@@ -20,8 +25,34 @@ export default function Header() {
     const [isLanguageSelect, setIsLanguageSelect] = useState<boolean>(false);
     const [isShowHelpOption, setIsShowHelpOption] = useState<boolean>(false);
     const [showConfirmGroupModal, setShowConfirmGroupModal] = useRecoilState<boolean>(recoilShowConfirmGroupModal);
-    
+    const [isToggled, setIsToggled] = useState(false);
+    const router = useRouter();
+    const {storeName}  = router.query;
+
+    useEffect(() => {
+        console.log("storeName:", storeName )
+    })
+
+    const renderStoreName = () => {
+        
+        switch (storeName) {
+            case "카페아뜰리에":
+                return <Image style={{ cursor:"pointer" }} src={"/icon/cate-logo-atelier.svg"} width={152} height={44} alt="카페아뜰리에" />;
+            case "스시노칸도":
+                return <Image style={{ cursor:"pointer" }} src={"/icon/cate-logo-sushinokando.svg"} width={152} height={44} alt="스시노칸도" />;
+            case "성원정":
+                return <Image style={{ cursor:"pointer" }} src={"/icon/cate-logo-swj.svg"} width={152} height={44} alt="성원정" />;
+            default:
+                return <div style={{ color: "#fff", fontSize: "28px", marginRight: "15px", cursor:"pointer" }}>{storeName}</div>;
+        }
+    };
+
+    const handleToggleClick = () => {
+        setIsToggled(!isToggled);
+    }
+
     const handleOnChangeSelectValue = (e:any) => {
+      
       const { innerText } = e.target;
       setCurrentValue(innerText);
 
@@ -66,7 +97,6 @@ export default function Header() {
         if (isShowHelpOption && target && !target.closest("#select-help-option-box")) {
           setIsShowHelpOption(false);
         }
-
       };
 
       // 문서에 클릭 이벤트 리스너를 추가합니다.
@@ -86,24 +116,31 @@ export default function Header() {
                 <Section>
                     <FlexSection flex={1}>
                         <FlexContainer>
-                            <FlexSection flex={0.5}>
-                            </FlexSection>
-                            <FlexSection flex={1}>
-                                <FlexContainer>
-                                    <Image src="/image/bi.png" alt="swfood" width={52} height={32} />
-                                </FlexContainer>
-                            </FlexSection>
                             <FlexSection flex={0.5}></FlexSection>
                             <FlexSection flex={1}>
                                 <FlexContainer>
-                                    <Image alt="메뉴" src={"icon/menu-icon.svg"} width={25} height={25} />
+                                    <Link href="/" >
+                                        <Image style={{ cursor:"pointer" }} src="/image/bi.png" alt="swfood" width={52} height={32} />
+                                    </Link>
+                                </FlexContainer>
+                            </FlexSection>
+                            <FlexSection flex={1}></FlexSection>
+                           
+                            <FlexSection flex={1}>
+                                <FlexContainer >
+                                    <div style={{ cursor:"pointer"}}>
+                                        <Image alt="메뉴" src={"icon/menu-icon.svg"} width={25} height={25} />
+                                    </div>
+                                    
                                     <div style={{ margin:"5px" }}></div>
-                                    <Image alt="메뉴" src={"icon/Search-icon.svg"} width={25} height={25} />
+                                    <div style={{ cursor:"pointer"}}>
+                                        <Image alt="메뉴" src={"icon/Search-icon.svg"} width={25} height={25} />
+                                    </div>
                                 </FlexContainer>
                             </FlexSection>
                             <FlexSection flex={1}>
                                 <FlexContainer>
-                                      <SelectBox onClick={() => setShowOptions((prev) => !prev)}>
+                                      <SelectBox onClick={() => setShowOptions((prev) => !prev)} style={{ pointerEvents: isToggled ? "none" : "inherit" }}>
                                         <Label onMouseOver={() => setShowOptions(true)} show={!showOptions}>예약</Label>
                                         <SelectOptions show={showOptions}>
                                             <Option style={{cursor:"none", pointerEvents: "none", fontSize: "15px", color:"rgba(81,81,81,0.8)" }}>예약</Option>
@@ -116,23 +153,94 @@ export default function Header() {
                             </FlexSection>
                             <FlexSection flex={1}>
                                 <FlexContainer>
-                                    <Label show={true}>EVENT</Label>
+                                    <Label show={true} style={{ pointerEvents: isToggled ? "none" : "inherit" }}>EVENT</Label>
                                 </FlexContainer>
                             </FlexSection>
+                            <FlexSection flex={1}></FlexSection>
+                            
                         </FlexContainer>
                     </FlexSection>
-                    <FlexSection flex={3}>
+                    <FlexSection flex={3} >
                         <FlexContainer>
-                            <div style={{ color:"#fff", fontSize:"28px" }}>연회장</div>
+                            {renderStoreName()}
+                            <Image
+                                onClick={handleToggleClick} 
+                                style={{ cursor:"pointer" }}
+                                src={isToggled ? "/icon/icon-top-logo-toggle-Top.svg" : "/icon/icon-top-logo-toggle-Bottom.svg"} 
+                                alt="arrow" 
+                                width={32} 
+                                height={32} 
+                            />
                         </FlexContainer>
+                        
                     </FlexSection>
+                    
                     <FlexSection flex={1}>
                         <FlexContainer>
-                            <div style={{ color:"#fff", fontSize:"28px" }}>도움말</div>   
+                            <FlexSection flex={1}></FlexSection>
+                            <FlexSection flex={1}></FlexSection>
+                            <FlexSection flex={0.5}>
+                                <SelectLanguageBox id="select-language-box" onClick={() => setIsLanguageSelect((prev) => !prev)} style={{ pointerEvents: isToggled ? "none" : "inherit" }}>
+                                    {
+                                      !isLanguageSelect && 
+                                      <LanguageOptionBox>
+                                        <LanguageLabel isSelected={!isLanguageSelect}>KR</LanguageLabel>
+                                        <SelectDirection>
+                                          <Image src={"/icon/icon-셀렉트_down.webp"} width={12} height={9} alt="down" />
+                                        </SelectDirection>
+                                      </LanguageOptionBox>
+                                    }
+                                    <LanguageOptions style={{ pointerEvents: isToggled ? "none" : "inherit" }} show={isLanguageSelect}>
+                                        <div style={{ display:"flex", justifyContent: "center", alignItems: "center", margin: "5px" }}>
+                                        <LanguageLabel  isSelected={!isLanguageSelect}>KR</LanguageLabel> 
+                                        {
+                                          isLanguageSelect && 
+                                          <SelectDirection>
+                                            <Image src={"/icon/icon-셀렉트_up.svg"} width={12} height={20} alt="down" />
+                                          </SelectDirection>
+                                        }
+                                        </div>
+                                        <div style={{ borderBottom:"1px solid #ededed", width:"70%", marginLeft: "8px", marginBottom: "9px"}}></div>
+                                        <Option value={0} onClick={handleOnChangeSelectValue}>KR</Option>
+                                        <Option value={1} onClick={handleOnChangeSelectValue}>EN</Option>
+                                        <Option value={2} onClick={handleOnChangeSelectValue}>CN</Option>
+                                        <Option value={3} onClick={handleOnChangeSelectValue}>JP</Option>
+                                    </LanguageOptions>
+                                </SelectLanguageBox>
+                            </FlexSection>
+                            <FlexSection flex={0.7}>
+                                <FlexContainer>
+                                    <Image style={{ marginLeft:"10px",marginTop: "4px" }} alt="메뉴" src={"icon/my-login.svg"} width={40} height={40} />   
+                                </FlexContainer>
+                            </FlexSection>
+                            <FlexSection flex={0.7}>
+                                <FlexContainer style={{ pointerEvents: isToggled ? "none" : "inherit" }}>
+                                    <div onMouseOver={() => setIsShowHelpOption(true)}>
+                                        <Image onClick={()=>setIsShowHelpOption((prev) => !prev)} style={{marginTop: "4px" }} alt="메뉴" src={"icon/고객센터.svg"} width={40} height={40} />
+                                    </div>
+                                    <SelectHelpOptionBox id="select-help-option-box">
+                                      <SelectBox  onClick={() => setIsShowHelpOption((prev) => !prev)}>
+                                        <SelectHelpOptions show={isShowHelpOption}>
+                                          <Option value={0} onClick={handleOnChangeSelectValue}>이용안내</Option>
+                                          <Option value={1} onClick={handleOnChangeSelectValue}>공지사항</Option>
+                                          <Option value={2} onClick={handleOnChangeSelectValue}>FAQ</Option>
+                                          <Option value={3} onClick={handleOnChangeSelectValue}>1:1문의</Option>
+                                        </SelectHelpOptions>
+                                      </SelectBox>
+                                    </SelectHelpOptionBox>
+                                </FlexContainer>
+                            </FlexSection>
+                            <FlexSection flex={0.7}>
+                                <FlexContainer>
+                                    <Image style={{ marginRight:"10px",marginTop: "4px" }} alt="메뉴" src={"/icon/장바구니.png"} width={40} height={40} />
+                                </FlexContainer>
+                            </FlexSection>
+                            <FlexSection flex={0.3}></FlexSection>
                         </FlexContainer>
                     </FlexSection>
                 </Section>
             </Container>
+            {isToggled && <StoreSelectPopup />}
             {showModal && <Reservation />} 
             {showGroupModal && <GroupReservation />}
             {showConfirmModal && <ConfirmModal />}
@@ -164,6 +272,7 @@ const FlexContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    
 `;
 
 const SelectBox = styled.div`
@@ -178,8 +287,8 @@ const SelectBox = styled.div`
 
 const SelectHelpOptionBox = styled.div`
   position: absolute; 
-  right: 108px;
-  top: 60px;
+  right: 80px;
+  top: 50px;
 `;
 
 const SelectHelpOptions = styled.ul<show>`
@@ -238,6 +347,59 @@ const Option = styled.li`
   &:hover {
     color: #f84040;
   }
+`;
+
+const SelectLanguageBox = styled.div`
+  width:55px;
+  height:23px; 
+  border-radius:15px; 
+  display:flex; 
+  justify-content:center; 
+  align-items:center;
+  cursor: pointer;
+`;
+
+const LanguageOptionBox = styled.div`
+  border: 1px solid #fff;
+  width: 70px;
+  display: flex; 
+  border-radius: 15px; 
+  height: 25px; 
+  justify-content: center; 
+  align-items: center;
+  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+  opacity: 1;
+`;
+
+const LanguageOptions = styled.ul<show>`
+  position: absolute;
+  list-style: none;
+  top:18px;
+  text-align: center;
+  width: 60px;
+  overflow: hidden;
+  padding: 0;
+  border-radius: 20px;
+  background-color: rgba(42,42,42,0.4);
+  color: #fefefe;
+  opacity: ${(props) => (props.show ? '1' : '0')};
+  z-index: 10;
+  transform: translateY(${({ show }) => (show ? '0' : '-5px')});
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  max-height: ${({ show }) => (show ? '200px' : '0')};
+`;
+
+const SelectDirection = styled.div`
+  margin-left: 8px;
+  display: ${(isSelected) => (isSelected ? "block" : "none")};
+`;
+
+const LanguageLabel = styled.div<{isSelected:boolean}>`
+  font-size: 14px;
+  color: #fff;
+  display: ${(isSelected) => (isSelected ? "block" : "none")};
+  cursor: pointer;
 `;
 
 

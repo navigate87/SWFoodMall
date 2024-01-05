@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
-import Layout from "@/components/Layout";
-import styles from "@/styles/Button.module.scss";
-import SlideShow from "@/components/slideShow";
+// import Layout from "@/components/Layout";
+import Layout from "@/components/Layout2";
 import Image from "next/image";
 import styled from "styled-components";
 /* eslint-disable prettier/prettier */
