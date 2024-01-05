@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import Layout from "@/components/Layout";
+// import Layout from "@/components/Layout";
+import Layout from "@/components/Layout2";
 import styles from "@/styles/Button.module.scss";
 import SlideShow from "@/components/slideShow";
 import Image from "next/image";
