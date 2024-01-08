@@ -37,26 +37,7 @@ export default function StoreSelectPopup({storeName}:StoreSelectPopupProps) {
             );
         });
     };
-    // const renderGuideData = (data: GuideData[]) => {
-    //     return [...data].reverse().map((guide) => {
-    //         let altText = guide.alt;
-    //         if (guide.floor === '2F' && guide.alt === '일식') {
-    //             altText = '스시노칸도';
-    //         } else if(guide.alt === '한식∙정육') {
-    //             altText = '성원정';
-    //         }
-
-    //         const isSelected = storeName.includes(altText);
-
-    //         return (
-    //             <StoreSubBox key={`${guide.floor}-${altText}`} isSelected={isSelected}>
-    //                 <StoreFloorFont>{guide.floor}</StoreFloorFont>
-    //                 <StoreSubSelectFont>{altText}</StoreSubSelectFont>
-    //             </StoreSubBox>
-    //         );
-    //     });
-    // };
-
+   
     const foodMallData = GuideDataProps.filter(
         guide => ['1F','3F~4F', '5F'].includes(guide.floor) || ((guide.floor === '2F' && guide.alt === '일식'))
     );

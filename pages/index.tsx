@@ -51,6 +51,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div style={{ display: "flex", justifyContent: "center",  margin: "-60px" }}>
+        <Image style={{ position:"absolute", zIndex:-2 }} src={"/image/sub-fullbanner-img-galbi.webp"} alt="BG" width={1920} height={936}/>
         <Image src={"/image/main-foodmall-img.png"} width={1330} height={936} alt="main" />
          <GuideBox>  
           {

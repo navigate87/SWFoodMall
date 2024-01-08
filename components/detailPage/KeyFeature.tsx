@@ -10,7 +10,6 @@ interface KeyFeatureProps {
   label: string;
   detail: string;
   animate: boolean;
-  // onClick: () => void;
 }
 
 const KeyFeature: React.FC<KeyFeatureProps> = ({ imageUrl, label, detail, animate }) => {
@@ -82,10 +81,8 @@ const FeatureBox = styled.span<{animate:boolean}>`
     cursor: pointer;
     ${({ animate }) => animate && css`
     &:after {
-      
       content: '';
       position: absolute;
-      //border: 1px solid #fff;
       margin-bottom: 2px;
       bottom: 0;
       left: 0;
@@ -100,7 +97,7 @@ const FeatureBox = styled.span<{animate:boolean}>`
 `;
 
 const FeatureImage = styled(Image)<{animate:boolean}>`
-  opacity: 0.5;
+  opacity: ${({ animate }) => (animate ? 1 : 0.5)};
   border-radius: 10px;
   border: ${({animate}) => (animate ? "2px solid #fff" : "none")};
 `;
@@ -111,7 +108,6 @@ const FeatureDetails = styled.div<{animate:boolean}>`
   width: 360px;
   height: 80px;
   left: 0;
-  
 `;
 
 const FeatureTextBox1 = styled.div`

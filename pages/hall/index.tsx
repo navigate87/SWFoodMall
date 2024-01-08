@@ -56,8 +56,7 @@ export default function HallDetail() {
                                     imageUrl={feature.imageUrlSmall}
                                     label={feature.title}
                                     detail={feature.floor}
-                                    animate={activeFeatureIndex === index}
-                                    // onClick={() => handleFeatureClick(index)}
+                                    animate={activeFeatureIndex === index}    
                                 />
                             ))
                         }
