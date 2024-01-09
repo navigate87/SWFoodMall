@@ -23,9 +23,9 @@ export default function HallDetail() {
         
         if(activeFeatureIndex < totalFeatures) {
 
-            const timer = setTimeout(() => {
+            const timer = setInterval(() => {
                 
-                setActiveFeatureIndex((prevIndex) => (prevIndex + 1) % totalFeatures);
+                setActiveFeatureIndex((prevIndex) => (prevIndex + 1) % HallInfoProps.length);
                 
             }, 20000);
 
@@ -56,7 +56,8 @@ export default function HallDetail() {
                                     imageUrl={feature.imageUrlSmall}
                                     label={feature.title}
                                     detail={feature.floor}
-                                    animate={activeFeatureIndex === index}    
+                                    animate={activeFeatureIndex === index}
+                                    onClick={() => handleFeatureClick(index)}    
                                 />
                             ))
                         }

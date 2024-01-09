@@ -10,9 +10,10 @@ interface KeyFeatureProps {
   label: string;
   detail: string;
   animate: boolean;
+  onClick: () => void;
 }
 
-const KeyFeature: React.FC<KeyFeatureProps> = ({ imageUrl, label, detail, animate }) => {
+const KeyFeature: React.FC<KeyFeatureProps> = ({ imageUrl, label, detail, animate, onClick }) => {
   const [hallInfoPopup, setHallInfoPopup] = useRecoilState<boolean>(recoilHallInfoState);
   const [, setSelectedHallData] = useRecoilState(recoilHallInfoData);
   const handleMoreClick = () => {
@@ -28,7 +29,7 @@ const KeyFeature: React.FC<KeyFeatureProps> = ({ imageUrl, label, detail, animat
   }
   
   return (
-        <Feature>
+        <Feature onClick={onClick}>
             <FeatureBox animate={animate}>
                 <FeatureImage animate={animate} src={imageUrl} alt={label} width={360} height={animate ? 120 : 80} />
                 <FeatureDetails animate={animate}>
@@ -97,7 +98,7 @@ const FeatureBox = styled.span<{animate:boolean}>`
 `;
 
 const FeatureImage = styled(Image)<{animate:boolean}>`
-  opacity: ${({ animate }) => (animate ? 1 : 0.5)};
+  opacity: ${({ animate }) => (animate ? 0.7 : 0.5)};
   border-radius: 10px;
   border: ${({animate}) => (animate ? "2px solid #fff" : "none")};
 `;
@@ -155,10 +156,16 @@ const FeatureAddLookBox = styled.div<{animate:boolean}>`
   width: 100px;
   margin: 15px;
   cursor: pointer;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.6);
+  }
 `;
 
 const FeatureAddText = styled.div`
   color: #fff;
   font-size: 14px;
   margin-right: 5px;
+
+ 
 `;
