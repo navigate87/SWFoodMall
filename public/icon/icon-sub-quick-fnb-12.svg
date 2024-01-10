@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58">
+    <path data-name="사각형 27220" style="fill:none" d="M0 0h58v58H0z"/>
+    <g data-name="그룹 47669">
+        <g data-name="사각형 27462" transform="translate(16 12)" style="stroke-width:1.6px;stroke:#474747;fill:none">
+            <rect width="26" height="34" rx="2" style="stroke:none"/>
+            <rect x=".8" y=".8" width="24.4" height="32.4" rx="1.2" style="fill:none"/>
+        </g>
+        <g data-name="사각형 27463" style="stroke-width:1.5px;stroke:#474747;fill:none">
+            <path style="stroke:none" d="M0 0h3v2H0z" transform="translate(18 45)"/>
+            <path style="fill:none" d="M.75.75h1.5v.5H.75z" transform="translate(18 45)"/>
+        </g>
+        <g data-name="사각형 27464" style="stroke-width:1.5px;stroke:#474747;fill:none">
+            <path style="stroke:none" d="M0 0h3v2H0z" transform="translate(37 45)"/>
+            <path style="fill:none" d="M.75.75h1.5v.5H.75z" transform="translate(37 45)"/>
+        </g>
+        <g data-name="타원 475" transform="translate(20 16)" style="stroke-width:1.3px;stroke:#474747;fill:none">
+            <circle cx="3.5" cy="3.5" r="3.5" style="stroke:none"/>
+            <circle cx="3.5" cy="3.5" r="2.85" style="fill:none"/>
+        </g>
+        <g data-name="타원 476" transform="translate(20 24)" style="stroke-width:1.3px;stroke:#474747;fill:none">
+            <circle cx="9" cy="9" r="9" style="stroke:none"/>
+            <circle cx="9" cy="9" r="8.35" style="fill:none"/>
+        </g>
+        <g data-name="타원 477" transform="translate(25 29)" style="stroke-width:1.3px;stroke:#474747;fill:none">
+            <circle cx="4" cy="4" r="4" style="stroke:none"/>
+            <circle cx="4" cy="4" r="3.35" style="fill:none"/>
+        </g>
+    </g>
+</svg>

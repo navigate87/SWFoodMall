@@ -45,6 +45,10 @@ export default function HallDetail() {
         setActiveFeatureIndex(index);
     }
 
+    const closeHallGuidePopup = () => {
+        setIsHallGuidePopupOpen(false);
+    };
+
     return (
         <Layout>
             <MainContainer>  
@@ -87,7 +91,7 @@ export default function HallDetail() {
                         }
                     </KeyFeatureBox>
                 </KeyFeatureContainer>
-                { isHallGuidePopupOpen && <HallGuidePopup selected={selectedItem} /> }
+                { isHallGuidePopupOpen && <HallGuidePopup selected={selectedItem} closePopup={closeHallGuidePopup} /> }
             </MainContainer>
             
             {
