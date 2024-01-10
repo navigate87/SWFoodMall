@@ -241,8 +241,6 @@ export default function Header() {
                 </Section>
             </Container>
             {isToggled && <StoreSelectPopup storeName={storeName ? (Array.isArray(storeName) ? storeName : [storeName]) : []} />}
-            {/* {isToggled && <StoreSelectPopup storeName={storeName ? (Array.isArray(storeName) ? storeName : [storeName]) : []} />} */}
-            {/* {isToggled && <StoreSelectPopup storeName={Array.isArray(storeName) ? storeName : [storeName]} />} */}
             {showModal && <Reservation />} 
             {showGroupModal && <GroupReservation />}
             {showConfirmModal && <ConfirmModal />}

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="316.001" viewBox="0 0 120 316.001">
+    <defs>
+        <filter id="3cvmn0ziva" x="0" y="0" width="120" height="316.001" filterUnits="userSpaceOnUse">
+            <feOffset/>
+            <feGaussianBlur stdDeviation="5" result="blur"/>
+            <feFlood flood-opacity=".2"/>
+            <feComposite operator="in" in2="blur"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g style="filter:url(#3cvmn0ziva)">
+        <path data-name="제외 8" d="M7670 12369h-70a20 20 0 0 1-20-20v-246a20 20 0 0 1 20-20h70v286zm-80-97v1h70v-1zm0-93v1h70v-1z" transform="translate(-7565.001 -12068)" style="fill:rgba(71,71,71,.7)"/>
+    </g>
+    <g data-name="사각형 27745" style="stroke:rgba(112,112,112,.4);fill:none">
+        <path d="M20 0h70v286H20a20 20 0 0 1-20-20V20A20 20 0 0 1 20 0z" style="stroke:none" transform="translate(14.999 15)"/>
+        <path d="M20 .5h69.5v285H20A19.5 19.5 0 0 1 .5 266V20A19.5 19.5 0 0 1 20 .5z" style="fill:none" transform="translate(14.999 15)"/>
+    </g>
+</svg>

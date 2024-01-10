@@ -179,7 +179,11 @@ export default function GroupReservation() {
   }));
 
   // Init Data 확인용
-  //const { data, isLoading, error } = useCodeInfo(); 
+  const { data, isLoading, error } = useCodeInfo(); 
+
+  // useEffect(() => {
+  //   console.log(data);
+  // })
 
   const isReservation = () => { // 예약하기 버튼 활성화 조건
     if(

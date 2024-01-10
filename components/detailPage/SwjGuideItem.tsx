@@ -20,7 +20,6 @@ const SwjGuideItem: React.FC<GuideItemProps> = ({ item, onSelect, index, isActiv
             <MarginSpan2>
                 <GuideImage 
                     opacity={isActive ? 0.7 : 0.4} 
-                    // background={isActive ? "rgba(0, 0, 0, 0.2)" :"rgba(0, 0, 0, 0.6)"} 
                     borderRadius={10} 
                     src={item.guideImgUrl} 
                     width={204} 

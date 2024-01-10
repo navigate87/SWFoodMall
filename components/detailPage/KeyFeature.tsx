@@ -98,7 +98,7 @@ const FeatureBox = styled.span<{animate:boolean}>`
 `;
 
 const FeatureImage = styled(Image)<{animate:boolean}>`
-  opacity: ${({ animate }) => (animate ? 0.7 : 0.5)};
+  opacity: ${({ animate }) => (animate ? 0.9 : 0.5)};
   border-radius: 10px;
   border: ${({animate}) => (animate ? "2px solid #fff" : "none")};
 `;
@@ -165,7 +165,5 @@ const FeatureAddLookBox = styled.div<{animate:boolean}>`
 const FeatureAddText = styled.div`
   color: #fff;
   font-size: 14px;
-  margin-right: 5px;
-
- 
+  margin-right: 5px; 
 `;
