@@ -2,21 +2,20 @@
 // eslint-disable-next-line prettier/prettier
 import Layout from "@/components/Layout";
 import Head from "next/head";
-import styles from "@/styles/Button.module.scss"
+
 import { useRouter } from "next/router";
-import styled, { createGlobalStyle } from "styled-components";
-import { HtmlProps } from "next/dist/shared/lib/html-context.shared-runtime";
-import { Html } from "next/document";
+import styled from "styled-components";
 import SlideShow from "@/components/slideShow"
 import Image from "next/image";
 
 import { SlideData } from "@/data/ImgDataType";
 import { GuideDataProps } from "@/data/GuideType";
 import GuideItem from "@/components/GuideItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StoreInfoDataProps, StoreInfoProps } from "@/data/StoreInfoType";
 import StoreInfoCard from "@/components/StoreInfoCard";
 import { CSSTransition } from "react-transition-group";
+
 export default function Home() {
   // eslint-disable-next-line prettier/prettier
   const router = useRouter();
@@ -25,6 +24,14 @@ export default function Home() {
   const [overlayStatus, setOverlayStatus] = useState<{[key: string]: boolean}>(
     GuideDataProps.reduce((acc, item) => ({ ...acc, [item.alt]: false }), {})
   );
+  type ShimmerStatueType = {
+    [key:string]:boolean
+  }
+  const initialShimmerStatus:ShimmerStatueType = GuideDataProps.reduce((acc, item) => {
+    acc[item.alt] = false;
+    return acc;
+  }, {} as ShimmerStatueType);
+  const [shimmerStatus, setShimmerStatus] = useState<{[key: string]: boolean}>(initialShimmerStatus);
   const isAnyOverlayActive = Object.values(overlayStatus).some(status => status);
   const handleGuideClick = (alt:string) => {
     setOverlayStatus(prev => ({ ...prev, [alt]: !prev[alt] }));
@@ -42,6 +49,28 @@ export default function Home() {
       return 'slide-fade';
     }
   }
+
+  useEffect(() => {
+    let current = 0;
+    let timerId: ReturnType<typeof setTimeout>;
+
+    const activateShimmer = () => {
+      const currentItem = GuideDataProps[current];
+      setShimmerStatus(prev => ({ ...prev, [currentItem.alt]: true }));
+
+      timerId = setTimeout(() => {
+        setShimmerStatus(prev => ({ ...prev, [currentItem.alt]: false }));
+        current = (current + 1) % GuideDataProps.length;
+        activateShimmer();
+      }, 2000); // 5초 후에 다음 아이템으로 변경
+    };
+
+    activateShimmer();
+
+    return () => clearTimeout(timerId); // useEffect 정리 함수에서 타이머 정리
+  }, []);
+
+  // ... 기존의 JSX 반환
 
   return (
     <Layout>
@@ -61,10 +90,12 @@ export default function Home() {
                 data={item}
                 isVisible={overlayStatus[item.alt]}
                 onClick={() => handleGuideClick(item.alt)}
+                isShimmering={shimmerStatus[item.alt]}
               />
             ))
           }
         </GuideBox>
+        
         <CSSTransition
           in={isAnyOverlayActive}
           timeout={300}
@@ -179,6 +210,7 @@ export default function Home() {
           </div>
         </div>
       </Main>
+      
     </Layout>
   );
 }

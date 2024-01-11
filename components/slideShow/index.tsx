@@ -38,9 +38,9 @@ const  SlideShow: React.FC<SliderProps> = ({ images }) => {
         slideToScroll: 1,
     }
 
-    useEffect(() => {
-        console.log("현재 인덱스값",slideIndex)
-    })
+    // useEffect(() => {
+    //     console.log("현재 인덱스값",slideIndex)
+    // })
 
     return (
         <SlideContainer>

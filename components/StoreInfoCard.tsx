@@ -41,7 +41,6 @@ const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo, isVisible }) =
       } 
       
     } else if(storeInfo.alt === "한식∙정육") {
-      console.log(storeInfo.alt, storeInfo.title)
       return {
         pathname: "/swjung",
         query: { storeName: storeInfo.title }

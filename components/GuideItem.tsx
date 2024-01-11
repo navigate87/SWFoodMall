@@ -2,64 +2,87 @@ import { GuideData } from '@/data/GuideType';
 import React, { useState, useEffect } from 'react';
 import styled, {keyframes} from 'styled-components';
 import Image from 'next/image';
+import { ShimmerButton } from './ShimmerButton';
 
 
 interface GuideItemProps {
     data: GuideData;
     isVisible: boolean;
     onClick: () => void;
+    isShimmering: boolean;
 }
 
-const GuideItem: React.FC<GuideItemProps> = ({ data, isVisible, onClick }) => {
+const GuideItem: React.FC<GuideItemProps> = ({ data, isVisible, onClick, isShimmering }) => {
     const [isOverlayVisible, setIsOverlayVisible] = useState(isVisible);
 
     useEffect(() => {
-        if (!isVisible) {
-            // isVisible이 false가 되면 애니메이션 후에 숨김 처리
-            const timer = setTimeout(() => {
-                setIsOverlayVisible(false);
-            }, 900); // 애니메이션 시간과 일치
-            return () => clearTimeout(timer);
-        } else {
-            setIsOverlayVisible(true);
-        }
-        
+      console.log("isShimmering의 값 : ",isShimmering)
+    },[isShimmering])
+
+    useEffect(() => {
+    if (!isVisible) {
+          // isVisible이 false가 되면 애니메이션 후에 숨김 처리
+          const timer = setTimeout(() => {
+              setIsOverlayVisible(false);
+          }, 900); // 애니메이션 시간과 일치
+          return () => clearTimeout(timer);
+      } else {
+          setIsOverlayVisible(true);
+      }
     }, [isVisible]);
 
 
     return (
-        <>
-            <GuideStoreBox box_bottom={data.box_bottom} box_left={data.box_left} isVisible={isVisible} >
-                <GuideStore onClick={onClick}>
-                    <FloorText>{data.floor}</FloorText>
-                    <StoreNameText>{data.alt}</StoreNameText>
-                </GuideStore>
-            </GuideStoreBox>
-            {
-                isOverlayVisible &&
-                <GuideOverLayBox 
-                    width={data.width} 
-                    height={data.height} 
-                    bottom={data.bottom} 
-                    left={data.left} 
-                    isVisible={isVisible}
-                    onClick={onClick}
-                >
-                    <MixBlendModeBox isVisible={isVisible}>
-                        <Image 
-                            style={{ position: "relative", zIndex:"400" }}
-                            src={data.overlay_src} 
-                            width={data.width} 
-                            height={data.height} 
-                            alt={data.alt} 
-                        />
-                    </MixBlendModeBox>
-                </GuideOverLayBox>
-            }
-            
-        </>
-        
-        
+      <>
+          <GuideStoreBox box_bottom={data.box_bottom} box_left={data.box_left} isVisible={isVisible}>
+              {/* <GuideStore onClick={onClick}> */}
+                <ShimmerButton isVisible={isVisible} onClick={onClick} className={isShimmering ? 'active' : ''}>
+                  <FloorText>{data.floor}</FloorText>
+                  <StoreNameText>{data.alt}</StoreNameText>
+                  <span className='shimmer'></span>
+                  {/* <span className={`shimmer ${isShimmering ? 'active' : ''}`}></span> */}
+                  {/* {
+                    isShimmering && <span className='shimmer'></span>
+                  } */}
+                </ShimmerButton>
+                  
+              {/* </GuideStore> */}
+          </GuideStoreBox>
+
+          {/* <GuideStoreBox box_bottom={data.box_bottom} box_left={data.box_left} isVisible={isVisible}>
+              <GuideStore onClick={onClick}>
+                <ShimmerButton>
+                  <FloorText>{data.floor}</FloorText>
+                  <StoreNameText>{data.alt}</StoreNameText>
+                  <span className='shimmer'></span>
+                </ShimmerButton>
+                  
+              </GuideStore>
+          </GuideStoreBox> */}
+          
+          {
+              isOverlayVisible &&
+              <GuideOverLayBox 
+                  width={data.width} 
+                  height={data.height} 
+                  bottom={data.bottom} 
+                  left={data.left} 
+                  isVisible={isVisible}
+                  onClick={onClick}
+              >
+                
+                  <MixBlendModeBox isVisible={isVisible}>
+                      <Image 
+                          style={{ position: "relative", zIndex:"400" }}
+                          src={data.overlay_src} 
+                          width={data.width} 
+                          height={data.height} 
+                          alt={data.alt} 
+                      />
+                  </MixBlendModeBox>
+              </GuideOverLayBox>
+          } 
+      </>
     )
 }
 
@@ -67,19 +90,22 @@ export default GuideItem
 
 const GuideStoreBox = styled.div<{ box_bottom: number, box_left: number, isVisible: boolean}>`
   position: absolute;
-  border-radius: 50%;
-  background: ${({ isVisible }) => (isVisible ? "#ff0000" : 'rgba(0,0,0, 0.5)')};
+  border-radius: 10px;
+  
+  /* background: ${({ isVisible }) => (isVisible ? "#ff0000" : 'rgba(0,0,0, 0.5)')}; */
   bottom: ${({ box_bottom }) => box_bottom}px;
   left: ${({ box_left }) => box_left}px;
-  height: 65px;
-  width: 68px;
+  height: 68px;
+  width: 72px;
   cursor: pointer;
   /* z-index: 500; */
   z-index: ${({ isVisible }) => (isVisible ? "400" : "300")};
-  &:hover{
+
+  /* &:hover{
     background: #f84040;
-  }
+  } */
 `;
+
 
 const GuideStore = styled.div`
   display: flex;
