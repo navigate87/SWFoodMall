@@ -40,10 +40,6 @@ const GuideItem: React.FC<GuideItemProps> = ({ data, isVisible, onClick, isShimm
                   <FloorText>{data.floor}</FloorText>
                   <StoreNameText>{data.alt}</StoreNameText>
                   <span className='shimmer'></span>
-                  {/* <span className={`shimmer ${isShimmering ? 'active' : ''}`}></span> */}
-                  {/* {
-                    isShimmering && <span className='shimmer'></span>
-                  } */}
                 </ShimmerButton>
                   
               {/* </GuideStore> */}

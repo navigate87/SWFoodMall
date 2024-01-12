@@ -60,7 +60,7 @@ body {
 }
 
 body, button {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, SourceHansSans
   Helvetica Neue, sans-serif;
 }
 
@@ -108,7 +108,7 @@ li, ul {
 .reverse-slide-fade-enter-active {
   opacity: 1;
   transform: translateX(0);
-  transition: opacity 300ms ease-in, transform 300ms ease-in;
+  transition: opacity 200ms ease-in, transform 200ms ease-in;
 }
 .reverse-slide-fade-exit {
   opacity: 1;
@@ -117,7 +117,7 @@ li, ul {
 .reverse-slide-fade-exit-active {
   opacity: 0;
   transform: translateX(100%);
-  transition: opacity 500ms ease-in, transform 500ms ease-in;
+  transition: opacity 200ms ease-in, transform 200ms ease-in;
 }
 
 .banner-fade-enter {

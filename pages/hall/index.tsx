@@ -9,8 +9,13 @@ import { useEffect, useState } from "react";
 import { HallInfoProps } from "@/data/hallInfo";
 import HallInfoPopup from "@/modal/hallInfo";
 import { useRecoilState } from "recoil";
-import { recoilHallInfoState } from "@/store/stores/modalState";
+import { recoilHallInfoState, recoilShowGroupModal } from "@/store/stores/modalState";
 import HallGuidePopup from "@/modal/HallGuide";
+import { CSSTransition } from "react-transition-group";
+import { SelectMenu } from "@/data/MenuType";
+
+
+
 /* eslint-disable prettier/prettier */
 export default function HallDetail() { 
     const router = useRouter();
@@ -18,6 +23,7 @@ export default function HallDetail() {
     const [hallInfoPopup, setHallInfoPopup] = useRecoilState<boolean>(recoilHallInfoState);
     const [isHallGuidePopupOpen, setIsHallGuidePopupOpen] = useState<boolean>(false);
     const [selectedItem, setSelectedItem] = useState<string>('');
+    const [showGroupModal, setShowGroupModal] = useRecoilState<boolean>(recoilShowGroupModal);
 
     const totalFeatures = 3;
     const currentFeature = HallInfoProps[activeFeatureIndex];
@@ -37,6 +43,10 @@ export default function HallDetail() {
     },[activeFeatureIndex]);
 
     const handleMenuItemClick = (item:string) => {
+        if(item === "바로예약") {
+            setShowGroupModal(true);
+            return;
+        }
         setIsHallGuidePopupOpen(true); 
         setSelectedItem(item);
     };
@@ -54,6 +64,23 @@ export default function HallDetail() {
             <MainContainer>  
                 <RightFixed>
                     <MenuBox>
+                    {/* {
+                        SelectMenu.map((menu, index) => (
+                            <CSSTransition
+                                key={menu.label}
+                                in={true} // 항상 true로 설정하여 항목이 마운트될 때 애니메이션 실행
+                                timeout={300} // 300ms 동안 애니메이션 실행
+                                classNames="fade" // 위에서 정의한 CSS 클래스
+                                appear // 초기 마운트 시 애니메이션 실행
+                            >
+                                <MenuItem onClick={() => handleMenuItemClick(menu.label)}>
+                                    <Image src={menu.mainIcon} alt={menu.label} width={32} height={32} />
+                                    <MenuText>{menu.label}</MenuText>
+                                </MenuItem>
+                                
+                            </CSSTransition>
+                        ))
+                    } */}
                         <MenuItem marginTop={20} onClick={() =>handleMenuItemClick('연회장 안내')}>
                             <Image src={"/icon/icon-sub-quick-info.svg"} alt="info" width={32} height={32} />
                             <MenuText>연회장 안내</MenuText>
@@ -69,6 +96,23 @@ export default function HallDetail() {
                             <MenuText>바로예약</MenuText>
                         </MenuItem>
                     </MenuBox>
+                    
+                    {/* <MenuBox>
+                        <MenuItem marginTop={20} onClick={() =>handleMenuItemClick('연회장 안내')}>
+                            <Image src={"/icon/icon-sub-quick-info.svg"} alt="info" width={32} height={32} />
+                            <MenuText>연회장 안내</MenuText>
+                        </MenuItem>
+                        <MenuSeparator />
+                        <MenuItem onClick={() =>handleMenuItemClick('이벤트')}>
+                            <Image src="/icon/icon-sub-quick-event_on.svg" alt="event" width={32} height={32} />
+                            <MenuText>이벤트</MenuText>
+                        </MenuItem>
+                        <MenuSeparator />
+                        <MenuItem onClick={() =>handleMenuItemClick('바로예약')}>
+                            <Image src={"/icon/icon-sub-quick-reservation.svg"} alt="reservation" width={32} height={32} />
+                            <MenuText>바로예약</MenuText>
+                        </MenuItem>
+                    </MenuBox> */}
                 </RightFixed>  
                 <Banner 
                     title={currentFeature.title}
@@ -91,9 +135,37 @@ export default function HallDetail() {
                         }
                     </KeyFeatureBox>
                 </KeyFeatureContainer>
-                { isHallGuidePopupOpen && <HallGuidePopup selected={selectedItem} closePopup={closeHallGuidePopup} /> }
+                {/* <CSSTransition
+                    in={isAnyOverlayActive}
+                    timeout={300}
+                    classNames={getAnimationClass(selectedStoreInfo?.alt ?? '')}
+                    unmountOnExit
+                >
+                    <StoreInfoCard 
+                        storeInfo={selectedStoreInfo}
+                        isVisible={storeInfoCardVisible}
+                    />
+                </CSSTransition> */}
+                <CSSTransition
+                    in={isHallGuidePopupOpen}
+                    timeout={200} // 애니메이션 시간 설정
+                    classNames="reverse-slide-fade" // 애니메이션 클래스 이름
+                    unmountOnExit
+                >
+                    <HallGuidePopup 
+                        selected={selectedItem} 
+                        closePopup={closeHallGuidePopup} 
+                    />
+                </CSSTransition>
+
+                {/* { 
+                    isHallGuidePopupOpen 
+                    && 
+                    <HallGuidePopup 
+                        selected={selectedItem} 
+                        closePopup={closeHallGuidePopup} 
+                    /> } */}
             </MainContainer>
-            
             {
                 hallInfoPopup && 
                 <HallInfoPopup />

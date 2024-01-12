@@ -46,8 +46,8 @@ export default function HallInfoPopup() {
                             HallInfoProps.map((hall, index) => (
                                 <FlexDiv key={index} onClick={() => handleHallClick(hall)} justifyContent="center" marginBottom={10} >
                                     <FlexDiv width={280} height={52} background="#f6f5f5"  borderRadius={25} justifyContent="center" alignItem="center" gap={50} cursor="pointer" isSelected={selectedFloor === hall.floor}>
-                                        <FontDiv size={18} weight="bold">{hall.floor}</FontDiv>
-                                        <FontDiv size={18} weight="bold">{hall.title}</FontDiv>
+                                        <FontDiv size={18} weight={selectedFloor === hall.floor ? "bold" : "none"}>{hall.floor}</FontDiv>
+                                        <FontDiv size={18} weight={selectedFloor === hall.floor ? "bold" : "none"}>{hall.title}</FontDiv>
                                     </FlexDiv>
                                 </FlexDiv>
                             ))
@@ -139,7 +139,7 @@ const InfoTitle = styled.div`
     border-bottom:1px solid #dcdcdc;
 `;
 
-const FontDiv = styled.div<{size?:number, weight?:string, color?:string, margin?:number}>`
+const FontDiv = styled.div<{size?:number, weight?:string, color?:string, margin?:number, isSelected?:boolean}>`
     font-size: ${({size})=>(size)}px;
     font-weight: ${({weight}) => weight};
     color: ${({color}) => color};
@@ -160,7 +160,7 @@ const FlexDiv = styled.div<{justifyContent?:string, alignItem?:string, marginTop
     height: ${({ height }) => height}px;
     cursor: ${({cursor}) => cursor};
     background: ${({ isSelected }) => isSelected ? "#f6f6f6" : ""};
-
+    
     &:hover {
         background: ${({ isSelected, background }) => isSelected ? "#f6f5f5" : (background !== "" ? background : "#f6f5f5")};
     }
