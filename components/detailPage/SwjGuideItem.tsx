@@ -16,10 +16,10 @@ const SwjGuideItem: React.FC<GuideItemProps> = ({ item, onSelect, index, isActiv
     }
 
     return (
-        <MarginSpan margin={30} onClick={handleClick} animate={isActive}>
+        <MarginSpan width={365} margin={30} onClick={handleClick} animate={isActive}>
             <MarginSpan2>
                 <GuideImage 
-                    opacity={isActive ? 0.7 : 0.4} 
+                    opacity={isActive ? 0.9 : 0.4} 
                     borderRadius={10} 
                     src={item.guideImgUrl} 
                     width={204} 
@@ -53,8 +53,41 @@ const borderBottomChange = keyframes`
 const MarginSpan = styled.span<{margin?:number, width?:number, animate?:boolean}>`
     margin: ${({ margin }) => margin}px;
     width: ${({ width }) => width}px;
-    position: relative;
     
+`;
+
+const GuideImage = styled(Image)<{opacity?:number, background?:string, borderRadius?:number, animate?:boolean}>`
+    opacity: ${({ opacity }) => opacity};
+    background:${({ background }) => background };
+    border-radius: ${({ borderRadius }) => borderRadius}px;
+    border: ${({animate}) => (animate ? "2px solid #fff" : "none")};
+    cursor:pointer;
+    z-index: 20;
+`;
+
+const GuideFontBox_2 = styled.div<{animate?:boolean}>`
+    position: absolute;
+    top: 50%; // 상단에서 50% 위치에 배치
+    left: 50%; // 왼쪽에서 50% 위치에 배치
+    transform : translate(-50%, -77%);
+    width: 180px;
+    height: 80px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+`;
+
+const MarginSpan2 = styled.span<{animate?:boolean, margin?:number, width?:number}>`
+    margin: ${({ margin }) => margin}px;
+    width: ${({ width }) => width}px; 
+    position: relative;
+    &:hover {
+        ${GuideImage} {
+            border:2px solid #fff;
+            opacity: 1;
+        }
+    }
     ${({ animate }) => animate && css`
         &:after {
             content: '';
@@ -70,40 +103,6 @@ const MarginSpan = styled.span<{margin?:number, width?:number, animate?:boolean}
             animation: ${borderBottomChange} 5s linear forwards;
         } 
     `}
-`;
-
-const MarginSpan2 = styled.span<{margin?:number, width?:number}>`
-    margin: ${({ margin }) => margin}px;
-    width: ${({ width }) => width}px;
-`;
-
-const GuideImage = styled(Image)<{opacity?:number, background?:string, borderRadius?:number, animate?:boolean}>`
-    opacity: ${({ opacity }) => opacity};
-    background:${({ background }) => background };
-    border-radius: ${({ borderRadius }) => borderRadius}px;
-    border: ${({animate}) => (animate ? "2px solid #fff" : "none")};
-    cursor:pointer;
-`;
-
-const GuideFontBox = styled.div<{left:number}>`
-    position:absolute;
-    bottom:-42px; 
-    left: ${({ left }) => left}px;
-    width:360px;
-    height:80px;
-    cursor:pointer;
-`;
-
-const GuideFontBox_2 = styled.div<{animate?:boolean}>`
-    position: absolute;
-    top: 50%; // 상단에서 50% 위치에 배치
-    left: 50%; // 왼쪽에서 50% 위치에 배치
-    transform : translate(-50%, -77%);
-    width: 360px;
-    height: 80px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
 `;
 
 const FlexDiv = styled.div`

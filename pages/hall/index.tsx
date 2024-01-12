@@ -64,23 +64,6 @@ export default function HallDetail() {
             <MainContainer>  
                 <RightFixed>
                     <MenuBox>
-                    {/* {
-                        SelectMenu.map((menu, index) => (
-                            <CSSTransition
-                                key={menu.label}
-                                in={true} // 항상 true로 설정하여 항목이 마운트될 때 애니메이션 실행
-                                timeout={300} // 300ms 동안 애니메이션 실행
-                                classNames="fade" // 위에서 정의한 CSS 클래스
-                                appear // 초기 마운트 시 애니메이션 실행
-                            >
-                                <MenuItem onClick={() => handleMenuItemClick(menu.label)}>
-                                    <Image src={menu.mainIcon} alt={menu.label} width={32} height={32} />
-                                    <MenuText>{menu.label}</MenuText>
-                                </MenuItem>
-                                
-                            </CSSTransition>
-                        ))
-                    } */}
                         <MenuItem marginTop={20} onClick={() =>handleMenuItemClick('연회장 안내')}>
                             <Image src={"/icon/icon-sub-quick-info.svg"} alt="info" width={32} height={32} />
                             <MenuText>연회장 안내</MenuText>
@@ -97,22 +80,6 @@ export default function HallDetail() {
                         </MenuItem>
                     </MenuBox>
                     
-                    {/* <MenuBox>
-                        <MenuItem marginTop={20} onClick={() =>handleMenuItemClick('연회장 안내')}>
-                            <Image src={"/icon/icon-sub-quick-info.svg"} alt="info" width={32} height={32} />
-                            <MenuText>연회장 안내</MenuText>
-                        </MenuItem>
-                        <MenuSeparator />
-                        <MenuItem onClick={() =>handleMenuItemClick('이벤트')}>
-                            <Image src="/icon/icon-sub-quick-event_on.svg" alt="event" width={32} height={32} />
-                            <MenuText>이벤트</MenuText>
-                        </MenuItem>
-                        <MenuSeparator />
-                        <MenuItem onClick={() =>handleMenuItemClick('바로예약')}>
-                            <Image src={"/icon/icon-sub-quick-reservation.svg"} alt="reservation" width={32} height={32} />
-                            <MenuText>바로예약</MenuText>
-                        </MenuItem>
-                    </MenuBox> */}
                 </RightFixed>  
                 <Banner 
                     title={currentFeature.title}
@@ -135,17 +102,7 @@ export default function HallDetail() {
                         }
                     </KeyFeatureBox>
                 </KeyFeatureContainer>
-                {/* <CSSTransition
-                    in={isAnyOverlayActive}
-                    timeout={300}
-                    classNames={getAnimationClass(selectedStoreInfo?.alt ?? '')}
-                    unmountOnExit
-                >
-                    <StoreInfoCard 
-                        storeInfo={selectedStoreInfo}
-                        isVisible={storeInfoCardVisible}
-                    />
-                </CSSTransition> */}
+                
                 <CSSTransition
                     in={isHallGuidePopupOpen}
                     timeout={200} // 애니메이션 시간 설정
@@ -157,14 +114,6 @@ export default function HallDetail() {
                         closePopup={closeHallGuidePopup} 
                     />
                 </CSSTransition>
-
-                {/* { 
-                    isHallGuidePopupOpen 
-                    && 
-                    <HallGuidePopup 
-                        selected={selectedItem} 
-                        closePopup={closeHallGuidePopup} 
-                    /> } */}
             </MainContainer>
             {
                 hallInfoPopup && 

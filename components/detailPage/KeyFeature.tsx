@@ -101,6 +101,11 @@ const FeatureImage = styled(Image)<{animate:boolean}>`
   opacity: ${({ animate }) => (animate ? 0.9 : 0.5)};
   border-radius: 10px;
   border: ${({animate}) => (animate ? "2px solid #fff" : "none")};
+
+  &:hover {
+    border: 2px solid #fff;
+    opacity: 0.9;
+  }
 `;
 
 const FeatureDetails = styled.div<{animate:boolean}>`
