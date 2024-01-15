@@ -53,7 +53,22 @@ const borderBottomChange = keyframes`
 const MarginSpan = styled.span<{margin?:number, width?:number, animate?:boolean}>`
     margin: ${({ margin }) => margin}px;
     width: ${({ width }) => width}px;
-    
+    position: relative;
+    ${({ animate }) => animate && css`
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: red;
+            border-radius: 15px;
+            margin-bottom: 2px;
+            margin-left: 9px;
+            animation: ${borderBottomChange} 5s linear forwards;
+        } 
+    `}
 `;
 
 const GuideImage = styled(Image)<{opacity?:number, background?:string, borderRadius?:number, animate?:boolean}>`
@@ -75,7 +90,6 @@ const GuideFontBox_2 = styled.div<{animate?:boolean}>`
     cursor: pointer;
     display: flex;
     justify-content: center;
-    z-index: 10;
 `;
 
 const MarginSpan2 = styled.span<{animate?:boolean, margin?:number, width?:number}>`
@@ -88,21 +102,6 @@ const MarginSpan2 = styled.span<{animate?:boolean, margin?:number, width?:number
             opacity: 1;
         }
     }
-    ${({ animate }) => animate && css`
-        &:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background-color: red;
-            border-radius: 15px;
-            margin-bottom: 2px;
-            margin-left: 9px;
-            animation: ${borderBottomChange} 5s linear forwards;
-        } 
-    `}
 `;
 
 const FlexDiv = styled.div`
