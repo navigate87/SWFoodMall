@@ -9,7 +9,7 @@ interface DescriptionModuleProps {
 
 const DescriptionModule: React.FC<DescriptionModuleProps> = ({ selectedItem }) => {
     return (
-        <>
+        <div>
             <Image 
                 src={selectedItem.fullImgUrl}
                 height={936}
@@ -26,7 +26,7 @@ const DescriptionModule: React.FC<DescriptionModuleProps> = ({ selectedItem }) =
                     </FontDiv>
                 </DescriptionBox>
             </DescriptionContainer>
-        </>
+        </div>
     );
 };
 

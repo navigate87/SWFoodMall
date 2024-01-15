@@ -29,10 +29,6 @@ export default function Header() {
     const router = useRouter();
     const {storeName}  = router.query;
 
-    useEffect(() => {
-        console.log("storeName:", storeName )
-    })
-
     const renderStoreName = () => {
         
         switch (storeName) {

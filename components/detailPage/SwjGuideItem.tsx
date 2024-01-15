@@ -16,7 +16,7 @@ const SwjGuideItem: React.FC<GuideItemProps> = ({ item, onSelect, index, isActiv
     }
 
     return (
-        <MarginSpan width={365} margin={30} onClick={handleClick} animate={isActive}>
+        <MarginSpan width={365} margin={10} onClick={handleClick} animate={isActive}>
             <MarginSpan2>
                 <GuideImage 
                     opacity={isActive ? 0.9 : 0.4} 

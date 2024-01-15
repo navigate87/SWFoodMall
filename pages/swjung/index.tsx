@@ -8,6 +8,8 @@ import { recoilShowGroupModal } from "@/store/stores/modalState";
 import { useRecoilState } from "recoil";
 import Image from "next/image";
 import SwjInfoPopup from "@/modal/swjInfo";
+import { CSSTransition } from "react-transition-group";
+import HallGuidePopup from "@/modal/HallGuide";
 /* eslint-disable prettier/prettier */
 export default function List() { 
     const [selectedItem, setSelectedItem] = useState<SWJInfoData>(SWJInfoProps[0]);
@@ -15,6 +17,8 @@ export default function List() {
     const [showGroupModal, setShowGroupModal] = useRecoilState<boolean>(recoilShowGroupModal);
     const [selectedMenu, setSelectedMenu] = useState<string>('');
     const [swjGuidePopupOpen, setSwjGuidePopupOpen] = useState<boolean>(false);
+    
+    
     const handleSelect = (index:number) => {
         setSelectedItemIndex(index);
         
@@ -27,6 +31,10 @@ export default function List() {
         setSwjGuidePopupOpen(true); 
         setSelectedMenu(item);
     };
+
+    const closeSwjPopup = () => {
+        setSwjGuidePopupOpen(false);
+    }
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -45,7 +53,7 @@ export default function List() {
         <Layout>
             <MainContainer>
                 <RightFixed>
-                <MenuBox>
+                    <MenuBox>
                         <MenuItem marginTop={20} onClick={() =>handleMenuItemClick('매장 안내')}>
                             <Image src={"/icon/icon-sub-quick-info.svg"} alt="info" width={32} height={32} />
                             <MenuText>매장 안내</MenuText>
@@ -80,11 +88,16 @@ export default function List() {
                         }
                     </IntervalBox>
                 </SelectGuideBox>
+                <CSSTransition 
+                    in={swjGuidePopupOpen} 
+                    timeout={200} 
+                    classNames="reverse-slide-fade" 
+                    unmountOnExit
+                >
+                    <SwjInfoPopup selected={selectedMenu} closePopup={closeSwjPopup} />
+                </CSSTransition> 
             </MainContainer>
-            {
-                swjGuidePopupOpen && 
-                <SwjInfoPopup />
-            }
+            
         </Layout>
     )
 }

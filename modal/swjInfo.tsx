@@ -1,11 +1,58 @@
+import SwjGuideNotice from "@/components/SwjGuide/SwjGuideStyle";
+import EventNotice from "@/components/hallGuide/EventStyle";
+import { SelectMenu, SwjSelectMenu } from "@/data/MenuType";
+import { recoilShowGroupModal } from "@/store/stores/modalState";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import styled, { css, keyframes } from "styled-components"
 
-export default function SwjInfoPopup() {
-    return (
-        <Container width={470}>
-            <MenuBox>
+export default function SwjInfoPopup({selected, closePopup} : {selected: string, closePopup: () => void}) {
+    const [selectedMenu, setSelectedMenu] = useState<string>(selected); 
+    const [showGroupModal, setShowGroupModal] = useRecoilState<boolean>(recoilShowGroupModal);
 
+    const handleMenuClick = ( menu:string ) => {
+        setSelectedMenu(menu);
+
+        if(menu === '바로예약') {
+            setShowGroupModal(true);
+            closePopup();
+        }
+    }
+
+    useEffect(() => {
+        console.log(selectedMenu);
+    })
+
+    return (
+        <Container width={selectedMenu === '매장 안내' ? 468 : 420} isVisible={true}>
+            <MenuBox>
+            {
+                SwjSelectMenu.map((menu, index) => (
+                    <MenuItem 
+                        key={index} 
+                        onClick={() => handleMenuClick(menu.label)} 
+                        isSelected={selectedMenu === menu.label}
+                    >
+                        <Image src={menu.icon} alt="info" width={32} height={32} />
+                        <MenuItemFont>{menu.label}</MenuItemFont>
+                    </MenuItem>
+                ))
+            }
+                <CloseBox isSelected={selectedMenu === '매장 안내'}>
+                    <CloseBtn onClick={closePopup}>
+                        <Image src={"/icon/icon-popup-close.svg"} alt="close" width={18} height={18} /> 
+                    </CloseBtn>
+                </CloseBox>
             </MenuBox>
+
+            {
+                selectedMenu === '매장 안내' 
+                    ? 
+                        <SwjGuideNotice />
+                    :
+                        <EventNotice />
+            }
         </Container>
     )
 }
@@ -83,3 +130,32 @@ const MenuItem = styled.div<{isSelected?:boolean}>`
         ${({ isSelected }) => isSelected ? '' : hoverAnimation};
     }
 `;
+
+const MenuItemFont = styled.div`
+    font-size: 14px;
+    margin-top: 7px;
+`;
+
+const CloseBox = styled.div<{isSelected?:boolean}>`
+    height: 80px;
+    width:110px;
+    display:flex;
+    align-items:center;
+    justify-content:${({ isSelected }) => (isSelected ? "flex-end" : "center") }
+`;
+
+const CloseBtn = styled.div`
+    display:flex;
+    align-items:center; 
+    justify-content:center;
+    width:48px;
+    height:48px;
+    border-radius:50%; 
+    
+    cursor:pointer;
+
+    &:hover {
+        background:#ededed; 
+    }
+`;
+
