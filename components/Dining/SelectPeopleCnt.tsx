@@ -21,11 +21,11 @@ const CustomerSelect: React.FC<CustomerSelectProps> = ({ adultCount, childCount 
         </Container>
         <SectionTitle>일반</SectionTitle>
         <CounterContainer>
-            <PeopleCount initialValue={0} label="일반" min={0} max={100} />
+            <PeopleCount  label="일반" min={0} max={100} />
         </CounterContainer>
         <SectionTitle>소인<SmallText>(~11세)</SmallText></SectionTitle>
         <CounterContainer>
-            <PeopleCount initialValue={0} label="소인" min={0} max={100} />
+            <PeopleCount label="소인" min={0} max={100} />
         </CounterContainer>
       </>
     );
