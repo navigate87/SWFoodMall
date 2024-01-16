@@ -125,12 +125,12 @@ export default function Header() {
                             <FlexSection flex={1}>
                                 <FlexContainer >
                                     <div style={{ cursor:"pointer"}}>
-                                        <Image alt="메뉴" src={"icon/menu-icon.svg"} width={25} height={25} />
+                                        <Image alt="메뉴" src={"/icon/menu-icon.svg"} width={25} height={25} />
                                     </div>
                                     
                                     <div style={{ margin:"5px" }}></div>
                                     <div style={{ cursor:"pointer"}}>
-                                        <Image alt="메뉴" src={"icon/Search-icon.svg"} width={25} height={25} />
+                                        <Image alt="메뉴" src={"/icon/Search-icon.svg"} width={25} height={25} />
                                     </div>
                                 </FlexContainer>
                             </FlexSection>
@@ -182,7 +182,7 @@ export default function Header() {
                                       <LanguageOptionBox>
                                         <LanguageLabel isSelected={!isLanguageSelect}>KR</LanguageLabel>
                                         <SelectDirection>
-                                          <Image src={"/icon/icon-셀렉트_down.webp"} width={12} height={9} alt="down" />
+                                          <Image src={"/icon/icon_select_down.webp"} width={12} height={9} alt="down" />
                                         </SelectDirection>
                                       </LanguageOptionBox>
                                     }
@@ -192,7 +192,7 @@ export default function Header() {
                                         {
                                           isLanguageSelect && 
                                           <SelectDirection>
-                                            <Image src={"/icon/icon-셀렉트_up.svg"} width={12} height={20} alt="down" />
+                                            <Image src={"/icon/icon_select_up.svg"} width={12} height={20} alt="down" />
                                           </SelectDirection>
                                         }
                                         </div>
@@ -206,13 +206,13 @@ export default function Header() {
                             </FlexSection>
                             <FlexSection flex={0.7}>
                                 <FlexContainer>
-                                    <Image style={{ marginLeft:"10px",marginTop: "4px" }} alt="메뉴" src={"icon/my-login.svg"} width={40} height={40} />   
+                                    <Image style={{ marginLeft:"10px",marginTop: "4px" }} alt="메뉴" src={"/icon/my-login.svg"} width={40} height={40} />   
                                 </FlexContainer>
                             </FlexSection>
                             <FlexSection flex={0.7}>
                                 <FlexContainer style={{ pointerEvents: isToggled ? "none" : "inherit" }}>
                                     <div onMouseOver={() => setIsShowHelpOption(true)}>
-                                        <Image onClick={()=>setIsShowHelpOption((prev) => !prev)} style={{marginTop: "4px" }} alt="메뉴" src={"icon/고객센터.svg"} width={40} height={40} />
+                                        <Image onClick={()=>setIsShowHelpOption((prev) => !prev)} style={{marginTop: "4px" }} alt="메뉴" src={"/icon/customcenter.svg"} width={40} height={40} />
                                     </div>
                                     <SelectHelpOptionBox id="select-help-option-box">
                                       <SelectBox  onClick={() => setIsShowHelpOption((prev) => !prev)}>
@@ -228,7 +228,7 @@ export default function Header() {
                             </FlexSection>
                             <FlexSection flex={0.7}>
                                 <FlexContainer>
-                                    <Image style={{ marginRight:"10px",marginTop: "4px" }} alt="메뉴" src={"/icon/장바구니.png"} width={40} height={40} />
+                                    <Image style={{ marginRight:"10px",marginTop: "4px" }} alt="메뉴" src={"/icon/basket.png"} width={40} height={40} />
                                 </FlexContainer>
                             </FlexSection>
                             <FlexSection flex={0.3}></FlexSection>

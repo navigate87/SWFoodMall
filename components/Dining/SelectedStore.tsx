@@ -27,7 +27,7 @@ export default function SelectedStore({id, store, onSelect, isSelected}: {id:num
     return (
         <Store key={store.code} onClick={selectStore} style={{background: isSelected ? "#f84040" : "#FFF"}}>
             <SelectedVisibleFilter style={{ display: isSelected ? "block" : "none"  }}>
-                <Image style={{  margin: "13px" }} src={"/icon/그룹 21275.svg"} width={48} height={48} alt="스토어체크" />
+                <Image style={{  margin: "13px" }} src={"/icon/group_21275.svg"} width={48} height={48} alt="스토어체크" />
             </SelectedVisibleFilter>
             <StoreImg src={store.src} alt={store.alt} width={88} height={75} />
             <StoreTextBox style={{ color: isSelected ? "#FFF":"#000" }}>{store.alt}</StoreTextBox>

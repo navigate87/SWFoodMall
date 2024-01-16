@@ -92,10 +92,10 @@ export default function Header() {
             <NavTabUl>
               <NavTabUlLi>Online/Store</NavTabUlLi>
               <NavTabUlLi>
-                <Image alt="메뉴" src={"icon/menu-icon.svg"} width={25} height={25} />
+                <Image alt="메뉴" src={"/icon/menu-icon.svg"} width={25} height={25} />
               </NavTabUlLi>
               <NavTabUlLi>
-                <Image alt="메뉴" src={"icon/Search-icon.svg"} width={25} height={25} />
+                <Image alt="메뉴" src={"/icon/Search-icon.svg"} width={25} height={25} />
               </NavTabUlLi>
               <SelectBox onClick={() => setShowOptions((prev) => !prev)}>
                 <Label onMouseOver={() => setShowOptions(true)} show={!showOptions}>예약</Label>
@@ -118,7 +118,7 @@ export default function Header() {
                     <LanguageOptionBox>
                       <LanguageLabel isSelected={!isLanguageSelect}>KR</LanguageLabel>
                       <SelectDirection>
-                        <Image src={"/icon/icon-셀렉트_down.webp"} width={12} height={9} alt="down" />
+                        <Image src={"/icon/icon_select_down.webp"} width={12} height={9} alt="down" />
                       </SelectDirection>
                     </LanguageOptionBox>
                   }
@@ -141,11 +141,11 @@ export default function Header() {
                 </SelectLanguageBox>
               </ProfileUlLi>
               <ProfileUlLi>
-                <Image style={{ marginTop: "15%" }} alt="메뉴" src={"icon/my-login.svg"} width={40} height={40} />
+                <Image style={{ marginTop: "15%" }} alt="메뉴" src={"/icon/my-login.svg"} width={40} height={40} />
               </ProfileUlLi>
               <ProfileUlLi>
                 <div onMouseOver={() => setIsShowHelpOption(true)}>
-                  <Image onClick={()=>setIsShowHelpOption((prev) => !prev)} style={{ marginTop: "15%" }} alt="메뉴" src={"icon/고객센터.svg"} width={40} height={40} />
+                  <Image onClick={()=>setIsShowHelpOption((prev) => !prev)} style={{ marginTop: "15%" }} alt="메뉴" src={"/icon/customcenter.svg"} width={40} height={40} />
                 </div>
                 <SelectHelpOptionBox id="select-help-option-box">
                   <SelectBox  onClick={() => setIsShowHelpOption((prev) => !prev)}>
@@ -159,7 +159,7 @@ export default function Header() {
                 </SelectHelpOptionBox>
               </ProfileUlLi>
               <ProfileUlLi>
-                <Image style={{ marginTop: "15%" }} alt="메뉴" src={"/icon/장바구니.png"} width={40} height={40} />
+                <Image style={{ marginTop: "15%" }} alt="메뉴" src={"/icon/basket.png"} width={40} height={40} />
               </ProfileUlLi>
             </ProfileUl>
           </Profile>

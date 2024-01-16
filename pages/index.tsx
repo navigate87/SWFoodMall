@@ -117,7 +117,7 @@ export default function Home() {
               <EventText>
                 <div style={{ display:"flex", justifyContent:"center", alignItems:"center" }}>
                   <div style={{ marginLeft: "15px" }}>EVENT NOTICE</div>  
-                  <Image style={{ marginLeft:"10px", cursor:"pointer" }} src={"/icon/btn-더보기.svg"} alt="+" width={36} height={36} /> 
+                  <Image style={{ marginLeft:"10px", cursor:"pointer" }} src={"/icon/btn_more.svg"} alt="+" width={36} height={36} /> 
                 </div>
               </EventText>
             </EventFlexBox>
@@ -163,7 +163,7 @@ export default function Home() {
                 <Image src={"/image/tit-icon_Bell.webp"} alt="종" width={36} height={36} />
                 <div style={{ fontSize:"22px", marginLeft:"10px", fontWeight:"bold" }}>알려드려요</div>
                 <div style={{ marginLeft: "15px", cursor:"pointer" }}>
-                  <Image src={"/icon/btn-더보기.svg"} alt="+" width={36} height={36} />
+                  <Image src={"/icon/btn_more.svg"} alt="+" width={36} height={36} />
                 </div>  
               </div>
             </div>
@@ -194,15 +194,15 @@ export default function Home() {
               </div>
               <div style={{marginTop: "20px", alignItems:"center", display: "flex", justifyContent:"space-around", width:"100%", height:"70px", border: "1px solid #CCCCCC", borderRadius:"20px" ,background:"#F1F1F1"}}>
                 <div style={{ display:"flex", alignItems:"center"}}>
-                  <Image src={"/icon/그룹 490.svg"} width={40} height={40} alt="icon490" />
+                  <Image src={"/icon/group_490.svg"} width={40} height={40} alt="icon490" />
                   <div style={{fontSize: "14px", marginLeft:"10px", fontWeight:"bold"}}>자주묻는질문</div>
                 </div>
                 <div style={{ display:"flex", alignItems:"center"}}>
-                  <Image src={"/icon/그룹 491.svg"} width={40} height={40} alt="icon491" />
+                  <Image src={"/icon/group_491.svg"} width={40} height={40} alt="icon491" />
                   <div style={{fontSize: "14px", marginLeft:"10px", fontWeight:"bold"}}>오시는길</div>
                 </div>
                 <div style={{ display:"flex", alignItems:"center"}}>
-                  <Image src={"/icon/그룹 492.svg"} width={40} height={40} alt="icon492" />
+                  <Image src={"/icon/group_492.svg"} width={40} height={40} alt="icon492" />
                   <div style={{fontSize: "14px", marginLeft:"10px", fontWeight:"bold"}}>연락처</div>
                 </div>
               </div>

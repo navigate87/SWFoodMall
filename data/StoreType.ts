@@ -6,27 +6,27 @@ export interface Stores  {
 
 export const StoreData: Stores[] = [
     {
-        src: '/image/성원정.png',
+        src: '/image/swj.png',
         alt: '성원정',
         code: "ODP73",
     },
     {
-        src: '/image/아뜰리에.png',
+        src: '/image/attelier.png',
         alt: '아뜰리에',
         code: "ODP71",
     },
     {
-        src: '/image/레스토랑.png',
+        src: '/image/restaurant.png',
         alt: '레스토랑',
         code: "ODP94",
     },
     {
-        src: '/image/뷔페.png',
+        src: '/image/buffet.png',
         alt: '뷔페',
         code: "ODP93",
     },
     {
-        src: '/image/스시노칸도.png',
+        src: '/image/sushi.png',
         alt: '스시노칸도',
         code: "ODP83",
     },
