@@ -16,10 +16,6 @@ const GuideItem: React.FC<GuideItemProps> = ({ data, isVisible, onClick, isShimm
     const [isOverlayVisible, setIsOverlayVisible] = useState(isVisible);
 
     useEffect(() => {
-      console.log("isShimmering의 값 : ",isShimmering)
-    },[isShimmering])
-
-    useEffect(() => {
     if (!isVisible) {
           // isVisible이 false가 되면 애니메이션 후에 숨김 처리
           const timer = setTimeout(() => {

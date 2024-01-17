@@ -32,6 +32,7 @@ export const FlexDiv = styled.div<FlexPropData>`
     background: ${({ background }) => background};
     border-radius: ${({ borderRadius }) => borderRadius}px;
     margin-right: ${({ marginRight }) => marginRight}px;
+    flex-wrap: ${({ flexWrap }) => flexWrap};
 `;
 
 export const FlexN = styled.div<{flex?:number}>`

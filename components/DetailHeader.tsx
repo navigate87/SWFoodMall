@@ -192,7 +192,7 @@ export default function Header() {
                                         {
                                           isLanguageSelect && 
                                           <SelectDirection>
-                                            <Image src={"/icon/icon_select_up.svg"} width={12} height={20} alt="down" />
+                                            <Image src={"/icon/icon_select_up.svg"} width={12} height={20} alt="up" />
                                           </SelectDirection>
                                         }
                                         </div>

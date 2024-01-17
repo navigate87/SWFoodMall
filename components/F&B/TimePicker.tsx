@@ -118,10 +118,6 @@ const TimePicker: React.FC = () => {
         }
     };
 
-    useEffect(() => {
-      console.log("현재 시간",getCurrentTime());
-    })
-  
     return (
       <>
         <PickerSection>

@@ -64,7 +64,6 @@ export const reservedDate = async ( data: FnbReservedDateRequest ) : Promise<Fnb
   const response = await axios.post<FnbReservedDateResponse>(`${API_SERVER_BASE_URL}${RESERVATION_FB_DATE_CHECK}`, data, {
       withCredentials: true,
   });
-  console.log("여기에 무슨값 받아옴?",response.data)
   return response.data;
 }
 

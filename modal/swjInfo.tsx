@@ -20,10 +20,6 @@ export default function SwjInfoPopup({selected, closePopup} : {selected: string,
         }
     }
 
-    useEffect(() => {
-        console.log(selectedMenu);
-    })
-
     return (
         <Container width={selectedMenu === '매장 안내' ? 468 : 420} isVisible={true}>
             <MenuBox>

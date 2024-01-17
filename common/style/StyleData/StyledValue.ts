@@ -10,5 +10,6 @@ export interface FlexPropData {
     background?:string;
     borderRadius?:number;
     marginRight?:number;
+    flexWrap?:string;
 }
 

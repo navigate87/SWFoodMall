@@ -208,19 +208,6 @@ export default function ConfirmGroupModal() {
     const tempFacilityTwoName = facilityTwoName;
  
     combineAndFormatFacilities(tempFacilityOneName, tempFacilityTwoName);
-
-    // const data:FnbReservedDateRequest = {
-    //   order_date: "202312",
-    // }
-    // mutateReservedDate(data, {
-    //   onSuccess: () => {
-    //     console.log("데이터 뭐 받아와요?");
-    //   },
-    //   onError: () => {
-    //     alert('못불러옴')
-    //   }
-    // });
-    
   })
   
   return (
