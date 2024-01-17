@@ -64,7 +64,7 @@ export default function HallInfoPopup() {
                     </div>
                     <FlexCount flex={3}>
                         <FlexDiv justifyContent="center">
-                            <Image src={"/image/Fnb popup img.webp"} alt="중규모 연회장" width={1020} height={440} />
+                            <Image src={"/image/Fnb_popup_img.webp"} alt="중규모 연회장" width={1020} height={440} />
                         </FlexDiv>
                         <FlexDiv>
                             <FontDiv size={38} weight="bold" margin={40}>{selectedHallData?.title}</FontDiv>
