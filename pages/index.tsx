@@ -79,9 +79,14 @@ export default function Home() {
         <meta name="description" content="성원푸드" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div style={{ display: "flex", justifyContent: "center",  margin: "-60px" }}>
-        <Image style={{ position:"absolute", zIndex:-2 }} src={"/image/sub-fullbanner-img-galbi.webp"} alt="BG" width={1920} height={936}/>
-        <Image src={"/image/main-foodmall-img.png"} width={1330} height={936} alt="main" />
+      <div style={{ display: "flex", marginTop: "-60px", justifyContent:"center", position:"relative"  }}>
+        <Image style={{ position:"absolute", zIndex:-2, }} src={"/image/sub-fullbanner-img-galbi.webp"} alt="BG" layout="fill"  />
+        <Image 
+          src={"/image/main-foodmall-img.png"} 
+          width={1330} 
+          height={936} 
+          alt="main" 
+        />
          <GuideBox>  
           {
             GuideDataProps.map((item) => (
@@ -110,44 +115,70 @@ export default function Home() {
         
         {isAnyOverlayActive && <GuideBackground onClick={closeAllOverlays}/>}
       </div>
-      
-      <Container>
-          <EventBox>
-            <EventFlexBox>
-              <EventText>
-                <div style={{ display:"flex", justifyContent:"center", alignItems:"center" }}>
-                  <div style={{ marginLeft: "15px" }}>EVENT NOTICE</div>  
-                  <Image style={{ marginLeft:"10px", cursor:"pointer" }} src={"/icon/btn_more.svg"} alt="+" width={36} height={36} /> 
-                </div>
-              </EventText>
-            </EventFlexBox>
-            <EventFlexBox>
-              <EventListBox>
-                <EventListCircle>NEW</EventListCircle>
-                <EventListTextBox>
-                  <EventTextDate>[성원정] 2023.06.16 ~ 2023.08.31</EventTextDate>
-                  <div>전복삼계탕 시즌 메뉴 예약</div>
-                </EventListTextBox>
-              </EventListBox>
-              <EventListBox>
-                <EventListCircle>EVENT</EventListCircle>
-                <EventListTextBox>
-                  <EventTextDate>[성원정] 2023.06.16 ~ 2023.08.31</EventTextDate>
-                  <div>전복삼계탕 시즌 메뉴 예약</div>
-                </EventListTextBox>
-              </EventListBox>
-              <EventListBox>
-                <EventListCircle>신제품</EventListCircle>
-                <EventListTextBox>
-                  <EventTextDate>[성원정] 2023.06.16 ~ 2023.08.31</EventTextDate>
-                  <div>전복삼계탕 시즌 메뉴 예약</div>
-                </EventListTextBox>
-              </EventListBox>
-            </EventFlexBox>
-          </EventBox>
-        </Container>
-      <Main>
-        
+
+      <div style={{ display:"flex", justifyContent:"center", marginTop:"-3.5%", position:"relative" }}>
+        <div style={{ width:"1574px", height:"204px", maxWidth:"auto", borderRadius:"102px", backgroundColor:"#f7f7f7", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column" }}>
+          <div style={{ display:"flex", justifyContent:"center", alignItems:"center", marginBottom:"30px" }}>
+            <div style={{ width:"204px", height:"41px", fontSize:"30px", fontWeight:"500", color:"#22201f", fontFamily:"Manrope", textAlign:"center", lineHeight:"47px" }}>EVENT NOTICE</div>
+            <div style={{ cursor:"pointer"}}>
+              <Image  src={"/icon/btn_more.svg"} alt="+" width={36} height={36} /> 
+            </div>
+          </div>
+          <div style={{ display:"flex", justifyContent:"center", marginBottom:"30px", gap:"24px"}}>
+            <div style={{ marginRight:"20px" }}>
+              <div style={{ width:"442px", height:"72px", display:"flex", alignItems:"center", borderRadius:"36px", border:"1px solid #dcdcdc", backgroundColor:"#ececec" }}>
+                  <div style={{ width:"60px", height:"60px", borderRadius:"36px", backgroundColor:"#343434", marginLeft:"6px", marginRight:"22px", display:"flex", alignItems:"center", justifyContent:"center"  }}>
+                    <div style={{ width:"46px", height:"27px", fontFamily:"Manrope", fontSize:"20px", fontWeight:"bold", color:"#FFF", textAlign:"center", lineHeight:"30px" }}>NEW</div>
+                  </div>
+                  <div style={{ display:"flex", flexDirection:"column", }}>
+                    <div style={{ display:"flex", alignItems:"center" }}>
+                      <div style={{ fontFamily:"SourceHanSans", width:"61px", height:"24px", color:"#888", letterSpacing:"-0.32px", fontSize:"16px",  lineHeight:"31px" }}>[성원정]</div>
+                      <div style={{ fontFamily:"SourceHanSans", width:"174px", height:"24px", color:"#888", letterSpacing:"-0.32px", fontSize:"16px",  lineHeight:"31px" }}>2023.06.16 ~ 2023.08.31</div>
+                    </div>
+                    <div style={{ display:"flex", justifyContent:"flex-start" }}>
+                      <div style={{ fontFamily:"SourceHanSans", fontSize:"20px", fontWeight:"500", width:"207px", height:"29px", letterSpacing:"-0.4px", lineHeight:"33px" }}>전복삼계탕 시즌메뉴 예약</div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            
+            <div style={{ marginRight:"20px" }}>
+              <div style={{ width:"442px", height:"72px", display:"flex", alignItems:"center", borderRadius:"36px", border:"1px solid #dcdcdc", backgroundColor:"#ececec" }}>
+                  <div style={{ width:"60px", height:"60px", borderRadius:"36px", backgroundColor:"#343434", marginLeft:"6px", marginRight:"22px", display:"flex", alignItems:"center", justifyContent:"center"  }}>
+                    <div style={{ width:"50px", height:"22px", fontFamily:"Manrope", fontSize:"16px", fontWeight:"bold", color:"#FFF", textAlign:"center", lineHeight:"28px" }}>EVENT</div>
+                  </div>
+                  <div style={{ display:"flex", flexDirection:"column", }}>
+                    <div style={{ display:"flex", alignItems:"center" }}>
+                      <div style={{ fontFamily:"SourceHanSans", width:"61px", height:"24px", color:"#888", letterSpacing:"-0.32px", fontSize:"16px",  lineHeight:"31px" }}>[성원정]</div>
+                      <div style={{ fontFamily:"SourceHanSans", width:"174px", height:"24px", color:"#888", letterSpacing:"-0.32px", fontSize:"16px",  lineHeight:"31px" }}>2023.06.16 ~ 2023.08.31</div>
+                    </div>
+                    <div style={{ display:"flex", justifyContent:"flex-start" }}>
+                      <div style={{ fontFamily:"SourceHanSans", fontSize:"20px", fontWeight:"500", width:"207px", height:"29px", letterSpacing:"-0.4px", lineHeight:"33px" }}>전복삼계탕 시즌메뉴 예약</div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div style={{ marginRight:"20px" }}>
+              <div style={{ width:"442px", height:"72px", display:"flex", alignItems:"center", borderRadius:"36px", border:"1px solid #dcdcdc", backgroundColor:"#ececec" }}>
+                  <div style={{ width:"60px", height:"60px", borderRadius:"36px", backgroundColor:"#343434", marginLeft:"6px", marginRight:"22px", display:"flex", alignItems:"center", justifyContent:"center"  }}>
+                    <div style={{ width:"48px", height:"21px", fontFamily:"Manrope", fontSize:"16px", fontWeight:"bold", color:"#FFF", textAlign:"center", lineHeight:"24px" }}>신제품</div>
+                  </div>
+                  <div style={{ display:"flex", flexDirection:"column", }}>
+                    <div style={{ display:"flex", alignItems:"center" }}>
+                      <div style={{ fontFamily:"SourceHanSans", width:"61px", height:"24px", color:"#888", letterSpacing:"-0.32px", fontSize:"16px",  lineHeight:"31px" }}>[성원정]</div>
+                      <div style={{ fontFamily:"SourceHanSans", width:"174px", height:"24px", color:"#888", letterSpacing:"-0.32px", fontSize:"16px",  lineHeight:"31px" }}>2023.06.16 ~ 2023.08.31</div>
+                    </div>
+                    <div style={{ display:"flex", justifyContent:"flex-start" }}>
+                      <div style={{ fontFamily:"SourceHanSans", fontSize:"20px", fontWeight:"500", width:"207px", height:"29px", letterSpacing:"-0.4px", lineHeight:"33px" }}>전복삼계탕 시즌메뉴 예약</div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+          
+      <Main>  
         <div>
           <CustomTextH1 weight="lighter" fontSize="25" color="#F84040" style={{margin: "20px"}}>NOW SNS</CustomTextH1>
           <CustomTextH1 weight="bold" fontSize="35">인스타그램에 놀러오세요!</CustomTextH1>
@@ -156,10 +187,10 @@ export default function Home() {
             <SlideShow images={SlideData} />
           </div>       
         </div>
-        <div style={{display:"flex", margin: "20px"}}>
+        <div style={{ display:"flex", margin: "20px" }}>
           <div style={{flex: 1}}>
             <div style={{ width:"100%" }}>
-              <div style={{ display:"flex", paddingLeft:"410px", height: "40px", alignItems:"center" }}>
+              <div style={{ display:"flex", height: "40px", alignItems:"center" }}>
                 <Image src={"/image/tit-icon_Bell.webp"} alt="종" width={36} height={36} />
                 <div style={{ fontSize:"22px", marginLeft:"10px", fontWeight:"bold" }}>알려드려요</div>
                 <div style={{ marginLeft: "15px", cursor:"pointer" }}>
@@ -255,70 +286,6 @@ const CustomText = styled.div<{
   line-height: 30px;
 `;
 
-const Container = styled.div`
-  margin-top: -4%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-`;
-
-const EventBox = styled.div`
-  border-radius: 125px;
-  background:#f8f8f8;
-  height: 15vh;
-  width: 80%;
-  position: relative;
-`;
-
-const EventFlexBox = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-`;
-
-const EventText = styled.div`
-  font-size: 25px;
-  margin-top: 20px;
-`;
-
-const EventListBox = styled.div`
-  border-radius: 125px;
-  margin-top: 20px;
-  width: 22%;
-  height: 50px;
-  background: #ECECEC;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const EventListCircle = styled.div`
-  border-radius: 50%;
-  height: 85%;
-  width: 12%;
-  background: #343434;
-  color: #FFF;
-  margin-left: 7px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const EventListTextBox = styled.div`
-  margin: 0 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const EventTextDate = styled.div`
-  color: #888888;
-  font-size:13px;
-  //margin-right: 5px;
-  margin-bottom: 5px;
-`;
 
 const GuideBox = styled.div`
   height: 91.3%;
@@ -332,6 +299,23 @@ const GuideBackground = styled.div`
   top: 0; left: 0; bottom: 0; right: 0;
   background: rgba(0, 0, 0, 0.8);
   z-index: 300;
+`;
+
+
+const EventFlexBox_1 = styled.div`
+  display:flex;
+  justify-content:center;
+  margin-top:-3.5%;
+  position:relative;
+`;
+
+const EventBox_1 = styled.div`
+  width:80%;
+  height:204px;
+  max-width:auto;
+  border-radius:102px; 
+  background-color:"#ededed"
+
 `;
 
 
