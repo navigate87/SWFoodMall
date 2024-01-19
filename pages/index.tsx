@@ -179,69 +179,89 @@ export default function Home() {
       </div>
           
       <Main>  
-        <div>
+        {/* <div>
           <CustomTextH1 weight="lighter" fontSize="25" color="#F84040" style={{margin: "20px"}}>NOW SNS</CustomTextH1>
           <CustomTextH1 weight="bold" fontSize="35">인스타그램에 놀러오세요!</CustomTextH1>
           <CustomTextH2 weight="lighter" fontSize="14" color="#B2B2B2" style={{margin: "10px"}}>@sungwon_foodmall</CustomTextH2>    
-          <div style={{ margin: "50px auto", marginBottom: "50px", boxSizing: "border-box" }}>
+          <div style={{ margin: "50px 0", marginBottom: "50px", boxSizing: "border-box" }}>
             <SlideShow images={SlideData} />
           </div>       
-        </div>
+        </div> */}
 
-        
-        <div style={{ display:"flex", margin: "20px" }}>
-          <div style={{flex: 1}}>
-            <div style={{ width:"100%" }}>
-              <div style={{ display:"flex", paddingLeft:"410px", height: "40px", alignItems:"center" }}>
-                <Image src={"/image/tit-icon_Bell.webp"} alt="종" width={36} height={36} />
-                <div style={{ fontSize:"22px", marginLeft:"10px", fontWeight:"bold" }}>알려드려요</div>
-                <div style={{ marginLeft: "15px", cursor:"pointer" }}>
-                  <Image src={"/icon/btn_more.svg"} alt="+" width={36} height={36} />
+        <div style={{ display:"flex", justifyContent:"center", marginTop:"80px" }}>
+          <div style={{ width: "1260px", display:"flex" }}>
+            <div style={{ flex:1 }}>
+              <div style={{ display:"flex", justifyContent:"flex-start" }}>
+                <div>
+                  <div style={{ width:"265px", height:"62px", display:"flex", alignItems:"center" }}>
+                    <Image src={"/image/tit-icon_Bell.webp"} alt="종" width={62} height={62} />
+                    <div style={{ width:"127px", height:"40px", lineHeight:"44px", fontSize:"28px", marginLeft:"8px",  fontWeight:"bold", letterSpacing:"-0.56px", color:"#22201f", fontFamily:"SourceHanSans" }}>알려드려요</div>
+                    <div style={{ marginLeft: "5%", cursor:"pointer" }}>
+                    <Image src={"/icon/btn_more.svg"} alt="+" width={54} height={54} />
+                  </div>
+                </div>
+                
+                <div style={{ marginTop:"12px" }}>
+                  <div style={{ display:"flex", alignItems:"flex-start", flexDirection:"column" }}>
+                    <div>
+                      <div style={{ display:"flex", alignItems:"center", justifyContent:"center" }}>
+                        <div style={{ marginRight:"3%" }}>
+                          <Image  src={"/icon/point_59.svg"} alt="point" width={5} height={5} />
+                        </div>
+                        <div style={{ width:"400px", height:"24px",lineHeight:"30.5px", fontSize:"16px", textAlign:"left", letterSpacing:"-0.32px" ,color:"#22201f", fontFamily:"SourceHanSans" }}>2023 현충일 운영안내</div>
+                      </div>
+                    </div>
+                    <div style={{ margin:"10px" }}></div>
+                    <div>
+                      <div style={{ display:"flex", alignItems:"center", justifyContent:"center" }}>
+                        <div style={{ marginRight:"3%" }}>
+                          <Image  src={"/icon/point_59.svg"} alt="point" width={5} height={5} />
+                        </div>
+                        <div style={{ width:"400px", height:"24px",lineHeight:"30.5px", fontSize:"16px", textAlign:"left", letterSpacing:"-0.32px" ,color:"#22201f", fontFamily:"SourceHanSans" }}>2023 부처님오신날 대체휴일 영업안내</div>
+                      </div>
+                    </div>
+                    <div style={{ margin:"10px" }}></div>
+                    <div>
+                      <div style={{ display:"flex", alignItems:"center", justifyContent:"center" }}>
+                        <div style={{ marginRight:"3%" }}>
+                          <Image  src={"/icon/point_59.svg"} alt="point" width={5} height={5} />
+                        </div>
+                        <div style={{ width:"400px", height:"24px",lineHeight:"30.5px", fontSize:"16px", textAlign:"left", letterSpacing:"-0.32px" ,color:"#22201f", fontFamily:"SourceHanSans" }}>2023년 어린이날 영업안내 </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>  
+                </div>
+              </div>
+              
+            </div>
+            <div style={{ flex:1 }}>
+            <div style={{display:"flex", justifyContent: "center", alignItems:"center", flexDirection: "column"}}>
+              <div style={{display: "flex", justifyContent: "flex-start", alignItems:"center", fontWeight:"bold", width: "100%"}}>
+                <Image src={"/image/tit-icon_service.webp"} alt="서비스" width={62} height={62} />
+                <div style={{ width:"127px", height:"40px", fontSize: "28px", marginLeft:"4px", fontWeight:"bold", lineHeight:"40px", fontFamily:"SourceHanSans" }}>고객서비스</div>
+              </div>
+              <div style={{marginTop: "22px", alignItems:"center", display: "flex", justifyContent:"space-evenly", width:"617px", height:"92px", border: "1px solid #CCCCCC", borderRadius:"18px" ,background:"#f7f7f7"}}>
+                <div style={{ display:"flex", alignItems:"center"}}>
+                  <Image src={"/icon/group_490.svg"} width={56} height={56} alt="icon490" />
+                  <div style={{fontSize: "19px", marginLeft:"10px", fontWeight:"bold", color:"#22201f", fontFamily:"SourceHanSans"}}>자주묻는질문</div>
+                </div>
+                <div style={{ display:"flex", alignItems:"center"}}>
+                  <Image src={"/icon/group_491.svg"} width={56} height={56} alt="icon491" />
+                  <div style={{fontSize: "19px", marginLeft:"10px", fontWeight:"bold", color:"#22201f", fontFamily:"SourceHanSans"}}>오시는길</div>
+                </div>
+                <div style={{ display:"flex", alignItems:"center"}}>
+                  <Image src={"/icon/group_492.svg"} width={56} height={56} alt="icon492" />
+                  <div style={{fontSize: "19px", marginLeft:"10px", fontWeight:"bold", color:"#22201f", fontFamily:"SourceHanSans"}}>연락처</div>
+                </div>
               </div>
             </div>
-            <div style={{ display:"flex", flexDirection:"column", margin:"10px" }}>
-              <div style={{ flex:1 }}>
-                <div style={{ paddingLeft: "390px" }}>
-                  <div style={{margin:"5px", textAlign:"left", height:"20px", fontSize:"13px" }}>∙ 2023 현충일 운영안내</div>
-                </div>
-              </div>
-              <div style={{ flex:1 }}>
-                <div style={{ paddingLeft: "390px" }}>
-                  <div style={{margin:"5px", textAlign:"left", height:"20px", fontSize:"13px" }}>∙ 2023 부처님오신날 대체휴일 영업안내</div>
-                </div>
-              </div>
-              <div style={{ flex:1 }}>
-                <div style={{ paddingLeft: "390px" }}>
-                  <div style={{margin:"5px", textAlign:"left", height:"20px", fontSize:"13px" }}>∙ 2023 어린이날 영업안내</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div style={{flex: 1}}>
-            <div style={{display:"flex", justifyContent: "center",width: "57%", alignItems:"center", flexDirection: "column", margin:"3px"}}>
-              <div style={{display: "flex", justifyContent: "flex-start",alignItems:"center", fontWeight:"bold", width: "100%"}}>
-                <Image src={"/image/tit-icon_service.webp"} alt="서비스" width={36} height={36} />
-                <div style={{ fontSize: "22px", marginLeft:"10px", fontWeight:"bold" }}>고객서비스</div>
-              </div>
-              <div style={{marginTop: "20px", alignItems:"center", display: "flex", justifyContent:"space-around", width:"100%", height:"70px", border: "1px solid #CCCCCC", borderRadius:"20px" ,background:"#F1F1F1"}}>
-                <div style={{ display:"flex", alignItems:"center"}}>
-                  <Image src={"/icon/group_490.svg"} width={40} height={40} alt="icon490" />
-                  <div style={{fontSize: "14px", marginLeft:"10px", fontWeight:"bold"}}>자주묻는질문</div>
-                </div>
-                <div style={{ display:"flex", alignItems:"center"}}>
-                  <Image src={"/icon/group_491.svg"} width={40} height={40} alt="icon491" />
-                  <div style={{fontSize: "14px", marginLeft:"10px", fontWeight:"bold"}}>오시는길</div>
-                </div>
-                <div style={{ display:"flex", alignItems:"center"}}>
-                  <Image src={"/icon/group_492.svg"} width={40} height={40} alt="icon492" />
-                  <div style={{fontSize: "14px", marginLeft:"10px", fontWeight:"bold"}}>연락처</div>
-                </div>
-              </div>
+              
             </div>
           </div>
-        </div>
+        </div>  
+
+        <div style={{ marginTop: "100px" }}></div>
       </Main>
       
     </Layout>
