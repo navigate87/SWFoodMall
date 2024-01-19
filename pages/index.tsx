@@ -187,10 +187,12 @@ export default function Home() {
             <SlideShow images={SlideData} />
           </div>       
         </div>
+
+        
         <div style={{ display:"flex", margin: "20px" }}>
           <div style={{flex: 1}}>
             <div style={{ width:"100%" }}>
-              <div style={{ display:"flex", height: "40px", alignItems:"center" }}>
+              <div style={{ display:"flex", paddingLeft:"410px", height: "40px", alignItems:"center" }}>
                 <Image src={"/image/tit-icon_Bell.webp"} alt="종" width={36} height={36} />
                 <div style={{ fontSize:"22px", marginLeft:"10px", fontWeight:"bold" }}>알려드려요</div>
                 <div style={{ marginLeft: "15px", cursor:"pointer" }}>
