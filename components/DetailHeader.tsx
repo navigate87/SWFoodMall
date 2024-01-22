@@ -175,6 +175,7 @@ export default function Header() {
                         <FlexContainer>
                             <FlexSection flex={1}></FlexSection>
                             <FlexSection flex={1}></FlexSection>
+                            <FlexSection flex={1}></FlexSection>
                             <FlexSection flex={0.5}>
                                 <SelectLanguageBox id="select-language-box" onClick={() => setIsLanguageSelect((prev) => !prev)} style={{ pointerEvents: isToggled ? "none" : "inherit" }}>
                                     {

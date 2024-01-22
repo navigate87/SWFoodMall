@@ -7,6 +7,8 @@ import ConfirmModal from "@/modal/confirmReservation";
 import { useEffect, useState } from "react";
 import GroupReservation from "@/modal/FnBGroupReserve";
 import ConfirmGroupModal from "@/modal/confirmGroupReservation";
+import {  } from "@mui/material";
+import CustomizedSwitches from "./MaterialUISwitch";
 
 type show = {
   show?:boolean;
@@ -86,16 +88,18 @@ export default function Header() {
       <Container>
         <Section>
           <ImgBox>
-            <Image src="/image/bi.png" alt="swfood" width={52} height={32} />
+            <Image src="/image/bi.png" alt="swfood" width={72} height={44} />
           </ImgBox>
           <NavTab>
             <NavTabUl>
-              <NavTabUlLi>Online/Store</NavTabUlLi>
               <NavTabUlLi>
-                <Image alt="메뉴" src={"/icon/menu-icon.svg"} width={25} height={25} />
+                <CustomizedSwitches />
               </NavTabUlLi>
               <NavTabUlLi>
-                <Image alt="메뉴" src={"/icon/Search-icon.svg"} width={25} height={25} />
+                <Image alt="메뉴" src={"/icon/menu-icon.svg"} width={32} height={32} />
+              </NavTabUlLi>
+              <NavTabUlLi>
+                <Image alt="메뉴" src={"/icon/Search-icon.svg"} width={32} height={32} />
               </NavTabUlLi>
               <SelectBox onClick={() => setShowOptions((prev) => !prev)}>
                 <Label onMouseOver={() => setShowOptions(true)} show={!showOptions}>예약</Label>
@@ -181,12 +185,12 @@ const Container = styled.div`
 `; 
 
 const Section = styled.div`
-  height: 60px;
+  height: 80px;
   margin: 0 auto;
   width: 100%;
   position: fixed;
   display: flex;
-  background-color: rgba(71,71,71,0.5);
+  background-color: rgba(71,71,71,0.7);
   justify-content: space-between;
   align-items: center;
   z-index: 40;
