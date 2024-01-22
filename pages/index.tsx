@@ -185,6 +185,12 @@ export default function Home() {
           <div style={{ width:"190px", height:"27px", fontFamily:"Manrope", fontSize:"20px", fontWeight:"500", letterSpacing:"-0.6px", color:"#b2b2b2", lineHeight:"30px", textAlign:"center" }}>@sungwon_foodmall</div>   
         </div>
 
+       <div style={{ marginTop:"57px" }}>
+          <SlideShow images={SlideData} />
+       </div>
+          
+        
+
         <div style={{ display:"flex", justifyContent:"center", marginTop:"80px" }}>
           <div style={{ width: "1260px", display:"flex" }}>
             <div style={{ flex:1 }}>
@@ -270,6 +276,7 @@ const Main = styled.div`
   justify-content: center;
   flex-direction: column;
   text-align: center;
+  align-items: center;
   width: 100%;
 `;
 
