@@ -5,11 +5,11 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
-  width: 170, // 스위치의 전체 너비를 171px로 설정
+  width: 171, 
   height: 32,
   padding: 1.5,
   '& .MuiSwitch-switchBase': {
-    padding:1,
+    padding:1.5,
     
     '&.Mui-checked': {
       transform: 'translateX(81px)',
@@ -17,9 +17,12 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
         '&::after': {
           content: '"Store"', // 체크된 상태에서는 'Store'로 표시
           position: 'absolute',
+          fontSize: '18px',
+          fontWeight:"bold",
+          fontFamily:"Manrope",
           color: '#fff',
           left:'50%',
-          top:'50%',
+          top:'56%',
           transform: 'translate(-50%, -50%)',
         },
       },
@@ -35,8 +38,11 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
         position: 'absolute',
         color: '#fff',
         left:'50%',
-        top:'50%',
+        top:'58%',
         transform: 'translate(-50%, -50%)',
+        fontSize:"18px",
+        fontWeight:"bold",
+        fontFamily:"Manrope"
       },
     },
   },
@@ -56,22 +62,28 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     borderRadius: "16px",
     backgroundColor:"rgba(71,71,71, 0.3)",
     border:"2px solid rgba(255,255,255,0.2)",
-    width: 170,
+    width: 171,
     '&::before, &::after': {
       content: '""',
       position: 'absolute',
-      top: '50%',
+      top: '55%',
       transform: 'translateY(-50%)',
       
     },
     '&::before': {
       left: 20,
-      color:"#fff",
+      fontSize:"18px",
+      fontWeight:"500",
+      fontFamily:"Manrope",
+      color:"#b2b2b2",
       content: '"Online"',
     },
     '&::after': {
       right: 20,
-      color:"#fff",
+      fontSize:"18px",
+      fontWeight:"500",
+      fontFamily:"Manrope",
+      color:"#b2b2b2",
       content: '"Store"',
     },
   },

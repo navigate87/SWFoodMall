@@ -179,14 +179,11 @@ export default function Home() {
       </div>
           
       <Main>  
-        {/* <div>
-          <CustomTextH1 weight="lighter" fontSize="25" color="#F84040" style={{margin: "20px"}}>NOW SNS</CustomTextH1>
-          <CustomTextH1 weight="bold" fontSize="35">인스타그램에 놀러오세요!</CustomTextH1>
-          <CustomTextH2 weight="lighter" fontSize="14" color="#B2B2B2" style={{margin: "10px"}}>@sungwon_foodmall</CustomTextH2>    
-          <div style={{ margin: "50px 0", marginBottom: "50px", boxSizing: "border-box" }}>
-            <SlideShow images={SlideData} />
-          </div>       
-        </div> */}
+        <div style={{ marginTop:"37px", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column" }}>
+          <div style={{ fontWeight:"300", fontSize:"28px", fontFamily:"SourceHanSans", letterSpacing:"-0.56px", color:"#F84040", width:"119px", height:"40px", lineHeight:"45px", textAlign:"center"  }}>NOW SNS</div>
+          <div style={{ width:"538px", height:"66px", letterSpacing:"-1.44px", color:"#22201f", fontFamily:"Manrope", fontSize:"48px", lineHeight:"74px", textAlign:"center" }}>인스타그램에 놀러오세요!</div>
+          <div style={{ width:"190px", height:"27px", fontFamily:"Manrope", fontSize:"20px", fontWeight:"500", letterSpacing:"-0.6px", color:"#b2b2b2", lineHeight:"30px", textAlign:"center" }}>@sungwon_foodmall</div>   
+        </div>
 
         <div style={{ display:"flex", justifyContent:"center", marginTop:"80px" }}>
           <div style={{ width: "1260px", display:"flex" }}>

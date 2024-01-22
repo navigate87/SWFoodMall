@@ -87,6 +87,92 @@ export default function Header() {
     <>
       <Container>
         <Section>
+          <div style={{ display:"flex", alignItems:"center" }}>
+            <ImgBox>
+              <Image src="/image/bi.png" alt="swfood" width={72} height={44} />
+            </ImgBox>
+            <div style={{ marginLeft:"30px" }}>
+              <CustomizedSwitches />
+            </div>
+            <div style={{ marginLeft:"5px", cursor:"pointer" }}>
+              <Image alt="메뉴" src={"/icon/menu-icon.svg"} width={32} height={32} />
+            </div>
+            <div style={{ marginLeft:"12px", cursor:"pointer" }}>
+              <Image alt="메뉴" src={"/icon/Search-icon.svg"} width={32} height={32} />
+            </div>
+            <div style={{ marginLeft:"34px" }}>
+              <SelectBox onClick={() => setShowOptions((prev) => !prev)}>
+                <Label onMouseOver={() => setShowOptions(true)} show={!showOptions}>예약</Label>
+                <SelectOptions show={showOptions}>
+                  <Option style={{cursor:"none", pointerEvents: "none", fontSize: "20px", color:"rgba(81,81,81,0.8)", fontFamily:"SourceHanSans", letterSpacing:"-0.4px",  }}>예약</Option>
+                  <Option id="dining_option" value={0}>Dining</Option>
+                  <Option id="fnb_option" value={1}>F&B</Option>
+                  <Option id="room_option" value={2}>객실</Option>
+                </SelectOptions>
+              </SelectBox>
+            </div>
+            <div style={{ }}>
+              <div style={{ fontSize:"20px", color:"#fff", fontWeight:"500", letterSpacing:"-0.4px", fontFamily:"SourceHanSans", cursor:"pointer" }}>EVENT</div>
+            </div>
+          </div>
+          <div style={{ display:"flex", alignItems:"center" }}>
+            <div style={{ marginRight:"20px" }}>
+              <SelectLanguageBox id="select-language-box" onClick={() => setIsLanguageSelect((prev) => !prev)}>
+                {
+                  !isLanguageSelect && 
+                  <LanguageOptionBox>
+                    <LanguageLabel isSelected={!isLanguageSelect}>KR</LanguageLabel>
+                    <SelectDirection>
+                      <Image src={"/icon/icon_select_down.webp"} width={12} height={10} alt="down" />
+                    </SelectDirection>
+                  </LanguageOptionBox>
+                }
+                <LanguageOptions show={isLanguageSelect}>
+                  <div style={{ display:"flex", justifyContent: "center", alignItems: "center", margin: "5px" }}>
+                    <LanguageLabel isSelected={!isLanguageSelect}>KR</LanguageLabel> 
+                    {
+                      isLanguageSelect && 
+                      <SelectDirection>
+                        <Image src={"/icon/icon_select_up.svg"} width={12} height={10} alt="up" />
+                      </SelectDirection>
+                    }
+                  </div>
+                  <div style={{ borderBottom:"1px solid #ededed", width:"70%", marginLeft: "12px", marginBottom: "3px", color:"#242424", opacity:"0.3"}}></div>
+                  <Option value={0} onClick={handleOnChangeSelectValue}>KR</Option>
+                  <Option value={1} onClick={handleOnChangeSelectValue}>EN</Option>
+                  <Option value={2} onClick={handleOnChangeSelectValue}>CN</Option>
+                  <Option value={3} onClick={handleOnChangeSelectValue}>JP</Option>
+                </LanguageOptions>
+              </SelectLanguageBox>
+            </div>
+            <div style={{ marginRight:"15px", cursor:"pointer" }}>
+              <Image style={{ marginTop: "12%" }} alt="메뉴" src={"/icon/my-login.svg"} width={58} height={58} />
+            </div>
+            <div style={{ marginRight:"15px", cursor:"pointer" }}>
+              <div onMouseOver={() => setIsShowHelpOption(true)}>
+                <Image onClick={()=>setIsShowHelpOption((prev) => !prev)} style={{ marginTop: "12%" }} alt="메뉴" src={"/icon/customcenter.svg"} width={58} height={58} />
+              </div>
+              <SelectHelpOptionBox id="select-help-option-box">
+                <SelectBox  onClick={() => setIsShowHelpOption((prev) => !prev)}>
+                  <SelectHelpOptions show={isShowHelpOption}>
+                    <Option value={0} onClick={handleOnChangeSelectValue}>이용안내</Option>
+                    <Option value={1} onClick={handleOnChangeSelectValue}>공지사항</Option>
+                    <Option value={2} onClick={handleOnChangeSelectValue}>FAQ</Option>
+                    <Option value={3} onClick={handleOnChangeSelectValue}>1:1문의</Option>
+                  </SelectHelpOptions>
+                </SelectBox>
+              </SelectHelpOptionBox>
+            </div>
+            <div style={{ marginRight:"50px", cursor:"pointer" }}>
+              <Image style={{ marginTop: "12%" }} alt="메뉴" src={"/icon/basket.png"} width={58} height={58} />
+            </div>
+          </div>
+          
+          
+        </Section>
+      </Container>
+      {/* <Container>
+        <Section>
           <ImgBox>
             <Image src="/image/bi.png" alt="swfood" width={72} height={44} />
           </ImgBox>
@@ -168,7 +254,7 @@ export default function Header() {
             </ProfileUl>
           </Profile>
         </Section>
-      </Container>
+      </Container> */}
       
       {showModal && <Reservation />} 
       {showGroupModal && <GroupReservation />}
@@ -197,7 +283,7 @@ const Section = styled.div`
 `;
 
 const ImgBox = styled.div`
-  padding-left: 20px;
+  margin-left: 50px;
 `;
 
 const NavTab = styled.div`
@@ -220,10 +306,14 @@ const NavTabUlLi = styled.li`
 
 const LanguageOptionBox = styled.div`
   border: 1px solid #fff;
-  width: 70px;
+  width: 74px;
   display: flex; 
   border-radius: 15px; 
-  height: 25px; 
+  height: 30px; 
+  color: #fff;
+  font-family: "SourceHanSans";
+  letter-spacing: -0.28px;
+  border:1px solid #e2e2e2;
   justify-content: center; 
   align-items: center;
   transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
@@ -248,8 +338,8 @@ const ProfileUlLi = styled.li`
 `;
 
 const SelectLanguageBox = styled.div`
-  width:55px;
-  height:23px; 
+  width:74px;
+  height:143px; 
   border-radius:15px; 
   display:flex; 
   justify-content:center; 
@@ -258,43 +348,50 @@ const SelectLanguageBox = styled.div`
 `;
 
 const LanguageLabel = styled.div<{isSelected:boolean}>`
-  font-size: 14px;
+  font-size: 16px;
   display: ${(isSelected) => (isSelected ? "block" : "none")};
   cursor: pointer;
+  color:"#fff";
+  margin-top:3.5px;
+  font-weight:"500";
+  font-family:"SourceHanSans";
+
 `;
 
 const SelectDirection = styled.div`
-  margin-left: 8px;
+  margin-left: 10px;
+  margin-top: 2px;
   display: ${(isSelected) => (isSelected ? "block" : "none")};
 `;
 
 const SelectBox = styled.div`
   position: relative;
-  width: 50px;
+  width: 84px;
   padding: 10px;
   border-radius: 12px;
-  align-self: center;
   cursor: pointer;  
 `;
 
 const Label = styled.label<show>`
-  font-size: 14px;
-  margin-left: 4px;
-  text-align: center;
+  font-size: 20px;
   color: white;
+  font-family: "SourceHanSans";
   cursor: pointer;
   display: ${(props) => (props.show ? "block" : "none")};
+  font-weight:500; 
+  letter-spacing:-0.4px;
+  cursor:pointer;
 `;
 
 const SelectOptions = styled.ul<show>`
   position: absolute;
   list-style: none;
-  left: 0;
+  left: -15px;
   text-align: center;
   right: 0;
-  width: 60px;
+  width: 84px;
   overflow: hidden;
-  top: -5px;
+  top: -8px;
   padding: 0;
   border-radius: 5px;
   background-color: rgba(42,42,42,0.4);
@@ -308,8 +405,8 @@ const SelectOptions = styled.ul<show>`
 
 const SelectHelpOptionBox = styled.div`
   position: absolute; 
-  right: 108px;
-  top: 60px;
+  right: 5.6%;
+  top: 90%;
 `;
 
 const SelectHelpOptions = styled.ul<show>`
@@ -318,9 +415,9 @@ const SelectHelpOptions = styled.ul<show>`
   left: 0;
   text-align: center;
   right: 0;
-  width: 60px;
+  width: 84px;
   overflow: hidden;
-  top: -5px;
+  top: 0;
   padding: 0;
   border-radius: 5px;
   background-color: rgba(42,42,42,0.4);
@@ -335,9 +432,9 @@ const SelectHelpOptions = styled.ul<show>`
 const LanguageOptions = styled.ul<show>`
   position: absolute;
   list-style: none;
-  top:18px;
+  top:25px;
   text-align: center;
-  width: 60px;
+  width: 74px;
   overflow: hidden;
   padding: 0;
   border-radius: 20px;
@@ -352,8 +449,11 @@ const LanguageOptions = styled.ul<show>`
 `;
 
 const Option = styled.li`
-  font-size: 12px;
-  padding: 6px 8px;
+  font-size: 14px;
+  padding: 8px 8px;
+  letter-spacing: -0.28px;
+  font-weight: bold;
+  font-family: SourceHanSans;
   transition: background-color 0.2s ease-in;
   &:hover {
     color: #f84040;
