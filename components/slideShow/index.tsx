@@ -18,108 +18,141 @@ interface ImageData {
   }
 const  SlideShow: React.FC<SliderProps> = ({ images }) => {
 
-    const [slideIndex, setSlideIndex] = useState(0);
+    const [centerSlideIndex, setCenterSlideIndex] = useState(0);
     const settings = {
-        infinite: true,
         dots: true,
-        speed: 500,
-        // autoplay: true,
-        // autoplaySpeed: 2000,
-        slidesToShow: 7,
-        className: "center",
         dotsClass: "dots_custom",
+        infinite: true,
         centerMode: true,
-        centerPadding: "110px",
-        beforeChange: (current:number, next:number) => {
-            return setSlideIndex(current)
-        },
-        draggable: false,
+        // swipe: true,
+        // swipeToSlide:true,
+        slidesToScroll: 1,
+        accessibility: true,
+        centerPadding: '90px', // Adjust the padding as needed
+        slidesToShow: 7, // Adjust the number of slides to show
+        speed: 500,
+        focusOnSelect: true,
         arrows:false,
-        slideToScroll: 1,
-    }
-
+        autoplay: true,
+        autoplaySpeed: 2000,
+        
+        // variableWidth:true,
+        beforeChange:(current:number, next:number) => {
+            return setCenterSlideIndex(next);
+        }
+    };
+    
     return (
-        <SlideContainer>
+        // <SlideContainer>
             <StyledSlider {...settings}>
-                {
-                    images.map((image, index) => (
-                        <div style={{ display: "flex", justifyContent:"center", alignItems: "center"}}>
-                            <Link href={image.path}>
-                                <Image style={{ cursor:"pointer" }} src={image.img_src} alt={image.alt} width={180} height={180} />
-                            </Link>
-                        </div>
-                    ))
-                }
+                {images.map((image, index) => (
+                <div key={index}>
+                    {centerSlideIndex === index ? (
+                        // 가운데 슬라이드에만 Link 적용
+                        <Link href={image.path}>
+                            
+                                <ImageWrapper isCenter={centerSlideIndex === index}>
+                                    <Image 
+                                        
+                                        src={image.img_src} 
+                                        alt={image.alt} 
+                                        width={348} 
+                                        height={348}
+                                        layout="intrinsic"
+                                    />
+                                </ImageWrapper>
+                            
+                        </Link>
+                    ) : (
+                        // 다른 슬라이드에는 Link 없음
+                        <ImageWrapper isCenter={centerSlideIndex === index}>
+                            <Image 
+
+                                src={image.img_src} 
+                                alt={image.alt} 
+                                width={200} 
+                                height={200} 
+                                layout="intrinsic"
+                            />
+                        </ImageWrapper>
+                    )}
+                </div>
+            ))}
             </StyledSlider>    
-        </SlideContainer>
+        
     )
 }
 
 export default SlideShow;
 
-const StyledSlider = styled(Slider)`
-    width: 100%;
-    position: relative;
-    margin: 0 auto;
-    box-sizing: border-box;
+const ImageWrapper = styled.div<{isCenter?:boolean}>`
+  display: block;
+  cursor: ${({ isCenter }) => (isCenter ? "pointer" : "")};
+  opacity: ${({ isCenter }) => (isCenter ? 1 : 0.5)};
+  img {
+    display: inline-block; // 이미지가 block 요소로 표시되도록 설정
+  }
 `;
 
-const SlideContainer = styled.div`
-    .slick-slider {
-        width: 100%;
-    }
 
-    .center .slick-center {
-        color: #e67e22;
-        opacity: 1;
-        transform: scale(1.2);
-        text-align: center;
-        transition: all 300ms ease;
-        padding: 20px;
-        margin-left: 20px;
-        margin-right: 48px;
-        //margin-bottom: 30px;
+const StyledSlider = styled(Slider)`
+    max-width: 1920px;
+    
+    .slick-slide {
+        box-sizing: border-box;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 20px;
     }
-
+    
+    .slick-center {
+        margin-bottom: 35px;
+        transform: scale(1.1);
+    } 
+    
     .slick-list {
-        object-fit: cover;
+        object-fit: contain;
         display: flex;
         align-items: center;
+        
     }
+
 
     .slick-track {
         display: flex;
+        justify-content: center;
         align-items: center;
-        left: 0;
-        right: 0;
-        bottom: 20;
+        
     }
-    
+
     .dots_custom {
         display: block;
-        margin: auto auto;
-        padding: 30px;
+        text-align: center;
+        margin-top: -20px;
     }
 
     .dots_custom li {
         list-style: none;
         cursor: pointer;
         display: inline-block;
-        margin: 10px 0px;
+        
     }
 
     .dots_custom li button {
         border: none;
         position: relative ;
-        background: #d1d1d1;
+        background: #dcdcdc;
         color: transparent;
         cursor: pointer;
         display: block;
-        height: 3px;
-        width: 140px;
+        height: 2px;
+        width: 155px;
     }
 
     .dots_custom li.slick-active button {
         background-color: red;
     }
 `;
+

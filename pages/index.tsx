@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import { StoreInfoDataProps, StoreInfoProps } from "@/data/StoreInfoType";
 import StoreInfoCard from "@/components/StoreInfoCard";
 import { CSSTransition } from "react-transition-group";
+import { Slideshow } from "@mui/icons-material";
+import SlideShow2 from "@/components/slideShow/swipe";
 
 export default function Home() {
   // eslint-disable-next-line prettier/prettier
@@ -34,9 +36,11 @@ export default function Home() {
   const [shimmerStatus, setShimmerStatus] = useState<{[key: string]: boolean}>(initialShimmerStatus);
   const isAnyOverlayActive = Object.values(overlayStatus).some(status => status);
   const handleGuideClick = (alt:string) => {
+    setOverlayStatus(GuideDataProps.reduce((acc, item) => ({ ...acc, [item.alt]: false }), {}));
     setOverlayStatus(prev => ({ ...prev, [alt]: !prev[alt] }));
     const findStoreInfo = StoreInfoProps.find(storeInfo => storeInfo.alt === alt);
     setSelectedStoreInfo(findStoreInfo);
+    setStoreInfoCardVisible(true);
   }
   const closeAllOverlays = () => {
     setOverlayStatus(GuideDataProps.reduce((acc, item) => ({ ...acc, [item.alt]: false }), {}));
@@ -102,6 +106,7 @@ export default function Home() {
         </GuideBox>
         
         <CSSTransition
+          key={selectedStoreInfo ? selectedStoreInfo.alt : 'default-key'}
           in={isAnyOverlayActive}
           timeout={300}
           classNames={getAnimationClass(selectedStoreInfo?.alt ?? '')}
@@ -179,25 +184,26 @@ export default function Home() {
       </div>
           
       <Main>  
-        <div style={{ marginTop:"37px", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column" }}>
-          <div style={{ fontWeight:"300", fontSize:"28px", fontFamily:"SourceHanSans", letterSpacing:"-0.56px", color:"#F84040", width:"119px", height:"40px", lineHeight:"45px", textAlign:"center"  }}>NOW SNS</div>
-          <div style={{ width:"538px", height:"66px", letterSpacing:"-1.44px", color:"#22201f", fontFamily:"Manrope", fontSize:"48px", lineHeight:"74px", textAlign:"center" }}>인스타그램에 놀러오세요!</div>
-          <div style={{ width:"190px", height:"27px", fontFamily:"Manrope", fontSize:"20px", fontWeight:"500", letterSpacing:"-0.6px", color:"#b2b2b2", lineHeight:"30px", textAlign:"center" }}>@sungwon_foodmall</div>   
+        <div>
+          <div style={{ marginTop:"37px", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column" }}>
+            <div style={{ fontWeight:"300", fontSize:"28px", fontFamily:"SourceHanSans", letterSpacing:"-0.56px", color:"#F84040", width:"119px", height:"40px", lineHeight:"45px", textAlign:"center"  }}>NOW SNS</div>
+            <div style={{ width:"538px", height:"66px", letterSpacing:"-1.44px", color:"#22201f", fontFamily:"Manrope", fontSize:"48px", lineHeight:"74px", textAlign:"center" }}>인스타그램에 놀러오세요!</div>
+            <div style={{ width:"190px", height:"27px", fontFamily:"Manrope", fontSize:"20px", fontWeight:"500", letterSpacing:"-0.6px", color:"#b2b2b2", lineHeight:"30px", textAlign:"center" }}>@sungwon_foodmall</div>   
+          </div>
+          <div style={{ marginTop:"40px"}}>
+            <SlideShow images={SlideData} />
+            {/* <SlideShow2 images={SlideData} /> */}
+          </div>
         </div>
-
-       <div style={{ marginTop:"57px" }}>
-          <SlideShow images={SlideData} />
-       </div>
-          
+      
         
-
-        <div style={{ display:"flex", justifyContent:"center", marginTop:"80px" }}>
+        <div style={{ display:"flex", justifyContent:"center", marginTop:"50px" }}>
           <div style={{ width: "1260px", display:"flex" }}>
             <div style={{ flex:1 }}>
               <div style={{ display:"flex", justifyContent:"flex-start" }}>
                 <div>
                   <div style={{ width:"265px", height:"62px", display:"flex", alignItems:"center" }}>
-                    <Image src={"/image/tit-icon_Bell.webp"} alt="종" width={62} height={62} />
+                    <Image src={"/icon/tit-icon_bell.svg"} alt="종" width={62} height={62} />
                     <div style={{ width:"127px", height:"40px", lineHeight:"44px", fontSize:"28px", marginLeft:"8px",  fontWeight:"bold", letterSpacing:"-0.56px", color:"#22201f", fontFamily:"SourceHanSans" }}>알려드려요</div>
                     <div style={{ marginLeft: "5%", cursor:"pointer" }}>
                     <Image src={"/icon/btn_more.svg"} alt="+" width={54} height={54} />
@@ -241,7 +247,7 @@ export default function Home() {
             <div style={{ flex:1 }}>
             <div style={{display:"flex", justifyContent: "center", alignItems:"center", flexDirection: "column"}}>
               <div style={{display: "flex", justifyContent: "flex-start", alignItems:"center", fontWeight:"bold", width: "100%"}}>
-                <Image src={"/image/tit-icon_service.webp"} alt="서비스" width={62} height={62} />
+                <Image src={"/icon/tit-icon_service.svg"} alt="서비스" width={62} height={62} />
                 <div style={{ width:"127px", height:"40px", fontSize: "28px", marginLeft:"4px", fontWeight:"bold", lineHeight:"40px", fontFamily:"SourceHanSans" }}>고객서비스</div>
               </div>
               <div style={{marginTop: "22px", alignItems:"center", display: "flex", justifyContent:"space-evenly", width:"617px", height:"92px", border: "1px solid #CCCCCC", borderRadius:"18px" ,background:"#f7f7f7"}}>

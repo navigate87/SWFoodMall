@@ -41,16 +41,7 @@ const GuideItem: React.FC<GuideItemProps> = ({ data, isVisible, onClick, isShimm
               {/* </GuideStore> */}
           </GuideStoreBox>
 
-          {/* <GuideStoreBox box_bottom={data.box_bottom} box_left={data.box_left} isVisible={isVisible}>
-              <GuideStore onClick={onClick}>
-                <ShimmerButton>
-                  <FloorText>{data.floor}</FloorText>
-                  <StoreNameText>{data.alt}</StoreNameText>
-                  <span className='shimmer'></span>
-                </ShimmerButton>
-                  
-              </GuideStore>
-          </GuideStoreBox> */}
+          
           
           {
               isOverlayVisible &&
@@ -90,8 +81,8 @@ const GuideStoreBox = styled.div<{ box_bottom: number, box_left: number, isVisib
   height: 68px;
   width: 72px;
   cursor: pointer;
-  /* z-index: 500; */
-  z-index: ${({ isVisible }) => (isVisible ? "400" : "300")};
+  z-index: 500; 
+  /* z-index: ${({ isVisible }) => (isVisible ? "400" : "300")}; */
 
   /* &:hover{
     background: #f84040;

@@ -12,6 +12,9 @@ import "slick-carousel/slick/slick-theme.css"
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import 'react-datepicker/dist/react-datepicker.css';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
 config.autoAddCss = false
 
 export default function App({ Component, pageProps }: AppProps) {
