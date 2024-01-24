@@ -27,12 +27,12 @@ const shineAnimation = keyframes`
 export const ShimmerButton = styled.button<{isVisible?:boolean}>`
   color: var(--bg);
   font-weight: 600;
-  height: 68px;
-  width: 72px;
+  height: 65px;
+  width: 102px;
   opacity: 0.8;
-  background: ${({ isVisible }) => (isVisible ? "#ff0000" : 'rgba(223,223,223, 0.1)')};
-  backdrop-filter: blur(50px);
-  -webkit-backdrop-filter: blur(10px);
+  /* background: ${({ isVisible }) => (isVisible ? "#ff0000" : 'rgba(223,223,223, 0.1)')}; */
+  /* backdrop-filter: blur(50px); */
+  /* -webkit-backdrop-filter: blur(10px); */
   /* background-image: linear-gradient(
     315deg,
     #ffc4ec -10%,
@@ -49,7 +49,7 @@ export const ShimmerButton = styled.button<{isVisible?:boolean}>`
   position: relative;
   isolation: isolate;
   box-shadow: 0 2px 3px 1px hsl(var(--glow-hue) 50% 20% / 50%), inset 0 -10px 20px -10px hsla(var(--shadow-hue),10%,90%,95%);
-  border-radius: 30.5px;
+  border-radius: 32.5px;
   scale: 1;
   transition: all var(--spring-duration) var(--spring-easing);
 
@@ -93,9 +93,7 @@ export const ShimmerButton = styled.button<{isVisible?:boolean}>`
     opacity: 1;
     animation: ${shineAnimation} 1.2s ease-in 1 forwards;
   }
-  &:hover{
-    background: #f84040;
-  }
+
   .shimmer::before,
   .shimmer::after {
     transition: all 0.5s ease;
@@ -104,7 +102,7 @@ export const ShimmerButton = styled.button<{isVisible?:boolean}>`
     border-radius: inherit;
     position: absolute;
     mix-blend-mode: color;
-    inset: 40px;
+    inset: 37px;
     pointer-events: none;
   }
 

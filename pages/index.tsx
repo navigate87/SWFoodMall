@@ -40,8 +40,11 @@ export default function Home() {
     setOverlayStatus(prev => ({ ...prev, [alt]: !prev[alt] }));
     const findStoreInfo = StoreInfoProps.find(storeInfo => storeInfo.alt === alt);
     setSelectedStoreInfo(findStoreInfo);
-    setStoreInfoCardVisible(true);
+    setStoreInfoCardVisible(true); 
+   
   }
+
+ 
   const closeAllOverlays = () => {
     setOverlayStatus(GuideDataProps.reduce((acc, item) => ({ ...acc, [item.alt]: false }), {}));
   };
@@ -86,7 +89,7 @@ export default function Home() {
       <div style={{ display: "flex", marginTop: "-60px", justifyContent:"center", position:"relative"  }}>
         <Image style={{ position:"absolute", zIndex:-2, }} src={"/image/sub-fullbanner-img-galbi.webp"} alt="BG" layout="fill"  />
         <Image 
-          src={"/image/main-foodmall-img.png"} 
+          src={"/image/main-foodmall-img.webp"} 
           width={1330} 
           height={936} 
           alt="main" 
@@ -329,7 +332,7 @@ const GuideBox = styled.div`
 const GuideBackground = styled.div`
   position: fixed;
   top: 0; left: 0; bottom: 0; right: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
   z-index: 300;
 `;
 

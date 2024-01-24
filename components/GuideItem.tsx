@@ -31,18 +31,13 @@ const GuideItem: React.FC<GuideItemProps> = ({ data, isVisible, onClick, isShimm
     return (
       <>
           <GuideStoreBox box_bottom={data.box_bottom} box_left={data.box_left} isVisible={isVisible}>
-              {/* <GuideStore onClick={onClick}> */}
                 <ShimmerButton isVisible={isVisible} onClick={onClick} className={isShimmering ? 'active' : ''}>
-                  <FloorText>{data.floor}</FloorText>
                   <StoreNameText>{data.alt}</StoreNameText>
+                  <FloorText>{data.floor}</FloorText>
                   <span className='shimmer'></span>
                 </ShimmerButton>
-                  
-              {/* </GuideStore> */}
           </GuideStoreBox>
 
-          
-          
           {
               isOverlayVisible &&
               <GuideOverLayBox 
@@ -73,32 +68,18 @@ export default GuideItem
 
 const GuideStoreBox = styled.div<{ box_bottom: number, box_left: number, isVisible: boolean}>`
   position: absolute;
-  border-radius: 10px;
-  
-  /* background: ${({ isVisible }) => (isVisible ? "#ff0000" : 'rgba(0,0,0, 0.5)')}; */
+  border-radius: 32.5px;
   bottom: ${({ box_bottom }) => box_bottom}px;
   left: ${({ box_left }) => box_left}px;
-  height: 68px;
-  width: 72px;
+  height: 65px;
+  width: 102px;
   cursor: pointer;
   z-index: 500; 
-  /* z-index: ${({ isVisible }) => (isVisible ? "400" : "300")}; */
-
-  /* &:hover{
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(30px);
+    &:hover{
     background: #f84040;
-  } */
-`;
-
-
-const GuideStore = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  border-radius: 50%;
-  flex-direction: column;
-  position: relative;
-  z-index: 400;
+  }
 `;
 
 const slideInTopToBottom = keyframes`
@@ -134,8 +115,6 @@ const GuideOverLayBox = styled.div<{ width:number, height:number, bottom:number,
   z-index: 350;
   display: ${({ isVisible }) => (isVisible ? "block" : "none")};
   animation: ${({ isVisible }) => (isVisible ? slideInTopToBottom : slideInBottomToTop)} 0.7s ease-out;
-
-  //z-index: ${({ isVisible }) => (isVisible ? "101" : "none")};
 `;
 
 const MixBlendModeBox =styled.div<{isVisible:boolean}>`
@@ -143,15 +122,19 @@ const MixBlendModeBox =styled.div<{isVisible:boolean}>`
     z-index: 50;
 `;
 
-const FloorText = styled.p`
-    font-size: 10px;
+const FloorText = styled.div`
+    font-size: 13px;
     color: #fff;
-    margin: 3px;
+    margin-top: 1px;
+    opacity: 0.5;
+    font-family: Manrope;
 `;
 
-const StoreNameText = styled.p`
-    font-size: 13px;
-    font-weight: bold;
+const StoreNameText = styled.div`
+    font-size: 18px;
+    font-weight: 500;
     color: #fff;
-    margin: 3px;
+    letter-spacing: -0.36px;
+    margin-top: 1px;
+    font-family: "SourceHanSans";
 `;

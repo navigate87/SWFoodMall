@@ -10,7 +10,7 @@ export interface StoreInfoDataProps {
 
 export const StoreInfoProps: StoreInfoDataProps[] = [
     {
-        alt: "카페",
+        alt: "아뜰리에",
         imgSrc: "/image/rolling img_cafe.webp",
         title: "성원아뜰리에",
         subtitle: "카페 & 베이커리",
@@ -19,7 +19,7 @@ export const StoreInfoProps: StoreInfoDataProps[] = [
         location: "성원푸드몰 1층"
     },
     {
-        alt: "일식",
+        alt: "스시노",
         imgSrc: "/image/rolling img_sushi.webp",
         title: "스시노칸도",
         subtitle: "다양한 회전초밥 스시의 감동, 스시노 칸도",
@@ -28,7 +28,7 @@ export const StoreInfoProps: StoreInfoDataProps[] = [
         location: "성원푸드몰 2층"
     },
     {
-        alt: "한식∙정육",
+        alt: "성원정",
         imgSrc: "/image/rolling img_meat.webp",
         title: "성원정",
         subtitle: "정육 & 한식",

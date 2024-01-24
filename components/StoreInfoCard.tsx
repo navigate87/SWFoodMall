@@ -13,9 +13,12 @@ const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo, isVisible }) =
   if (!storeInfo) {
     return <div>정보가 없습니다.</div>;
   }
+  useEffect(() => {
+    console.log("storeInfo과 isVisible", storeInfo, )
 
+  })
   const isPosChange = () => {
-    return ['카페', '일식', '한식∙정육', '루프가든'].includes(storeInfo.alt);
+    return ['아뜰리에', '스시노', '성원정', '루프가든'].includes(storeInfo.alt);
   }
 
   const isRoomOrHall = () => {
@@ -40,7 +43,7 @@ const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo, isVisible }) =
         query: { storeName: storeInfo.title }
       } 
       
-    } else if(storeInfo.alt === "한식∙정육") {
+    } else if(storeInfo.alt === "성원정") {
       return {
         pathname: "/swjung",
         query: { storeName: storeInfo.title }
@@ -98,25 +101,6 @@ const StoreInfoCard: React.FC<StoreInfoCardProps> = ({ storeInfo, isVisible }) =
 
 export default StoreInfoCard;
 
-const fadeOutLeft = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-`;
-
-const fadeOutRight = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-`;
 
 const slideInLeftToRight = keyframes`
   from {
@@ -145,19 +129,11 @@ const slideInRightToLeft = keyframes`
 const InfoCardContainer = styled.div<{isLeft:boolean, isVisible?: boolean}>`
   z-index: 350;
   position: absolute;
-  left: ${({ isLeft }) => (isLeft? "50" : "1450")}px;
+  left: ${({ isLeft }) => (isLeft? "30" : "1450")}px;
   bottom: 88px;
   width: 432px;
   height: 636px;
   animation: ${({ isLeft }) => (isLeft ? slideInLeftToRight : slideInRightToLeft)} 0.5s ease-out;
-  /* opacity: ${({ isVisible }) => (isVisible ? "1" : "0")};
-  visibility: ${({ isVisible }) => (isVisible ? "visible" : "hidden")};
-  transition: opacity 0.5s ease-out, visibility 0.5s ease-out; */
-  /* animation: ${({ isLeft, isVisible }) => 
-    isVisible 
-      ? (isLeft ? slideInLeftToRight : slideInRightToLeft) 
-      : (isLeft ? fadeOutLeft : fadeOutRight)
-  } 0.5s ease-out forwards; */
 `;
 
 const ImageContainer = styled.div``;
@@ -177,12 +153,18 @@ const TitleRow = styled.div`
   align-items: center;
   width: 80%;
   height: 65px;
+  margin-top: 18px;
 `;
 
 const Title = styled.div`
   font-size: 30px;
   font-weight: bold;
   margin-right: 5px;
+  height: 44px;
+  color: #22201f;
+  letter-spacing: -0.6px;
+  font-family: SourceHanSans;
+  line-height: 48px;
 `;
 
 const LocationIconContainer = styled.div`
@@ -199,19 +181,22 @@ const SubtitleRow = styled.div`
   display: flex;
   align-items: center;
   width: 80%;
-  height: 30px;
-  font-size: 12px;
+  height: 24px;
+  font-size: 16px;
+  letter-spacing: -0.32px;
   color: #707070;
   font-weight: bold;
+  font-family: SourceHanSans;
 `;
 
 const Description = styled.div`
   display: flex;
   align-items: center;
   width: 80%;
-  height: 50px;
-  word-wrap: break-word;
-  line-height: 15px;
+  height: 40px;
+  /* word-wrap: break-word; */
+  line-height: 16px;
+  letter-spacing: -0.28px;
   color: #707070;
   font-family: 'SourceHanSans';
 `;
@@ -220,22 +205,30 @@ const InfoRow = styled.div`
   display: flex;
   align-items: center;
   width: 80%;
-  height: 50px;
+  height: 20px;
+  margin-top: 14px;
 `;
 
 const InfoText = styled.div`
   flex: 1;
   font-weight: bold;
   color: #707070;
+  font-size: 14px;
+  letter-spacing: -0.28px;
+  font-family: SourceHanSans;
 `;
 
 const DetailText = styled.span`
+  font-weight: 500;
   color: #9b9b9b;
+  font-size: 14px;
+  letter-spacing: -0.28px;
+  font-family: SourceHanSans;
 `;
 
 const ButtonRow = styled.div`
   flex: 1;
-  margin: 27px;
+  margin-top: 43px;
 `;
 
 const DetailedViewButton = styled.div`
@@ -243,13 +236,16 @@ const DetailedViewButton = styled.div`
   justify-content: center;
   align-items: center;
   border: 3px solid #ededed;
-  border-radius: 15px;
+  border-radius: 10px;
   width: 176px;
   height: 50px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-size: 15px;
+  font-weight: bold;
   color: #707070;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+  font-size: 18px;
   cursor: pointer;
+  font-family: SourceHanSans;
   &:hover {
     border: 2px solid #f84040;
   }
