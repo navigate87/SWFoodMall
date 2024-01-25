@@ -26,10 +26,10 @@ ${reset}
 html {
     font-size: 11px;
     -webkit-text-size-adjust: none;
-    /* min-width: 1600px;
+    min-width: 1600px;
     max-width: 1920px;
     min-height: 936px;
-    max-width: 936px; */
+
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     font-display: fallback;
     -ms-overflow-style: none;

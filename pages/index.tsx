@@ -125,9 +125,9 @@ export default function Home() {
       </div>
 
       <div style={{ display:"flex", justifyContent:"center", marginTop:"-3.5%", position:"relative" }}>
-        <div style={{ width:"1574px", height:"204px", maxWidth:"auto", borderRadius:"102px", backgroundColor:"#f7f7f7", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column" }}>
+        <div style={{ width:"83%", height:"204px", maxWidth:"auto", borderRadius:"102px", backgroundColor:"#f7f7f7", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column" }}>
           <div style={{ display:"flex", justifyContent:"center", alignItems:"center", marginBottom:"30px" }}>
-            <div style={{ width:"204px", height:"41px", fontSize:"30px", fontWeight:"500", color:"#22201f", fontFamily:"Manrope", textAlign:"center", lineHeight:"47px" }}>EVENT NOTICE</div>
+            <div style={{height:"41px", fontSize:"30px", fontWeight:"500", color:"#22201f", fontFamily:"Manrope", textAlign:"center", lineHeight:"44px" }}>EVENT NOTICE</div>
             <div style={{ cursor:"pointer"}}>
               <Image  src={"/icon/btn_more.svg"} alt="+" width={36} height={36} /> 
             </div>
@@ -144,7 +144,7 @@ export default function Home() {
                       <div style={{ fontFamily:"SourceHanSans", width:"174px", height:"24px", color:"#888", letterSpacing:"-0.32px", fontSize:"16px",  lineHeight:"31px" }}>2023.06.16 ~ 2023.08.31</div>
                     </div>
                     <div style={{ display:"flex", justifyContent:"flex-start" }}>
-                      <div style={{ fontFamily:"SourceHanSans", fontSize:"20px", fontWeight:"500", width:"207px", height:"29px", letterSpacing:"-0.4px", lineHeight:"33px" }}>전복삼계탕 시즌메뉴 예약</div>
+                      <div style={{ fontFamily:"SourceHanSans", fontSize:"20px", fontWeight:"500", width:"100%", height:"29px", letterSpacing:"-0.4px", lineHeight:"33px" }}>전복삼계탕 시즌메뉴 예약</div>
                     </div>
                   </div>
               </div>
@@ -153,7 +153,7 @@ export default function Home() {
             <div style={{ marginRight:"20px" }}>
               <div style={{ width:"442px", height:"72px", display:"flex", alignItems:"center", borderRadius:"36px", border:"1px solid #dcdcdc", backgroundColor:"#ececec" }}>
                   <div style={{ width:"60px", height:"60px", borderRadius:"36px", backgroundColor:"#343434", marginLeft:"6px", marginRight:"22px", display:"flex", alignItems:"center", justifyContent:"center"  }}>
-                    <div style={{ width:"50px", height:"22px", fontFamily:"Manrope", fontSize:"16px", fontWeight:"bold", color:"#FFF", textAlign:"center", lineHeight:"28px" }}>EVENT</div>
+                    <div style={{ width:"56px", height:"22px", fontFamily:"Manrope", fontSize:"16px", fontWeight:"bold", color:"#FFF", textAlign:"center", lineHeight:"28px" }}>EVENT</div>
                   </div>
                   <div style={{ display:"flex", flexDirection:"column", }}>
                     <div style={{ display:"flex", alignItems:"center" }}>
@@ -161,7 +161,7 @@ export default function Home() {
                       <div style={{ fontFamily:"SourceHanSans", width:"174px", height:"24px", color:"#888", letterSpacing:"-0.32px", fontSize:"16px",  lineHeight:"31px" }}>2023.06.16 ~ 2023.08.31</div>
                     </div>
                     <div style={{ display:"flex", justifyContent:"flex-start" }}>
-                      <div style={{ fontFamily:"SourceHanSans", fontSize:"20px", fontWeight:"500", width:"207px", height:"29px", letterSpacing:"-0.4px", lineHeight:"33px" }}>전복삼계탕 시즌메뉴 예약</div>
+                      <div style={{ fontFamily:"SourceHanSans", fontSize:"20px", fontWeight:"500", width:"100%", height:"29px", letterSpacing:"-0.4px", lineHeight:"33px" }}>전복삼계탕 시즌메뉴 예약</div>
                     </div>
                   </div>
               </div>
@@ -169,15 +169,15 @@ export default function Home() {
             <div style={{ marginRight:"20px" }}>
               <div style={{ width:"442px", height:"72px", display:"flex", alignItems:"center", borderRadius:"36px", border:"1px solid #dcdcdc", backgroundColor:"#ececec" }}>
                   <div style={{ width:"60px", height:"60px", borderRadius:"36px", backgroundColor:"#343434", marginLeft:"6px", marginRight:"22px", display:"flex", alignItems:"center", justifyContent:"center"  }}>
-                    <div style={{ width:"48px", height:"21px", fontFamily:"Manrope", fontSize:"16px", fontWeight:"bold", color:"#FFF", textAlign:"center", lineHeight:"24px" }}>신제품</div>
+                    <div style={{ width:"56px", height:"21px", fontFamily:"Manrope", fontSize:"16px", fontWeight:"bold", color:"#FFF", textAlign:"center", lineHeight:"24px" }}>신제품</div>
                   </div>
                   <div style={{ display:"flex", flexDirection:"column", }}>
                     <div style={{ display:"flex", alignItems:"center" }}>
                       <div style={{ fontFamily:"SourceHanSans", width:"61px", height:"24px", color:"#888", letterSpacing:"-0.32px", fontSize:"16px",  lineHeight:"31px" }}>[성원정]</div>
-                      <div style={{ fontFamily:"SourceHanSans", width:"174px", height:"24px", color:"#888", letterSpacing:"-0.32px", fontSize:"16px",  lineHeight:"31px" }}>2023.06.16 ~ 2023.08.31</div>
+                      <div style={{ fontFamily:"SourceHanSans", width:"200px", height:"24px", color:"#888", letterSpacing:"-0.32px", fontSize:"16px",  lineHeight:"31px" }}>2023.06.16 ~ 2023.08.31</div>
                     </div>
                     <div style={{ display:"flex", justifyContent:"flex-start" }}>
-                      <div style={{ fontFamily:"SourceHanSans", fontSize:"20px", fontWeight:"500", width:"207px", height:"29px", letterSpacing:"-0.4px", lineHeight:"33px" }}>전복삼계탕 시즌메뉴 예약</div>
+                      <div style={{ fontFamily:"SourceHanSans", fontSize:"20px", fontWeight:"500", width:"100%", height:"29px", letterSpacing:"-0.4px", lineHeight:"33px" }}>전복삼계탕 시즌메뉴 예약</div>
                     </div>
                   </div>
               </div>
@@ -189,9 +189,9 @@ export default function Home() {
       <Main>  
         <div>
           <div style={{ marginTop:"37px", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column" }}>
-            <div style={{ fontWeight:"300", fontSize:"28px", fontFamily:"SourceHanSans", letterSpacing:"-0.56px", color:"#F84040", width:"119px", height:"40px", lineHeight:"45px", textAlign:"center"  }}>NOW SNS</div>
-            <div style={{ width:"538px", height:"66px", letterSpacing:"-1.44px", color:"#22201f", fontFamily:"Manrope", fontSize:"48px", lineHeight:"74px", textAlign:"center" }}>인스타그램에 놀러오세요!</div>
-            <div style={{ width:"190px", height:"27px", fontFamily:"Manrope", fontSize:"20px", fontWeight:"500", letterSpacing:"-0.6px", color:"#b2b2b2", lineHeight:"30px", textAlign:"center" }}>@sungwon_foodmall</div>   
+            <div style={{ fontWeight:"300", fontSize:"28px", fontFamily:"SourceHanSans", letterSpacing:"-0.56px", color:"#F84040", height:"40px", lineHeight:"45px", textAlign:"center"  }}>NOW SNS</div>
+            <div style={{ height:"66px", letterSpacing:"-1.44px", color:"#22201f", fontFamily:"Manrope", fontSize:"48px", lineHeight:"74px", textAlign:"center" }}>인스타그램에 놀러오세요!</div>
+            <div style={{ height:"27px", fontFamily:"Manrope", fontSize:"20px", fontWeight:"500", letterSpacing:"-0.6px", color:"#b2b2b2", lineHeight:"30px", textAlign:"center" }}>@sungwon_foodmall</div>   
           </div>
           <div style={{ marginTop:"40px"}}>
             <SlideShow images={SlideData} />
@@ -205,10 +205,10 @@ export default function Home() {
             <div style={{ flex:1 }}>
               <div style={{ display:"flex", justifyContent:"flex-start" }}>
                 <div>
-                  <div style={{ width:"265px", height:"62px", display:"flex", alignItems:"center" }}>
+                  <div style={{ width:"350px", height:"62px", display:"flex", alignItems:"center" }}>
                     <Image src={"/icon/tit-icon_bell.svg"} alt="종" width={62} height={62} />
-                    <div style={{ width:"127px", height:"40px", lineHeight:"44px", fontSize:"28px", marginLeft:"8px",  fontWeight:"bold", letterSpacing:"-0.56px", color:"#22201f", fontFamily:"SourceHanSans" }}>알려드려요</div>
-                    <div style={{ marginLeft: "5%", cursor:"pointer" }}>
+                    <div style={{ textAlign:"left", height:"40px", lineHeight:"44px", fontSize:"28px", marginLeft:"8px",  fontWeight:"bold", letterSpacing:"-0.56px", color:"#22201f", fontFamily:"SourceHanSans" }}>알려드려요</div>
+                    <div style={{ cursor:"pointer" }}>
                     <Image src={"/icon/btn_more.svg"} alt="+" width={54} height={54} />
                   </div>
                 </div>
@@ -251,7 +251,7 @@ export default function Home() {
             <div style={{display:"flex", justifyContent: "center", alignItems:"center", flexDirection: "column"}}>
               <div style={{display: "flex", justifyContent: "flex-start", alignItems:"center", fontWeight:"bold", width: "100%"}}>
                 <Image src={"/icon/tit-icon_service.svg"} alt="서비스" width={62} height={62} />
-                <div style={{ width:"127px", height:"40px", fontSize: "28px", marginLeft:"4px", fontWeight:"bold", lineHeight:"40px", fontFamily:"SourceHanSans" }}>고객서비스</div>
+                <div style={{ textAlign:"left", height:"40px", fontSize: "28px", marginLeft:"4px", fontWeight:"bold", lineHeight:"40px", fontFamily:"SourceHanSans" }}>고객서비스</div>
               </div>
               <div style={{marginTop: "22px", alignItems:"center", display: "flex", justifyContent:"space-evenly", width:"617px", height:"92px", border: "1px solid #CCCCCC", borderRadius:"18px" ,background:"#f7f7f7"}}>
                 <div style={{ display:"flex", alignItems:"center"}}>
