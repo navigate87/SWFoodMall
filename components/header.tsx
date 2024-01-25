@@ -104,7 +104,7 @@ export default function Header() {
               <SelectBox onClick={() => setShowOptions((prev) => !prev)}>
                 <Label onMouseOver={() => setShowOptions(true)} show={!showOptions}>예약</Label>
                 <SelectOptions show={showOptions}>
-                  <Option style={{cursor:"none", pointerEvents: "none", fontSize: "20px", color:"rgba(81,81,81,0.8)", fontFamily:"SourceHanSans", letterSpacing:"-0.4px",  }}>예약</Option>
+                  <Option style={{cursor:"none", pointerEvents: "none", fontSize: "20px", color:"#fff",opacity:"0.5", fontFamily:"SourceHanSans", letterSpacing:"-0.4px",  }}>예약</Option>
                   <Option id="dining_option" value={0}>Dining</Option>
                   <Option id="fnb_option" value={1}>F&B</Option>
                   <Option id="room_option" value={2}>객실</Option>
