@@ -75,6 +75,7 @@ const GuideStoreBox = styled.div<{ box_bottom: number, box_left: number, isVisib
   width: 102px;
   cursor: pointer;
   z-index: 500; 
+  background: ${({ isVisible }) => (isVisible ? "#f84040" : "none")};
   border: 2px solid rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(30px);
     &:hover{
