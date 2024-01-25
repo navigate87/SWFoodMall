@@ -11,9 +11,9 @@ export default function Footer() {
           </div>
           <div style={{ marginLeft:"42px" }}></div>
           <div style={{ display:"flex", alignItems:"flex-start", flexDirection:"column" }}>
-            <div style={{ width:"120px", height:"27px", textAlign:"left", color:"#22201f", fontWeight:"600", fontSize:"20px", fontFamily:"Manrope" }}>CS CENTER</div>
+            <div style={{ boxSizing:"border-box", height:"27px", textAlign:"left", color:"#22201f", fontWeight:"600", fontSize:"20px", fontFamily:"Manrope" }}>CS CENTER</div>
             
-            <div style={{ width:"170px", height:"55px", fontFamily:"Manrope", fontSize:"40px", lineHeight:"70px", fontWeight:"600", color:"#22201f", textAlign:"left" }}>1811-1811</div>
+            <div style={{  height:"55px", fontFamily:"Manrope", fontSize:"40px", lineHeight:"70px", fontWeight:"600", color:"#22201f", textAlign:"left", boxSizing:"border-box" }}>1811-1811</div>
             <div style={{ display:"flex", marginTop:"5px", height:"24px", lineHeight:"28px", width: "250px"}}>
               <div style={{ fontFamily:"SourceHanSans", fontSize:"16px", fontWeight:"bold", letterSpacing:"-0.32px", textAlign:"left",color:"#22201f" }}>CS 운영시간 :</div>
               
