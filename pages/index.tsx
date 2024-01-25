@@ -87,7 +87,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div style={{ display: "flex", marginTop: "-60px", justifyContent:"center", position:"relative"  }}>
-        <Image style={{ position:"absolute", zIndex:-2, }} src={"/image/sub-fullbanner-img-galbi.webp"} alt="BG" layout="fill"  />
+        <Image style={{ position:"absolute", zIndex:-2, }} src={"/image/bg.webp"} alt="BG" layout="fill"  />
         <Image 
           src={"/image/main-foodmall-img.webp"} 
           width={1330} 
