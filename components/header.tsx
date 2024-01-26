@@ -167,95 +167,8 @@ export default function Header() {
               <Image style={{ marginTop: "12%" }} alt="메뉴" src={"/icon/basket.png"} width={58} height={58} />
             </div>
           </div>
-          
-          
         </Section>
       </Container>
-      {/* <Container>
-        <Section>
-          <ImgBox>
-            <Image src="/image/bi.png" alt="swfood" width={72} height={44} />
-          </ImgBox>
-          <NavTab>
-            <NavTabUl>
-              <NavTabUlLi>
-                <CustomizedSwitches />
-              </NavTabUlLi>
-              <NavTabUlLi>
-                <Image alt="메뉴" src={"/icon/menu-icon.svg"} width={32} height={32} />
-              </NavTabUlLi>
-              <NavTabUlLi>
-                <Image alt="메뉴" src={"/icon/Search-icon.svg"} width={32} height={32} />
-              </NavTabUlLi>
-              <SelectBox onClick={() => setShowOptions((prev) => !prev)}>
-                <Label onMouseOver={() => setShowOptions(true)} show={!showOptions}>예약</Label>
-                <SelectOptions show={showOptions}>
-                  <Option style={{cursor:"none", pointerEvents: "none", fontSize: "15px", color:"rgba(81,81,81,0.8)" }}>예약</Option>
-                  <Option id="dining_option" value={0}>Dining</Option>
-                  <Option id="fnb_option" value={1}>F&B</Option>
-                  <Option id="room_option" value={2}>객실</Option>
-                </SelectOptions>
-              </SelectBox>
-              <NavTabUlLi>EVENT</NavTabUlLi>
-            </NavTabUl>
-          </NavTab>
-          <Profile>
-            <ProfileUl>
-              <ProfileUlLi>
-                <SelectLanguageBox id="select-language-box" onClick={() => setIsLanguageSelect((prev) => !prev)}>
-                  {
-                    !isLanguageSelect && 
-                    <LanguageOptionBox>
-                      <LanguageLabel isSelected={!isLanguageSelect}>KR</LanguageLabel>
-                      <SelectDirection>
-                        <Image src={"/icon/icon_select_down.webp"} width={12} height={9} alt="down" />
-                      </SelectDirection>
-                    </LanguageOptionBox>
-                  }
-                  <LanguageOptions show={isLanguageSelect}>
-                    <div style={{ display:"flex", justifyContent: "center", alignItems: "center", margin: "5px" }}>
-                      <LanguageLabel isSelected={!isLanguageSelect}>KR</LanguageLabel> 
-                      {
-                        isLanguageSelect && 
-                        <SelectDirection>
-                          <Image src={"/icon/icon_select_up.svg"} width={12} height={20} alt="up" />
-                        </SelectDirection>
-                      }
-                    </div>
-                    <div style={{ borderBottom:"1px solid #ededed", width:"70%", marginLeft: "8px", marginBottom: "9px"}}></div>
-                    <Option value={0} onClick={handleOnChangeSelectValue}>KR</Option>
-                    <Option value={1} onClick={handleOnChangeSelectValue}>EN</Option>
-                    <Option value={2} onClick={handleOnChangeSelectValue}>CN</Option>
-                    <Option value={3} onClick={handleOnChangeSelectValue}>JP</Option>
-                  </LanguageOptions>
-                </SelectLanguageBox>
-              </ProfileUlLi>
-              <ProfileUlLi>
-                <Image style={{ marginTop: "15%" }} alt="메뉴" src={"/icon/my-login.svg"} width={40} height={40} />
-              </ProfileUlLi>
-              <ProfileUlLi>
-                <div onMouseOver={() => setIsShowHelpOption(true)}>
-                  <Image onClick={()=>setIsShowHelpOption((prev) => !prev)} style={{ marginTop: "15%" }} alt="메뉴" src={"/icon/customcenter.svg"} width={40} height={40} />
-                </div>
-                <SelectHelpOptionBox id="select-help-option-box">
-                  <SelectBox  onClick={() => setIsShowHelpOption((prev) => !prev)}>
-                    <SelectHelpOptions show={isShowHelpOption}>
-                      <Option value={0} onClick={handleOnChangeSelectValue}>이용안내</Option>
-                      <Option value={1} onClick={handleOnChangeSelectValue}>공지사항</Option>
-                      <Option value={2} onClick={handleOnChangeSelectValue}>FAQ</Option>
-                      <Option value={3} onClick={handleOnChangeSelectValue}>1:1문의</Option>
-                    </SelectHelpOptions>
-                  </SelectBox>
-                </SelectHelpOptionBox>
-              </ProfileUlLi>
-              <ProfileUlLi>
-                <Image style={{ marginTop: "15%" }} alt="메뉴" src={"/icon/basket.png"} width={40} height={40} />
-              </ProfileUlLi>
-            </ProfileUl>
-          </Profile>
-        </Section>
-      </Container> */}
-      
       {showModal && <Reservation />} 
       {showGroupModal && <GroupReservation />}
       {showConfirmModal && <ConfirmModal />}
@@ -279,7 +192,7 @@ const Section = styled.div`
   background-color: rgba(71,71,71,0.7);
   justify-content: space-between;
   align-items: center;
-  z-index: 40;
+  z-index: 600;
 `;
 
 const ImgBox = styled.div`
